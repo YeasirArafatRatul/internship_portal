@@ -1,0 +1,44 @@
+{% load static %}
+<!-- Begin Slider With Banner Area -->
+<div class="slider-with-banner">
+    <div class="container">
+        <div class="row">
+            <!-- Begin Slider Area -->
+            <div class="col-lg-12 col-md-12">
+                <div class="slider-area">
+                    <div class="slider-active owl-carousel">
+                        <!-- Begin Single Slide Area -->
+                        {% for slide in sliding %}
+                        <div class="single-slide align-center-left  animation-style bg">
+                            <img id='slideimage' src='{{slide.image.url}}' alt='slider image '>
+                            <!-- <div class="slider-progress"></div> -->
+                            <div class="slider-content">
+                                <!-- <h5>Sale Offer <span>-20% Off</span> This Week</h5> -->
+                                <h2>{{slide.title}}</h2>
+                                <h3>{{slide.subtitle}}</h3>
+                                <div class="default-btn slide-btn">
+                                    <a class="links" href="#">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!-- Single Slide Area End Here -->
+                    </div>
+                </div>
+            </div>
+            <!-- Slider Area End Here -->
+            <!-- Begin Li Banner Area -->
+            <div class="col-lg-4 col-md-4 text-center pt-xs-30">
+                <!-- {% for image in sliding %}
+                <div class="li-banner">
+                    <a href="#">
+                        <img src="{{ image.image.url }}" alt="">
+                    </a>
+                </div>
+                {%endfor%} -->
+            </div>
+            <!-- Li Banner Area End Here -->
+        </div>
+    </div>
+</div>
+<!-- Slider With Banner Area End Here -->

@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Home {% endblock %}
+
+<!-- block start -->
+{% block content %}
+
+<h4 style="color:skyblue">Resume of {{resume.name}} </h4>
+<img src="{{resume.image.path}}" , style="height: 9rem; width: 9rem; border-radius: 50%;">
+<br>
+<p>{{resume.description}} </p>
+
+{% endblock %}

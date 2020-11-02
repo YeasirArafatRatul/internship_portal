@@ -1,0 +1,136 @@
+{% extends 'base.html' %} {% load static %} {% block styles %}
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<style>
+    .fb-profile img.fb-image-lg {
+        z-index: 0;
+        width: 100%;
+        margin-bottom: 10px;
+        height: 35rem;
+    }
+    
+    .fb-image-profile {
+        margin: -90px 10px 0px 50px;
+        z-index: 9;
+        width: 20%;
+        padding: 5px;
+        background-color: aliceblue;
+        border: 1px solid white;
+        border-radius: 4px;
+    }
+    
+    .content {
+        text-align: left;
+    }
+    
+    .content h5 {
+        color: #007bff;
+    }
+    
+    @media (max-width:768px) {
+        .fb-profile-text>h1 {
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .fb-profile img.fb-image-lg {
+            z-index: 0;
+            width: 100%;
+            height: 15rem;
+        }
+        .fb-image-profile {
+            margin: -45px 10px 0px 25px;
+            z-index: 9;
+            width: 20%;
+        }
+    }
+</style>
+{% endblock %} {% block title %} Profile {% endblock %} {% block content %}
+
+
+
+<div class="container">
+    <div class="row align-items-stretch">
+        <div class="fb-profile">
+            <img align="left" class="fb-image-lg" src="{{ profile.user.userprofile.cover_img.url }}" alt="Cover Image" />
+            <img align="left" class="fb-image-profile thumbnail" src="{{ profile.user.userprofile.image.url  }}" alt="Profile image example" />
+            <!-- find name -->
+            {% if request.user.is_authenticated %}
+            <div class="fb-profile-text">
+                <h1>{{profile.user.first_name}} {{profile.user.last_name}}</h1>
+            </div>
+            {% else %}
+            <h1>@username</h1>{% endif %}
+        </div>
+    </div>
+    <!-- 2nd row -->
+    <div class="row featured align-items-stretch pr-25 pl-0">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+            <div class="box-image-text bg-visible full-height">
+                <div class="content">
+                    <h5>About</h5>
+                    <!-- <p class="featured__details"><i class="fa fa-map-marker job__location"></i> {{ job.location }} {% if job.type == '1' %}
+                        <span class="badge featured-badge badge-success">Full time</span> {% elif job.type == '2' %}
+                        <span class="badge featured-badge badge-primary">Part time</span> {% else %}
+                        <span style="color: #ffffff;" class="badge featured-badge badge-warning">Internship</span> {% endif %}
+                    </p> -->
+                    <p>
+                        {{profile.user.userprofile.about}}
+                    </p>
+                </div>
+                <div class="content">
+                    <ul style="list-style: none;">
+                        <li><i class="fa fa-envelope"></i>{{profile.user.email}}</li>
+                        <li><i class="fa fa-edit"></i>Another</li>
+                    </ul>
+                </div>
+                {% if request.user.is_authenticated and request.user == profile.user %}
+                <div class="content">
+                    <a><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-edit"></i>Edit Profile</button></a>
+                    <a><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-key"></i>Change Password</button></a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-7 mb-5 mb-lg-0">
+            <div class="box-image-text bg-visible full-height">
+                <div class="content">
+                    {% if request.user.is_authenticated and request.user.role == 'employee' %}
+                    <h5>EDUCATION</h5>
+                    {% else %}
+                    <h5>SERVICES</h5>{% endif %}
+
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo omnis harum expedita voluptatum. Veritatis sit deleniti voluptatem iste cumque neque, id sunt quo sint, molestiae mollitia. Mollitia voluptates iusto amet natus! Nostrum
+                        error corporis sunt. Accusamus tenetur iste deleniti, sint quaerat quasi libero officia facere numquam. Sint nisi adipisci laborum voluptatibus hic! Doloribus unde officiis culpa nisi natus architecto voluptates quod a neque saepe
+                        dignissimos distinctio similique facilis recusandae harum sint, est tempora nostrum maiores non adipisci! Et tempora aspernatur quos temporibus consequuntur. Sit laudantium repellat unde cum impedit consequuntur nostrum atque qui
+                        sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
+                    </p>
+                </div>
+                <div class="content">
+                    {% if request.user.is_authenticated and request.user.role == 'employee' %}
+                    <h5>SKILLS</h5>
+                    {% elif request.user.is_authenticated and request.user.role == 'admin' %}
+                    <h5>DESIGNATION</h5>
+                    {% else %}
+                    <h5>ADDRESS</h5>{% endif %}
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo omnis harum expedita voluptatum. Veritatis sit deleniti voluptatem iste cumque neque, id sunt quo sint, molestiae mollitia. Mollitia voluptates iusto amet natus! Nostrum
+                        error corporis sunt. Accusamus tenetur iste deleniti, sint quaerat quasi libero officia facere numquam. Sint nisi adipisci laborum voluptatibus hic! Doloribus unde officiis culpa nisi natus architecto voluptates quod a neque saepe
+                        dignissimos distinctio similique facilis recusandae harum sint, est tempora nostrum maiores non adipisci! Et tempora aspernatur quos temporibus consequuntur. Sit laudantium repellat unde cum impedit consequuntur nostrum atque qui
+                        sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
+                    </p>
+                </div>
+                <div class="content">
+                    {% if request.user.is_authenticated and request.user.role == 'employer' %}
+                    <h5>EDUCATION</h5>
+                    {% else %}
+                    <h5>EDUCATION</h5>{% endif %}
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo omnis harum expedita voluptatum. Veritatis sit deleniti voluptatem iste cumque neque, id sunt quo sint, molestiae mollitia. Mollitia voluptates iusto amet natus! Nostrum
+                        error corporis sunt. Accusamus tenetur iste deleniti, sint quaerat quasi libero officia facere numquam. Sint nisi adipisci laborum voluptatibus hic! Doloribus unde officiis culpa nisi natus architecto voluptates quod a neque saepe
+                        dignissimos distinctio similique facilis recusandae harum sint, est tempora nostrum maiores non adipisci! Et tempora aspernatur quos temporibus consequuntur. Sit laudantium repellat unde cum impedit consequuntur nostrum atque qui
+                        sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!-- /container -->

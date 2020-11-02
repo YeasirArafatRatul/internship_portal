@@ -1,0 +1,12 @@
+{%extends 'base.html' %} {% load static %}
+<!-- title -->
+{% block title %} {{setting.siteTitle}} {% endblock %}
+<!-- description -->
+{% block description %} {% endblock %}
+<!-- keyword -->
+{% block keyword %} {% endblock %}
+
+<!-- Slider -->
+{% block slider %} {% include 'slider.html' %} {% endblock %}
+<!-- Begin Body -->
+{% block mainbody %} {% include 'products.html'%} {% endblock %}
