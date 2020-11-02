@@ -3,7 +3,7 @@
 {% block title %} {{ setting.siteTitle}} Contact {% endblock %}
 
 <!-- Mainbody -->
-{% block mainbody %}
+{% block content %}
 <!-- Begin Contact Main Page Area -->
 <div class="contact-main-page mt-60 mb-40 mb-md-40 mb-sm-40 mb-xs-40">
     <!-- <div class="container mb-60">
@@ -16,26 +16,26 @@
                     <h3 class="contact-page-title">Contact Us</h3>
                     <p class="contact-page-message mb-25">Please Contact With Us For Any Query</p>
                     <!-- Address -->
-                    {% if setting.siteAddress %}
+                    {% if settings.siteAddress %}
                     <div class="single-contact-block">
                         <h4><i class="fa fa-fax"></i> Address</h4>
-                        <p>{{setting.siteAddress}}</p>
+                        <p>{{settings.siteAddress}}</p>
                     </div>
                     {% else %}
                     <p>Address Is Not Updated Yet</p>> {% endif %}
                     <!-- Phone -->
-                    {% if setting.sitePhone %}
+                    {% if settings.sitePhone %}
                     <div class="single-contact-block">
                         <h4><i class="fa fa-phone"></i> Phone</h4>
-                        <p>+880{{setting.sitePhone}}</p>
+                        <p>+{{settings.sitePhone}}</p>
                     </div>
                     {% else %}
                     <p>Phone Is Not Updated Yet</p>> {% endif %}
                     <!-- Email -->
-                    {% if setting.siteEmail %}
+                    {% if settings.siteEmail %}
                     <div class="single-contact-block last-child">
                         <h4><i class="fa fa-envelope-o"></i> Email</h4>
-                        <p>{{setting.siteEmail}}</p>
+                        <p>{{settings.siteEmail}}</p>
                     </div>
                     {% else %}
                     <p>Email Is Not Updated Yet</p>> {% endif %}

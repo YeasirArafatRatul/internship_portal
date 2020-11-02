@@ -2,7 +2,7 @@
 <!-- title -->
 {% block title %} {% if setting.siteTitle %} {{setting.siteTitle}}-About {% else %} My Site-About {% endif %} {% endblock %}
 <!-- Mainbody -->
-{% block mainbody %}
+{% block content %}
 <div class="contact-main-page mt-60 mb-40 mb-md-40 mb-sm-40 mb-xs-40">
     <!-- about wrapper start -->
     <div class="about-us-wrapper pt-60 pb-40">
@@ -12,9 +12,9 @@
                 <div class="col-lg-6 order-last order-lg-first">
                     <div class="about-text-wrap">
                         <h2><span>Provide Best</span>Product For You</h2>
-                        {% if setting.siteAbout %}
+                        {% if settings.siteAbout %}
                         <div class="single-contact-block">
-                            <p>{{setting.siteAbout}}</p>
+                            <p>{{settings.siteAbout}}</p>
                         </div>
                         {% else %}
                         <p>About Is Not Updated Yet</p>
@@ -25,7 +25,7 @@
                 <!-- About Text End -->
                 <!-- About Image Start -->
                 <div class="col-lg-5 col-md-10">
-                    {% if setting.siteLogo %}
+                    {% if settings.siteLogo %}
                     <div class="about-image-wrap">
                         <img class="img-full" src="{{ setting.siteLogo.url }}" alt="SiteLogo" />
                     </div>
