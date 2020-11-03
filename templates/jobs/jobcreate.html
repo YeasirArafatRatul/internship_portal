@@ -1,7 +1,49 @@
 {% extends 'base.html' %}{% load crispy_forms_tags %}
 <!-- static load -->
 {% load static %} {% block title %} {{ title }} {% endblock %} {% block styles %}
-<link rel="stylesheet" href="{% static 'vendor/bootstrap-select/css/bootstrap-select.min.css' %}"> {% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'vendor/bootstrap-select/css/bootstrap-select.min.css' %}">
+<style>
+    /* CUSTOMIZED BY ME */
+    
+    .row {
+        margin-left: 85px;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+        margin-left: 1.5rem;
+    }
+    
+    .login-form input {
+        width: 100%;
+        background-color: transparent;
+        border: 1px solid #23A8B1;
+        border-radius: 1px;
+        line-height: 23px;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: #7a7a7a;
+        margin-bottom: 15px;
+        column-gap: 1.5rem;
+    }
+    
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        margin: 0;
+        font-family: 'Times New Roman', Times, serif;
+        width: 100%;
+        background-color: transparent;
+        border: 1px solid #23A8B1;
+        border-radius: 1px;
+        line-height: 23px;
+        margin-bottom: 15px;
+        column-gap: 1.5rem;
+    }
+</style>
+{% endblock %} {% block content %}
 
 <section class="bg-light-gray">
     <div class="container">
@@ -13,7 +55,35 @@
     </div>
 </section>
 <section>
-    <div class="container">
+    <div class="page-section mb-60">
+        <div class="container">
+            <div class="col-sm-12 col-md-12 col-xs-12">
+                {% if form.errors %} {% for field in form %} {% for error in field.errors %}
+                <div class="alert alert-danger alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{ field.label }}: {{ error|escape }}</strong>
+                </div>
+                {% endfor %} {% endfor %} {% endif %}
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="login-form">
+                        <div class="row">
+                            <fieldset class="form-group">
+                                {% csrf_token %} {{ form.as_p }} {{form.media}}
+                            </fieldset>
+                            <div class="col-12">
+                                <!-- <button class="btn btn-outline-white-primary" type='submit'>Update</button> -->
+                                <button type="submit" class="btn btn-outline-white-primary" style="width:20em; float: center;"><i class="fa fa-file"></i>
+                                    Save and publish
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="container">
         <div class="col-lg-12 mx-auto">
             {% if form.errors %} {% for field in form %} {% for error in field.errors %}
             <div class="alert alert-danger alert-dismissable">
@@ -23,9 +93,7 @@
             {% endfor %} {% endfor %} {% endif %}
             <div class="form-group">
                 <form id="job-main-form" method="post" action="" class="col-lg-12 form-group">
-                    {% csrf_token %} {{ form.as_p }}
-
-
+                    {% csrf_token %} {{ form.as_p }} {{form.media}}
                     <div class="row">
                         <div class="col-lg-12 text-center">
                             <hr>
@@ -37,17 +105,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 </section>
 
 {% endblock %}
-
-
-<!-- <legend class="border-bottom mb-4">Post A New Job</legend>
-                        {% for field in form %}
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <label for="{{field.id_for_label}}">{{field.html_name}}</label> {{field}}
-                            </div>
-                        </div>
-                        {% endfor %} -->

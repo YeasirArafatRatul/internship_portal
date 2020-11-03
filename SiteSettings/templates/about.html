@@ -1,7 +1,13 @@
  {% extends 'base.html' %} {% load static %}
 <!-- title -->
 {% block title %} {% if setting.siteTitle %} {{setting.siteTitle}}-About {% else %} My Site-About {% endif %} {% endblock %}
-<!-- Mainbody -->
+
+<!-- {% block styles %}
+<style>
+
+</style>
+{% endblock %} -->
+
 {% block content %}
 <div class="contact-main-page mt-60 mb-40 mb-md-40 mb-sm-40 mb-xs-40">
     <!-- about wrapper start -->
@@ -11,10 +17,14 @@
                 <!-- About Text Start -->
                 <div class="col-lg-6 order-last order-lg-first">
                     <div class="about-text-wrap">
-                        <h2><span>Provide Best</span>Product For You</h2>
+                        <h2><span>To Lift You Up</span>We Are Here</h2>
                         {% if settings.siteAbout %}
                         <div class="single-contact-block">
-                            <p>{{settings.siteAbout}}</p>
+                            <!-- <p>{{settings.siteAbout}}</p> -->
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste nam qui culpa facilis eveniet placeat accusantium alias omnis blanditiis dignissimos? Laboriosam odit, dignissimos impedit natus eligendi nemo doloremque dolor
+                                nobis, debitis, quod officia enim provident eos maiores sapiente. Accusantium itaque reiciendis iste laudantium maxime consequuntur deserunt? Alias officia aliquid ipsam deserunt aut voluptas facere, quo est totam quisquam
+                                quos? Ipsum inventore est quasi cupiditate praesentium molestias error dignissimos autem iusto! Reiciendis, optio quibusdam mollitia at magni vitae alias illum. Sequi nesciunt omnis similique unde totam distinctio officiis,
+                                suscipit aspernatur minima perferendis consequuntur in aliquam praesentium aperiam sint obcaecati inventore molestiae?</p>
                         </div>
                         {% else %}
                         <p>About Is Not Updated Yet</p>
@@ -27,7 +37,7 @@
                 <div class="col-lg-5 col-md-10">
                     {% if settings.siteLogo %}
                     <div class="about-image-wrap">
-                        <img class="img-full" src="{{ setting.siteLogo.url }}" alt="SiteLogo" />
+                        <img class="img-full" src="{{ settings.siteLogo.url }}" alt="SiteLogo" />
                     </div>
                     {% else %}
                     <p>Image Is Not Updated Yet</p>> {% endif %}

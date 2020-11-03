@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView
 
 from jobsapp.decorators import user_is_employer
-from jobsapp.forms import CreateJobForm
+from jobsapp.forms import CreateJobForm, JobDescriptionForm
 from jobsapp.models import Job, Applicant, JobCategory
 from SiteSettings.models import Setting
 
@@ -34,7 +34,7 @@ class DashboardView(ListView):
 
 
 class JobCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'jobs/create.html'
+    template_name = 'jobs/jobcreate.html'
     form_class = CreateJobForm
     success_url = reverse_lazy('jobs:employer-dashboard')
 

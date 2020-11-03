@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from ckeditor.fields import RichTextField
 from accounts.models import User
 
 
@@ -15,16 +15,17 @@ class JobCategory(models.Model):
 
 
 JOB_TYPE = (
-    # ('1', "Full time"),
-    # ('2', "Part time"),
-    ('3', "Internship"),
+    ('1', "Paid"),
+    ('2', "Unpaid"),
+    # ('3', "Internship"),
 )
 
 
 class Job(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=300)
-    description = models.TextField()
+    description = RichTextField(
+        blank=True, null=True, default="Write Your Content Here")
     location = models.CharField(max_length=150)
     type = models.CharField(choices=JOB_TYPE, max_length=10)
     category = models.ForeignKey(JobCategory, on_delete=models.CASCADE)

@@ -6,9 +6,9 @@
             <small>at <a href="{% url 'accounts:user-detail' job.user.id %}"> {{ job.company_name }}</a></small>
         </h1>
         <div class="job-detail-description"><i class="fa fa-map-marker job__location"> </i> {{ job.location }} | Posted {{ job.created_at|timesince }} | {% if job.type == '1' %}
-            <span class="badge featured-badge badge-success">Full time</span> {% elif job.type == '2' %}
+            <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == '2' %}
             <span class="badge featured-badge badge-primary">Part time</span> {% else %}
-            <span style="color: #ffffff;" class="badge featured-badge badge-warning">Internship</span> {% endif %}
+            <span style="color: #ffffff;" class="badge featured-badge badge-warning">Remote</span> {% endif %}
         </div>
     </div>
 </section>
@@ -18,9 +18,9 @@
             <div class="col-lg-8">
                 <h3>Category: {{ job.category }}</h3>
                 <h5>Last date: {{ job.last_date|date }}</h5>
-                <h5 class="text-info">Salary: {% if job.salary > 0 %} {{ job.salary }}/Monthly {% else %} Negotiable {% endif %} </h5>
+                <h5 class="text-info">Salary: {% if job.salary > 0 %} {{ job.salary }}/Monthly {% else %} Unpaid {% endif %} </h5>
                 <blockquote class="blockquote">
-                    <p>{{ job.description }}</p>
+                    <p>{{ job.description|safe }}</p>
                 </blockquote>
                 <div class="job-detail__apply-bottom">
                     {% if request.user.is_authenticated %} {% is_already_applied job request.user as is_applied %} {% if is_applied %}

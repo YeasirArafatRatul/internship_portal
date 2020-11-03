@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% block title %} {{ title }} {% endblock %} {% block styles %}
+{% extends 'base.html' %} {% load static %} {% block title %} Post New Job {{ title }} {% endblock %} {% block styles %}
 <link rel="stylesheet" href="{% static 'vendor/bootstrap-select/css/bootstrap-select.min.css' %}"> {% endblock %} {% block content %}
 
 <section class="bg-light-gray">
@@ -49,15 +49,16 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-6 form-group">
+                            {{description_form.as_p}} {{description_form.media}}
                             <label for="location">Location</label>
                             <input id="location" name="location" type="text" placeholder="e.g. Dhaka, Bangladesh" class="form-control" value="{{ form.location.value|default_if_none:' ' }}">
                         </div>
                         <div class="col-lg-6 form-group">
                             <label for="type">Type</label>
                             <select id="type" name="type" placeholder="Choose job type" class="form-control select2">
-                                    <!-- <option value="1" {% if form.type.value == "1" %} selected {% endif %}>Full time</option>
-                                    <option value="2" {% if form.type.value == "2" %} selected {% endif %}>Part time</option> -->
-                                    <option value="3" {% if form.type.value == "3" %} selected {% endif %}>Internship</option>
+                                    <option value="1" {% if form.type.value == "1" %} selected {% endif %}>Paid</option>
+                                    <option value="2" {% if form.type.value == "2" %} selected {% endif %}>Unpaid</option>
+                                    <!-- <option value="3" {% if form.type.value == "3" %} selected {% endif %}>Internship</option> -->
                                 </select>
                         </div>
                     </div>
@@ -68,12 +69,6 @@
 
                                 {% for job in categories %}
                                 <option value="{{ job.id }}" selected >{{job.name}}</option> 
-                                    <!-- <option value="web-design" {% if form.category.value == "web-design" %} selected {% endif %}>Web design</option>
-                                    <option value="graphic-design" {% if form.category.value == "graphic-design" %} selected {% endif %}>Graphic design</option>
-                                    <option value="web-development" {% if form.category.value == "web-development" %} selected {% endif %}>Web development</option>
-                                    <option value="human-resource" {% if form.category.value == "human-resource" %} selected {% endif %}>Human Resources</option>
-                                    <option value="support" {% if form.category.value == "support" %} selected {% endif %}>Support</option>
-                                    <option value="android" {% if form.category.value == "android" %} selected {% endif %}>Android</option> -->
                                 {% endfor %}
                                 </select>
                         </div>
@@ -122,11 +117,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <hr>
-                            <!-- <div class="checkbox text-center">
+                            <div class="checkbox text-center">
                                 <label>
                                         <input type="checkbox"> I agree with the <a href="#">Terms and conditions</a>.
                                     </label>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                     <div class="row">

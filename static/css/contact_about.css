@@ -1,9 +1,3 @@
-/* your styles go here */
-
-.contact-main-page {
-    margin-top: 25px;
-}
-
 h3.contact-page-title {
     font-size: 32px;
     line-height: 32px;
@@ -101,9 +95,7 @@ span.required {
 /*----------------------------------------*/
 
 
-/* About Us Page */
-
-
+/* 6.10 Li's About Us Page
 /*----------------------------------------*/
 
 .about-text-wrap {
@@ -136,6 +128,7 @@ span.required {
 
 .about-image-wrap::after {
     border: 5px solid #f0e54b;
+    ;
     content: "";
     position: absolute;
     left: 0;
@@ -143,11 +136,6 @@ span.required {
     height: calc(100% - 30px);
     width: calc(100% - 30px);
     z-index: -1;
-}
-
-.about-image-wrap .img-full {
-    height: 15rem;
-    width: 20rem;
 }
 
 

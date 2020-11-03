@@ -362,7 +362,7 @@ strong {
     background: var(--main);
     padding-top: 0 !important;
     padding-bottom: 0 !important;
-    height: 5rem;
+    height: 100px;
 }
 
 .navbar a {
@@ -377,25 +377,25 @@ strong {
 }
 
 .navbar ul.navbar-nav>li>a:not(.navbar-btn):hover {
-    border-top-color: var(--hover);
+    /* border-top-color: var(--hover); */
     color: var(--hover);
 }
 
 @media (min-width: 992px) {
     .navbar ul.navbar-nav>li>a:not(.navbar-btn) {
         border-top: 5px solid transparent;
-        padding: 40px 15px !important;
+        padding: 25px 15px !important;
         color: #fff;
         font-weight: 300
     }
     .navbar ul.navbar-nav>li>a:not(.navbar-btn):hover {
-        border-top-color: var(--hover);
+        /* border-top-color: var(--hover); */
         color: var(--hover);
     }
     .navbar ul.navbar-nav>li.active>a,
     .navbar ul.navbar-nav>li.show>a {
         text-decoration: none !important;
-        border-top-color: var(--hover);
+        /* border-top-color: var(--hover); */
         color: var(--default);
     }
     .navbar ul.navbar-nav>li>a.navbar-btn {
@@ -457,7 +457,7 @@ ul.dropdown-menu li a:hover {
 
 #clientZone.has-img {
     position: relative;
-    padding-left: 50px !important;
+    padding-left: 40px !important;
     border-color: transparent !important
 }
 
@@ -1315,7 +1315,10 @@ ul.dropdown-menu li a:hover {
 }
 
 .box-image-text .content {
-    padding: 15px 15px 0 15px
+    padding: 15px 15px 0 15px;
+    border: 2px solid var(--default);
+    border-radius: 0 8px 0 8px;
+    height: 18em;
 }
 
 .box-image-text .content h3,
@@ -1324,7 +1327,7 @@ ul.dropdown-menu li a:hover {
     line-height: 1.5;
     color: #adb5bd;
     font-weight: 800;
-    letter-spacing: 0.08em
+    letter-spacing: 0.08em;
 }
 
 .box-image-text .content p {
@@ -1358,7 +1361,8 @@ ul.dropdown-menu li a:hover {
     border: solid 1px #ccc;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 40px
+    padding: 40px;
+    margin-top: 2.5rem;
 }
 
 .box .box-header {
@@ -1386,10 +1390,10 @@ ul.dropdown-menu li a:hover {
 .featured__details {
     font-family: "Montserrat", Helvetica, Arial, sans-serif;
     font-weight: 300;
-    font-size: 0.75rem !important;
+    font-size: 0.70rem !important;
     text-transform: uppercase;
     letter-spacing: 0.12rem;
-    color: #aaa
+    color: #aaa;
 }
 
 .featured__details i {
@@ -2745,14 +2749,15 @@ body {
 }
 
 a {
-    color: var(--hover);
-    text-decoration: none
+    color: var(--default);
+    text-decoration: none;
+    font-size: 1.2em;
 }
 
 a:focus,
 a:hover {
-    color: #ff2827;
-    text-decoration: underline
+    color: var(--hover);
+    text-decoration: underline;
 }
 
 h1,

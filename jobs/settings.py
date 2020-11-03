@@ -16,10 +16,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_elasticsearch_dsl',
     'crispy_forms',
+    'ckeditor',
+    'django_seed',
+
 
     'jobsapp',
     'accounts',
     'SiteSettings',
+
+
 ]
 
 MIDDLEWARE = [
