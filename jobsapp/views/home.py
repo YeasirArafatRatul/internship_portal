@@ -50,7 +50,7 @@ class JobListView(ListView):
     model = Job
     template_name = 'jobs/jobs.html'
     context_object_name = 'jobs'
-    paginate_by = 5
+    paginate_by = 8
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
