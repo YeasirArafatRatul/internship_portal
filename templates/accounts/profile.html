@@ -3,9 +3,9 @@
 <style>
     .fb-profile img.fb-image-lg {
         z-index: 0;
-        width: 100%;
+        width: 1170px;
         margin-bottom: 10px;
-        height: 35rem;
+        height: 35em;
     }
     
     .fb-image-profile {
@@ -18,11 +18,12 @@
         border-radius: 4px;
     }
     
-    .content {
+    .profile-content {
         text-align: left;
+        border: none !important;
     }
     
-    .content h5 {
+    .profile-content h5 {
         color: #007bff;
     }
     
@@ -65,7 +66,7 @@
     <div class="row featured align-items-stretch pr-25 pl-0">
         <div class="col-lg-4 mb-5 mb-lg-0">
             <div class="box-image-text bg-visible full-height">
-                <div class="content">
+                <div class="profile-content">
                     <h5>About</h5>
                     <!-- <p class="featured__details"><i class="fa fa-map-marker job__location"></i> {{ job.location }} {% if job.type == '1' %}
                         <span class="badge featured-badge badge-success">Full time</span> {% elif job.type == '2' %}
@@ -76,14 +77,14 @@
                         {{profile.user.userprofile.about}}
                     </p>
                 </div>
-                <div class="content">
+                <div class="profile-content">
                     <ul style="list-style: none;">
                         <li><i class="fa fa-envelope"></i>{{profile.user.email}}</li>
                         <li><i class="fa fa-edit"></i>Another</li>
                     </ul>
                 </div>
                 {% if request.user.is_authenticated and request.user == profile.user %}
-                <div class="content">
+                <div class="profile-content">
                     <a><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-edit"></i>Edit Profile</button></a>
                     <a><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-key"></i>Change Password</button></a>
                 </div>
@@ -92,7 +93,7 @@
         </div>
         <div class="col-lg-7 mb-5 mb-lg-0">
             <div class="box-image-text bg-visible full-height">
-                <div class="content">
+                <div class="profile-content">
                     {% if request.user.is_authenticated and request.user.role == 'employee' %}
                     <h5>EDUCATION</h5>
                     {% else %}
@@ -104,7 +105,7 @@
                         sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
                     </p>
                 </div>
-                <div class="content">
+                <div class="profile-content">
                     {% if request.user.is_authenticated and request.user.role == 'employee' %}
                     <h5>SKILLS</h5>
                     {% elif request.user.is_authenticated and request.user.role == 'admin' %}
@@ -117,7 +118,7 @@
                         sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
                     </p>
                 </div>
-                <div class="content">
+                <div class="profile-content">
                     {% if request.user.is_authenticated and request.user.role == 'employer' %}
                     <h5>EDUCATION</h5>
                     {% else %}

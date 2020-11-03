@@ -51,17 +51,17 @@ class UserProfile(models.Model):
         super(UserProfile, self).save(*args, **kwargs)
 
         img = Image.open(self.image.path)
-        cover_img = Image.open(self.cover_img.path)
+        # cover_img = Image.open(self.cover_img.path)
 
         if img.height > 200 or img.width > 200:
             output_size = (200, 200)
             img.thumbnail(output_size)
             img.save(self.image.path)
 
-        if cover_img.height > 400 or cover_img.width > 600 or cover_img.height < 400 or cover_img.width < 600:
-            output_size = (400, 600)
-            cover_img.thumbnail(output_size)
-            cover_img.save(self.cover_img.path)
+        # if cover_img.height > 400 or cover_img.width > 600 or cover_img.height < 400 or cover_img.width < 600:
+        #     output_size = (960, 400)
+        #     cover_img.thumbnail(output_size)
+        #     cover_img.save(self.cover_img.path)
 
     objects = UserProfileManager()
 

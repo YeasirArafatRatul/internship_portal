@@ -3,9 +3,9 @@
 <style>
     .fb-profile img.fb-image-lg {
         z-index: 0;
-        width: 100%;
+        width: 1170px;
         margin-bottom: 10px;
-        height: 35rem;
+        height: 35em;
     }
     
     .fb-image-profile {
@@ -18,11 +18,11 @@
         border-radius: 4px;
     }
     
-    .content {
+    .profile-content {
         text-align: left;
     }
     
-    .content h5 {
+    .profile-content h5 {
         color: #007bff;
     }
     
@@ -50,7 +50,7 @@
 <div class="container">
     <div class="row align-items-stretch">
         <div class="fb-profile">
-            <img align="left" class="fb-image-lg" src="{% static 'img/featured1.jpg' %}" alt="Cover Image" />
+            <img align="left" class="fb-image-lg" src="{{user.userprofile.cover_img.url}}" alt="Cover Image" />
             <img align="left" class="fb-image-profile thumbnail" src="{{user.userprofile.image.url}}" alt="Profile image example" />
             <!-- find name -->
             {% if request.user.is_authenticated %}
@@ -65,16 +65,16 @@
     <div class="row featured align-items-stretch pr-25 pl-0">
         <div class="col-lg-4 mb-5 mb-lg-0">
             <div class="box-image-text bg-visible full-height">
-                <div class="content">
+                <div class="profile-content">
                     <h5>About</h5>
                     <!-- <p class="featured__details"><i class="fa fa-map-marker job__location"></i> {{ job.location }} {% if job.type == '1' %}
                         <span class="badge featured-badge badge-success">Full time</span> {% elif job.type == '2' %}
                         <span class="badge featured-badge badge-primary">Part time</span> {% else %}
                         <span style="color: #ffffff;" class="badge featured-badge badge-warning">Internship</span> {% endif %}
                     </p> -->
-                    <p>{{profile.user.about}}</p>
+                    <p>{{user.userprofile.about}}</p>
                 </div>
-                <div class="content">
+                <div class="profile-content">
                     <ul style="list-style: none;">
                         <li><i class="fa fa-envelope"></i>{{user.email}}</li>
                         <li><i class="fa fa-edit"></i>Another</li>
@@ -84,7 +84,7 @@
         </div>
         <div class="col-lg-7 mb-5 mb-lg-0">
             <div class="box-image-text bg-visible full-height">
-                <div class="content">
+                <div class="profile-content">
                     {% if user.role == 'employee' %}
                     <h5>EDUCATION</h5>
                     {% else %}
@@ -96,7 +96,7 @@
                         sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
                     </p>
                 </div>
-                <div class="content">
+                <div class="profile-content">
                     {% if user.role == 'employee' %}
                     <h5>SKILLS</h5>
                     {% elif request.user.is_authenticated and request.user.role == 'admin' %}
@@ -109,7 +109,7 @@
                         sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
                     </p>
                 </div>
-                <div class="content">
+                <div class="profile-content">
                     {% if user.role == 'employee' %}
                     <h5>Others</h5>
                     {% else %}

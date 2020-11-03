@@ -152,3 +152,52 @@ span.required {
 
 
 /*------- end About Page Wrapper --------*/
+
+
+/* PROFILE CSS */
+
+.fb-profile img.fb-image-lg {
+    z-index: 0;
+    width: 80em;
+    margin-bottom: 10px;
+    height: 35em;
+}
+
+.fb-image-profile {
+    margin: -90px 10px 0px 50px;
+    z-index: 9;
+    width: 20%;
+    padding: 5px;
+    background-color: aliceblue;
+    border: 1px solid white;
+    border-radius: 4px;
+}
+
+.profile-content {
+    text-align: left;
+    border: none !important;
+}
+
+.profile-content h5 {
+    color: #007bff;
+}
+
+@media (max-width:768px) {
+    .fb-profile-text>h1 {
+        font-weight: 700;
+        font-size: 16px;
+    }
+    .fb-profile img.fb-image-lg {
+        z-index: 0;
+        width: 100%;
+        height: 15rem;
+    }
+    .fb-image-profile {
+        margin: -45px 10px 0px 25px;
+        z-index: 9;
+        width: 20%;
+    }
+}
+
+
+/* PROFILE CSS ENDS */
