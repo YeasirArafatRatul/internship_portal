@@ -198,7 +198,7 @@ class UserUpdateForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('first_name', 'last_name', 'email', "gender")
         widgets = {
             'first_name': TextInput(attrs={'class': 'input', 'placeholder': 'firts_name'}),
             'last_name': TextInput(attrs={'class': 'input', 'placeholder': 'last_name'}),
@@ -214,7 +214,9 @@ class UserUpdateForm(UserChangeForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('image',)
+        fields = ('about', 'image', 'cover_img')
         widgets = {
-            'image': FileInput(attrs={'class': 'input', 'placeholder': 'image', }),
+            'image': FileInput(attrs={'class': 'input', 'placeholder': 'profile picture', }),
+            'cover_img': FileInput(attrs={'class': 'input', 'placeholder': 'cover photo', }),
+            'about': TextInput(attrs={'class': 'input', 'placeholder': 'about', }),
         }

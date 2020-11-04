@@ -79,6 +79,7 @@
                                 <a href="{% url 'jobs:employer-jobs-create' %}" class="dropdown-item">Post a new job </a>
                                 <a href="{% url 'jobs:employer-dashboard' %}" class="dropdown-item">Dashboard</a>
                                 <a href="{% url 'accounts:my-profile' %}" class="dropdown-item">Profile</a>
+                                <a href="{% url 'accounts:logout' %}" class="dropdown-item">Logout</a>
                             </div>
                         </li>
                         {% elif request.user.is_authenticated and request.user.role == 'employee' %}
@@ -93,6 +94,7 @@
                             </a>
                             <div aria-labelledby="clientZone" class="dropdown-menu">
                                 <a href="{% url 'accounts:employer-profile-update' %}" class="dropdown-item">Profile</a>
+                                <a href="{% url 'accounts:my-profile' %}" class="dropdown-item">My Profile</a>
                                 <a href="{% url 'accounts:logout' %}" class="dropdown-item">Logout</a>
                             </div>
                         </li>
@@ -123,7 +125,8 @@
                             </div>
                         </li>
                         <li class="nav-item" style="color: #fff">
-                            <a href="{% url 'accounts:login' %}" class="btn navbar-btn btn-outline-light mb-5 mb-lg-0">
+                            <!-- old class (class="btn navbar-btn btn-outline-light mb-5 mb-lg-0" ) -->
+                            <a href="{% url 'accounts:login' %}" class="nav-link">
                                Sign In
                             </a>
                         </li>

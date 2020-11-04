@@ -373,7 +373,7 @@ strong {
     color: #fff;
     font-weight: 300;
     font-family: "Montserrat", Helvetica, Arial, sans-serif;
-    font-size: 0.8rem
+    font-size: 0.7rem;
 }
 
 .navbar ul.navbar-nav>li>a:not(.navbar-btn):hover {
@@ -384,7 +384,7 @@ strong {
 @media (min-width: 992px) {
     .navbar ul.navbar-nav>li>a:not(.navbar-btn) {
         border-top: 5px solid transparent;
-        padding: 25px 15px !important;
+        padding: 35px 15px !important;
         color: #fff;
         font-weight: 300
     }
@@ -1863,11 +1863,11 @@ ul.dropdown-menu li a:hover {
 .btn {
     font-weight: 700;
     font-family: "Montserrat", Helvetica, Arial, sans-serif;
-    border: 1px solid transparent;
+    /* border: 1px solid transparent; */
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    padding: .375rem .75rem;
-    font-size: .875rem;
+    padding: .65rem .75rem;
+    font-size: .75rem;
     line-height: 1.5;
     border-radius: 0;
     -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;

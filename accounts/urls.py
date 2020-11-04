@@ -24,6 +24,7 @@ urlpatterns = [
          name='employer-profile-update'),
     path('employee/profile-update', user_update,
          name='profile-update'),
+
     path('user/profile/password-change', password_change,
          name='password-change'),
 

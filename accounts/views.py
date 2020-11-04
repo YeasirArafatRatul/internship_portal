@@ -15,6 +15,7 @@ from jobsapp.models import JobCategory
 from SiteSettings.models import Setting
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from .forms import UserUpdateForm, ProfileUpdateForm
 
 
 @login_required(login_url='/login')
@@ -44,12 +45,12 @@ def user_update(request):
             profile_form.save()
             messages.success(
                 request, "Your Profile is updated successfully")
-            return redirect('profile')
+            return redirect('accounts:my-profile')
     else:
         category = JobCategory.objects.all()
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.userprofile)
-        setting = Setting.objects.get(status=True)
+        setting = Setting.objects.filter(status=True).first()
     context = {
         'categories': category,
         'user_form': user_form,
@@ -58,7 +59,7 @@ def user_update(request):
 
     }
 
-    return render(request, 'user_update.html', context)
+    return render(request, 'accounts/user_update.html', context)
 
 
 @login_required(login_url='/login')  # Check login

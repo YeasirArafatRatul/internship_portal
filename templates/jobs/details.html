@@ -7,7 +7,7 @@
         </h1>
         <div class="job-detail-description"><i class="fa fa-map-marker job__location"> </i> {{ job.location }} | Posted {{ job.created_at|timesince }} | {% if job.type == '1' %}
             <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == '2' %}
-            <span class="badge featured-badge badge-primary">Part time</span> {% else %}
+            <span class="badge featured-badge badge-primary">Unpaid</span> {% else %}
             <span style="color: #ffffff;" class="badge featured-badge badge-warning">Remote</span> {% endif %}
         </div>
     </div>
@@ -23,20 +23,25 @@
                     <p>{{ job.description|safe }}</p>
                 </blockquote>
                 <div class="job-detail__apply-bottom">
-                    {% if request.user.is_authenticated %} {% is_already_applied job request.user as is_applied %} {% if is_applied %}
+                    {% if request.user.role == 'employee' %} {% if request.user.is_authenticated %} {% is_already_applied job request.user as is_applied %} {% if is_applied %}
                     <input type="button" class="btn btn-outline-white-primary" value="Already applied" /> {% else %}
                     <form action="{% url 'jobs:apply-job' job.id %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="job" value="{{ job.id }}">
                         <input type="submit" class="btn btn-outline-white-primary" value="Apply for this job" />
                     </form>
-                    {% endif %} {% else %}
+                    {% endif %}
+                    <!-- else -->
+                    {% else %}
                     <form action="{% url 'jobs:apply-job' job.id %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="job" value="{{ job.id }}">
                         <input type="submit" class="btn btn-outline-white-primary" value="Apply for this job" />
                     </form>
                     {% endif %}
+                    <!-- if not employee -->
+                    {% else %}
+                    <input type="submit" class="btn btn-outline-white-primary" value="Employer Can't Apply" /> {% endif %}
                 </div>
             </div>
             <div class="col-lg-1"></div>
@@ -55,14 +60,14 @@
                     </a>
                 </p>
                 <div class="job-detail__apply-top">
-                    {% if is_applied %}
+                    {% if request.user.role == 'employee' %} {% if is_applied %}
                     <input type="button" class="btn btn-outline-white-primary" value="Already applied" /> {% else %}
                     <form action="{% url 'jobs:apply-job' job.id %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="job" value="{{ job.id }}">
                         <input type="submit" class="btn btn-outline-white-primary" value="Apply for this job" />
                     </form>
-                    {% endif %}
+                    {% endif %} {% endif %}
                 </div>
             </div>
         </div>

@@ -40,8 +40,10 @@ class UserProfileManager(models.Manager):
 class UserProfile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True)
-    image = models.ImageField(default='avatar.png', upload_to='profile_pics')
-    cover_img = models.ImageField(default='cover.png', upload_to='cover_pics')
+    image = models.ImageField(blank=True, null=True,
+                              default='avatar.png', upload_to='profile_pics')
+    cover_img = models.ImageField(
+        blank=True, null=True, default='cover.png', upload_to='cover_pics')
     about = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
