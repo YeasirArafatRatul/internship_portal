@@ -86,7 +86,7 @@
                 {% if request.user.is_authenticated and request.user == profile.user %}
                 <div class="profile-content">
                     <a href="{% url 'accounts:profile-update' %}"><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-edit"></i>Edit Profile</button></a>
-                    <a><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-key"></i>Change Password</button></a>
+                    <a href="{% url 'accounts:password-change' %}"><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-key"></i>Change Password</button></a>
                 </div>
                 {% endif %}
             </div>

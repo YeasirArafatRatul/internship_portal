@@ -72,17 +72,18 @@ def password_change(request):
             update_session_auth_hash(request, user)  # Important!
             messages.success(
                 request, 'Your password was successfully updated!')
-            return redirect('home')
+            return redirect('accounts:my-profile')
         else:
-            msg = messages.error(
-                request, 'Error.<br>' + str(form.errors))
-            return HttpResponseRedirect(url)
+            return render(request, 'accounts/password_change.html', {'form': form})
+            # messages.error(
+            #     request, 'Error' + str(form.errors))
+            # return HttpResponseRedirect(url)
     else:
         category = JobCategory.objects.all()
-        setting = Setting.objects.get(status=True)
+        setting = Setting.objects.filter(status=True).first()
         form = PasswordChangeForm(request.user)
-        return render(request, 'user_password.html', {'form': form, 'categories': category, 'setting': setting,
-                                                      })
+        return render(request, 'accounts/password_change.html', {'form': form, 'categories': category, 'settings': setting,
+                                                                 })
 
 
 class UserDetailView(DetailView):
