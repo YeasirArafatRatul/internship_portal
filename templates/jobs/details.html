@@ -40,6 +40,10 @@
                     </form>
                     {% endif %}
                     <!-- if not employee -->
+                    {% elif request.user == job.user %}
+                    <a href="{% url 'jobs:job-update' job.id %}">
+                        <input type="submit" class="btn btn-outline-white-primary" value="Edit Job Details" />
+                    </a>
                     {% else %}
                     <input type="submit" class="btn btn-outline-white-primary" value="Employer Can't Apply" /> {% endif %}
                 </div>

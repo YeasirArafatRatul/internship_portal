@@ -1,4 +1,18 @@
-{% extends 'base.html' %} {% load static %} {% block title %} Dashboard {% endblock %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %} Dashboard {% endblock %} {% block styels %}
+<style>
+    .btn {
+        border-radius: 5px;
+    }
+    
+    .btn-danger:hover {
+        background-color: #868e96;
+    }
+    
+    .btn-success:hover {
+        background-color: #868e96;
+    }
+</style>
+{% endblock %} {% block content %}
 
 <section class="bg-light-gray">
     <div class="container">
@@ -47,25 +61,26 @@
                                 <td>
                                     <a href="{% url 'jobs:employer-dashboard-applicants' job.id %}" class="btn btn-success">
                                         <i class="fa fa-users"></i>{{ job.applicants.count }}
-                                        <span class="hidden-xs hidden-sm">Applicants</span>
+                                        <span class="hidden-xs hidden-sm">Applied</span>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{% url 'jobs:job-update' job.id %}" class="btn btn-outline-white-secondary">
+                                    <a href="{% url 'jobs:job-update' job.id %}" class="btn btn-warning">
                                         <i class="fa fa-edit"></i>Update
                                     </a>
+                                    <a href="{% url 'jobs:delete-job' job.id %}" class="btn btn-danger">
+                                        <i class="fa fa-times-circle-o"></i>Delete
+                                    </a>
                                     <br> {% if job.filled %}
-                                    <a href="{% url 'jobs:job-mark-filled' job.id %}" class="btn btn-outline-white-secondary">
-                                        <i class="fa fa-check-circle-o"></i>
+                                    <a href="{% url 'jobs:job-mark-filled' job.id %}" class="btn btn-success">
+                                        <i class="fa fa-check"></i>
                                         <span class="hidden-xs hidden-sm">Filled</span>
                                     </a><br> {% else %}
                                     <a href="{% url 'jobs:job-mark-filled' job.id %}" class="btn btn-outline-white-secondary">
                                         <i class="fa fa-check-circle-o"></i>
-                                        <span class="hidden-xs hidden-sm">Mark as </span>filled
+                                        <span class="hidden-xs hidden-sm">Mark As</span> filled
                                     </a><br> {% endif %}
-                                    <a href="{% url 'jobs:delete-job' job.id %}" class="btn btn-outline-white-secondary">
-                                        <i class="fa fa-times-circle-o"></i>Delete
-                                    </a>
+
                                 </td>
                             </tr>
                             {% endfor %}

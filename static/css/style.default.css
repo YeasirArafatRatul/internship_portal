@@ -2071,8 +2071,8 @@ ul.dropdown-menu li a:hover {
 
 .btn-danger:hover {
     color: color-yiq(#c82333);
-    background-color: #c82333;
-    border-color: #bd2130
+    background-color: #868e96;
+    border-color: #868e96;
 }
 
 .btn-danger:focus,
