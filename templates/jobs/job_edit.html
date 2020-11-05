@@ -1,0 +1,117 @@
+{% extends 'base.html' %}{% load crispy_forms_tags %}
+<!-- static load -->
+{% load static %} {% block title %}Update Job{{ title }} {% endblock %} {% block styles %}
+<link rel="stylesheet" href="{% static 'vendor/bootstrap-select/css/bootstrap-select.min.css' %}">
+<style>
+    /* CUSTOMIZED BY ME */
+    
+    .row {
+        margin-left: 85px;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+        margin-left: 1.5rem;
+    }
+    /* .login-form input {
+        width: 100%;
+        background-color: transparent;
+        border: 1px solid #ffc06f;
+        border-radius: 1px;
+        line-height: 23px;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: #7a7a7a;
+        margin-bottom: 15px;
+        column-gap: 1.5rem;
+        height: 3.2em;
+    }
+     */
+    
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        margin: 0;
+        padding-left: 1em;
+        width: 100%;
+        background-color: rgb(238, 238, 238);
+        border: 2px solid #ffc06f;
+        border-radius: 5px;
+        line-height: 23px;
+        margin-bottom: 15px;
+        column-gap: 1.5rem;
+        height: 2.8em;
+    }
+    
+    .btn {
+        font-size: medium;
+    }
+</style>
+{% endblock %} {% block content %}
+
+<section class="bg-light-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="heading">Update Your Job</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="page-section mb-60">
+        <div class="container">
+            <div class="col-sm-12 col-md-12 col-xs-12">
+                {% if form.errors %} {% for field in form %} {% for error in field.errors %}
+                <div class="alert alert-danger alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{ field.label }}: {{ error|escape }}</strong>
+                </div>
+                {% endfor %} {% endfor %} {% endif %}
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="login-form">
+                        <div class="row">
+                            <fieldset class="form-group">
+                                {% csrf_token %} {{ form|crispy }} {{form.media}}
+                            </fieldset>
+                            <div class="col-12">
+                                <!-- <button class="btn btn-outline-white-primary" type='submit'>Update</button> -->
+                                <button type="submit" class="btn btn-outline-white-primary" style="width:20em; float: center;"><i class="fa fa-file"></i>
+                                    Update Job Details
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="container">
+        <div class="col-lg-12 mx-auto">
+            {% if form.errors %} {% for field in form %} {% for error in field.errors %}
+            <div class="alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>{{ field.label }}: {{ error|escape }}</strong>
+            </div>
+            {% endfor %} {% endfor %} {% endif %}
+            <div class="form-group">
+                <form id="job-main-form" method="post" action="" class="col-lg-12 form-group">
+                    {% csrf_token %} {{ form.as_p }} {{form.media}}
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <hr>
+                            <button type="submit" class="btn btn-outline-white-primary"><i class="fa fa-file"></i>
+                                    Save and publish
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+</section>
+
+{% endblock %}

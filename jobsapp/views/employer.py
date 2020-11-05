@@ -1,16 +1,19 @@
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView
 
 from jobsapp.decorators import user_is_employer
-from jobsapp.forms import CreateJobForm, JobDescriptionForm
+from jobsapp.forms import CreateJobForm, JobUpdateForm
 from jobsapp.models import Job, Applicant, JobCategory
 from SiteSettings.models import Setting
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render
+from jobsapp.decorators import user_is_employer
 
 
 class DashboardView(ListView):
@@ -57,6 +60,68 @@ class JobCreateView(LoginRequiredMixin, CreateView):
         context['categories'] = JobCategory.objects.all()
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
+
+
+class JobUpdateView(LoginRequiredMixin, UpdateView):
+    model = Job
+    form_class = JobUpdateForm
+    template_name = 'jobs/job_edit.html'
+    pk_url_kwarg = 'job_id'
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        job = self.get_object()
+        if self.request.user == job.user:
+            return True
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+@login_required(login_url='/login')
+def job_update(request, job_id):
+    if request.method == "POST":
+        job_form = JobUpdateForm(
+            request.POST, instance=request.user, id=job_id)
+        if job_form.is_valid():
+            job_form.save()
+
+            messages.success(
+                request, "Your Job is updated successfully")
+            return redirect('jobs:employer-dashboard')
+    else:
+        category = JobCategory.objects.all()
+        job_form = CreateJobForm(instance=request.user)
+        setting = Setting.objects.filter(status=True).first()
+    context = {
+        'categories': category,
+        'job_form': job_form,
+
+        'settings': setting,
+
+    }
+
+    return render(request, 'jobs/job_edit.html', context)
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
+def delete(request, job_id=None):
+    try:
+        job = Job.objects.get(user_id=request.user.id, id=job_id)
+        job.delete()
+    except IntegrityError as e:
+        print(e.message)
+        return HttpResponseRedirect(reverse_lazy('jobs:employer-dashboard'))
+    return HttpResponseRedirect(reverse_lazy('jobs:employer-dashboard'))
 
 
 class ApplicantPerJobView(ListView):

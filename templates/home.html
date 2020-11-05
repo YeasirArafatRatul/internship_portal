@@ -39,40 +39,28 @@
 </section>
 <section class="bg-light-gray">
     <div class="container">
-        <h3 class="heading">Featured jobs</h3>
+        <h3 class="heading">Browse By Categories</h3>
+        <!-- Categories Starts -->
         <div class="row featured align-items-stretch">
-            {% for job in jobs %}
+            {% for cat in categories %}
             <div class="col-lg-3 mb-5 mb-lg-0">
                 <div class="box-image-text bg-visible full-height">
-                    <!-- <div class="top">
-                        <a href="#">
-                            <div class="image">
-                                <img src="{% static 'img/featured1.jpg' %}" alt="" class="img-fluid">
-                            </div>
-                            <div class="bg"></div>
-                            <div class="logo">
-                                <img src="{% static 'img/company-1.png' %}" alt="" style="max-width: 80px;">
-                            </div>
-                        </a>
-                    </div> -->
                     <div class="content">
                         <div>
-                            <h5><a href="{% url 'jobs:jobs-detail' job.id %}">{{ job.title }}</a></h5>
+                            <img src="{% static 'img/o6.png' %}" alt="Cat Logo" style="height: 100px; width: 100px;">
                         </div>
-                        <p class="featured__details"><i class="fa fa-map-marker job__location"></i> {{ job.location }} {% if job.type == '1' %}
-                            <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == '2' %}
-                            <span class="badge featured-badge badge-primary">Unpaid</span> {% else %}
-                            <span style="color: #ffffff;" class="badge featured-badge badge-warning">Paid</span> {% endif %}
-                        </p>
-                        <p><i class="fa fa-money"></i> {{ job.salary }}</p>
-                        <p><i class="fa fa-building"></i> {{ job.user.first_name }}</p>
-                        <a><button class="btn btn-outline-white-primary">Read More</button></a>
-                        <!-- <p>{{ job.description|safe|truncatechars:40 }}</p> -->
+                        <hr>
+                        <div>
+                            <h5><a href="#">{{ cat.name }}</a></h5>
+                        </div>
+                        <!-- <p><i class="fa fa-money"></i></p> -->
+
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
+        <!-- Categories Ends -->
     </div>
 </section>
 <section>
@@ -86,7 +74,7 @@
                         <div class="col-2">
                             <img src="{{trending.user.userprofile.image.url}}" alt="ShareBoardd " class="img-fluid">
                         </div>
-                        <div class="col-10">
+                        <div class="col-8">
                             <h4 class="job__title">
                                 <a href="{% url 'jobs:jobs-detail' trending.id %}">{{ trending.title }}</a>
                             </h4>
@@ -96,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-10 col-md-4 col-lg-2 ml-auto"><i class="fa fa-map-marker job__location"></i> {{ trending.location }}
+                <div class="col-10 col-md-4 col-lg-2 ml-auto featured__details"><i class="fa fa-map-marker job__location"></i> {{ trending.location }}
                 </div>
                 <div class="col-10 col-md-3 col-lg-3 ml-auto">
                     <p>Posted {{ trending.created_at|timesince }}</p>

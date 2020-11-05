@@ -25,7 +25,7 @@ class HomeView(ListView):
         context['trendings'] = self.model.objects.filter(filled=False,
                                                          created_at__month=timezone.now().month).order_by('-created_at')[:5]
         context['settings'] = Setting.objects.filter(status=True).first()
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         return context
 
 

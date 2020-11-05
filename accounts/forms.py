@@ -200,10 +200,10 @@ class UserUpdateForm(UserChangeForm):
         model = User
         fields = ('first_name', 'last_name', 'email', "gender")
         widgets = {
-            'first_name': TextInput(attrs={'class': 'input', 'placeholder': 'firts_name'}),
-            'last_name': TextInput(attrs={'class': 'input', 'placeholder': 'last_name'}),
+            'first_name': TextInput(attrs={'class': 'input', 'placeholder': 'first name'}),
+            'last_name': TextInput(attrs={'class': 'input', 'placeholder': 'last name'}),
             'email': EmailInput(attrs={'class': 'input', 'placeholder': 'email'}),
-            'phone': TextInput(attrs={'class': 'input', 'placeholder': 'phone'}),
+
         }
 
     def __init__(self, *args, **kwargs):
@@ -218,5 +218,5 @@ class ProfileUpdateForm(forms.ModelForm):
         widgets = {
             'image': FileInput(attrs={'class': 'input', 'placeholder': 'profile picture', }),
             'cover_img': FileInput(attrs={'class': 'input', 'placeholder': 'cover photo', }),
-            'about': TextInput(attrs={'class': 'input', 'placeholder': 'about', }),
+            'about': TextInput(attrs={'class': 'input', 'placeholder': 'Say Something About You...'}),
         }
