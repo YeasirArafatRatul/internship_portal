@@ -59,8 +59,8 @@
                                 Categories
                             </a>
                             <div aria-labelledby="clientZone" class="dropdown-menu">
-                                {% for job in categories %}
-                                <a href="{% url 'jobs:employer-dashboard' %}" class="dropdown-item">{{job.name}}</a> {% endfor %}
+                                {% for cat in categories %}
+                                <a href="{% url 'jobs:filter-jobs' cat.id %}" class="dropdown-item">{{cat.name}}</a> {% endfor %}
                             </div>
                         </li>
                         <li class="nav-item">

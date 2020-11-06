@@ -10,6 +10,7 @@ from ..documents import JobDocument
 from ..forms import ApplyJobForm
 from ..models import Job, Applicant, JobCategory
 from SiteSettings.models import Setting
+from django.shortcuts import get_object_or_404
 
 
 class HomeView(ListView):
@@ -51,6 +52,23 @@ class JobListView(ListView):
     template_name = 'jobs/jobs.html'
     context_object_name = 'jobs'
     paginate_by = 8
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class CatJobListView(ListView):
+    model = Job
+    template_name = 'jobs/jobs.html'
+    context_object_name = 'jobs'
+
+    def get_queryset(self):
+        self.id = get_object_or_404(JobCategory, id=self.kwargs['cat_id'])
+        return Job.objects.filter(category=self.id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
