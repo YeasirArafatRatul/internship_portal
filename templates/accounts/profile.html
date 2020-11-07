@@ -96,6 +96,7 @@
                 <div class="profile-content">
                     {% if request.user.is_authenticated and request.user.role == 'employee' %}
                     <h5>EDUCATION</h5>
+
                     {% else %}
                     <h5>SERVICES</h5>{% endif %}
 

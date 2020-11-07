@@ -12,7 +12,7 @@
 <section>
     <div class="container">
         <div class="row">
-            {% for applicant in applicants %}
+            {% if applicants %} {% for applicant in applicants %}
             <div class="col-lg-6">
                 <div class="box applicant">
                     <a href="{% url 'accounts:user-detail' applicant.user.id %}">
@@ -67,7 +67,7 @@
                     </nav>
                 </div>
             </div>
-            {% else %}
+            {% endif %} {% else %}
             <h3>No Applicants</h3>
             {% endif %}
         </div>

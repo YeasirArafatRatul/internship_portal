@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from django.forms import TextInput, EmailInput, Select, FileInput
 from accounts.models import User, UserProfile
+from accounts.models import Education, Service
+from django.forms.widgets import DateInput
 
 GENDER_CHOICES = (
     ('male', 'Male'),
@@ -219,4 +221,36 @@ class ProfileUpdateForm(forms.ModelForm):
             'image': FileInput(attrs={'class': 'input', 'placeholder': 'profile picture', }),
             'cover_img': FileInput(attrs={'class': 'input', 'placeholder': 'cover photo', }),
             'about': TextInput(attrs={'class': 'input', 'placeholder': 'Say Something About You...'}),
+        }
+
+
+class AddEducationForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        exclude = ('user',)
+        widgets = {
+            'institute_name': TextInput(attrs={'class': 'input', 'placeholder': 'Institute Name', }),
+            'subject': TextInput(attrs={'class': 'input', 'placeholder': 'Discipline', }),
+            'passing_year': DateInput(attrs={'class': 'input', 'placeholder': '00/00/00'}),
+            'cgpa': TextInput(attrs={'class': 'input', 'placeholder': '4.00'}),
+        }
+
+
+class AddExperienceForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        exclude = ('user',)
+        widgets = {
+            'name': TextInput(attrs={'class': 'input', 'placeholder': 'Institute Name', }),
+            'details': TextInput(attrs={'class': 'input', 'placeholder': 'Discipline', }),
+        }
+
+
+class AddServiceForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        exclude = ('user',)
+        widgets = {
+            'name': TextInput(attrs={'class': 'input', 'placeholder': 'Institute Name', }),
+            'details': TextInput(attrs={'class': 'input', 'placeholder': 'Discipline', }),
         }

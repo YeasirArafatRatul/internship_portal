@@ -81,6 +81,25 @@ def create_profile(sender, instance, created, **kwargs):
         post_save.connect(create_profile, sender=User)
 
 
+class Education(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    degree = models.CharField(max_length=400, default="My Degree")
+    institute_name = models.CharField(max_length=400)
+    subject = models.CharField(max_length=250)
+    passing_year = models.DateTimeField()
+    cgpa = models.DecimalField(max_digits=3, decimal_places=2)
+
+    def __str__(self):
+        return str(f'{self.user.first_name} {self.user.last_name} - Degree')
+
+
+class Service(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=400)
+    details = models.CharField(
+        max_length=1000)
+
+
 class CV(models.Model):
     name = models.CharField(max_length=200)
     image = models.ImageField()
