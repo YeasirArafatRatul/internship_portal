@@ -8,9 +8,18 @@ from django.views.generic import ListView, DetailView, CreateView
 
 from ..documents import JobDocument
 from ..forms import ApplyJobForm
-from ..models import Job, Applicant, JobCategory
+from ..models import Job, Applicant, JobCategory, User
 from SiteSettings.models import Setting
 from django.shortcuts import get_object_or_404
+
+
+# class BaseView(CreateView):
+#     model = Setting
+#     template_name = 'base.html'
+#     context_object_name = 'settings'
+
+#     def get_queryset(self):
+#         return self.model.objects.filter(status=True).first()
 
 
 class HomeView(ListView):
@@ -23,6 +32,8 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['employers'] = User.objects.filter(
+            role='employer').order_by('?')[:8]
         context['trendings'] = self.model.objects.filter(filled=False,
                                                          created_at__month=timezone.now().month).order_by('-created_at')[:5]
         context['settings'] = Setting.objects.filter(status=True).first()
@@ -69,6 +80,23 @@ class CatJobListView(ListView):
     def get_queryset(self):
         self.id = get_object_or_404(JobCategory, id=self.kwargs['cat_id'])
         return Job.objects.filter(category=self.id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class Companies(ListView):
+    model = User
+    template_name = 'jobs/companies.html'
+    context_object_name = 'companies'
+    paginate_by = 16
+
+    def get_queryset(self):
+        return self.model.objects.filter(role='employer').order_by('?')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

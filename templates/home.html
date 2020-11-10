@@ -37,9 +37,11 @@
         </div>
     </div>
 </section>
+<section style=" height: 10em; position: relative; top:0; background-image: linear-gradient(180deg, #05386B, #fffff5);">
+</section>
 <section class="bg-light-gray">
     <div class="container">
-        <h3 class="heading">Browse By Categories</h3>
+        <h4 class="heading">Browse By Categories</h4>
         <!-- Categories Starts -->
         <div class="row featured align-items-stretch">
             {% for cat in categories %}
@@ -47,7 +49,7 @@
                 <div class="box-image-text bg-visible full-height">
                     <div class="content">
                         <div>
-                            <img src="{% static 'img/o6.png' %}" alt="Cat Logo" style="height: 100px; width: 100px;">
+                            <img src="{{cat.logo.url}}" alt="Cat Logo" style="height: 100px;">
                         </div>
                         <hr>
                         <div>
@@ -63,6 +65,34 @@
         <!-- Categories Ends -->
     </div>
 </section>
+<!-- BROWSE BY COMPANIES -->
+<section class="bg-light-gray">
+    <div class="container">
+        <h4 class="heading">Browse By Company</h4>
+        <!-- Categories Starts -->
+        <div class="row featured align-items-stretch">
+            {% for employer in employers %}
+            <div class="col-lg-3 mb-5 mb-lg-0">
+                <div class="box-image-text bg-visible full-height">
+                    <div class="content">
+                        <div>
+                            <img src="{{employer.userprofile.image.url}}" alt="Company Logo" style="height: 100px; width: 100px;">
+                        </div>
+                        <hr>
+                        <div>
+                            <h5><a href="{% url 'jobs:filter-jobs' employer.id %}">{{ employer.first_name }}{{employer.last_name}}</a></h5>
+                        </div>
+                        <!-- <p><i class="fa fa-money"></i></p> -->
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Categories Ends -->
+    </div>
+</section>
+<!-- BROWSE BY COMPANIES ENDS -->
 <section>
     <div class="container">
         <h4 class="heading">Trending this month</h4>
@@ -78,15 +108,25 @@
                             <h4 class="job__title">
                                 <a href="{% url 'jobs:jobs-detail' trending.id %}">{{ trending.title }}</a>
                             </h4>
-                            <p class="job__company">
-                                <i class="fa fa-building"></i><span> {{ trending.company_name }}
-                                </span></p>
+                            {% if request.user.is_authenticated and request.user == trending.user %}
+                            <a href="{% url 'accounts:my-profile' %}">
+                                <p class="job__company">
+                                    <i class="fa fa-building"></i> {{ trending.company_name }}
+                                </p>
+                            </a>
+                            {% else %}
+                            <a href="{% url 'accounts:user-detail' trending.user.id %}">
+                                <p class="job__company">
+                                    <i class="fa fa-building"></i> {{ trending.company_name }}
+                                </p>
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 <div class="col-10 col-md-4 col-lg-2 ml-auto featured__details"><i class="fa fa-map-marker job__location"></i> {{ trending.location }}
                 </div>
-                <div class="col-10 col-md-3 col-lg-3 ml-auto">
+                <div class="col-10 col-md-3 col-lg-3 ml-auto featured__details">
                     <p>Posted {{ trending.created_at|timesince }}</p>
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-1">

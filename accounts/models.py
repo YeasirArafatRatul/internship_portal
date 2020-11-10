@@ -41,6 +41,8 @@ class UserProfileManager(models.Manager):
 class UserProfile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True)
+    address = models.CharField(
+        max_length=300, default="Write Your Adress Here")
     image = models.ImageField(blank=True, null=True,
                               default='avatar.png', upload_to='profile_pics')
     cover_img = models.ImageField(

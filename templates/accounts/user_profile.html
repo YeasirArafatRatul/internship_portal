@@ -26,6 +26,12 @@
         color: #007bff;
     }
     
+    .btn-primary {
+        background-color: #004d88;
+        border-radius: 10px;
+        border-color: #004d88;
+    }
+    
     @media (max-width:768px) {
         .fb-profile-text>h1 {
             font-weight: 700;
@@ -80,6 +86,12 @@
                         <li><i class="fa fa-edit"></i>Another</li>
                     </ul>
                 </div>
+                <!-- {% if request.user.is_authenticated and request.user == user %}
+                <div class="profile-content">
+                    <a href="{% url 'accounts:profile-update' %}"><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-edit"></i>Edit Profile</button></a>
+                    <a href="{% url 'accounts:password-change' %}"><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-key"></i>Change Password</button></a>
+                </div>
+                {% endif %} -->
             </div>
         </div>
         <div class="col-lg-7 mb-5 mb-lg-0">

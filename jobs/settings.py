@@ -17,7 +17,7 @@ INSTALLED_APPS = [
     'django_elasticsearch_dsl',
     'crispy_forms',
     'ckeditor',
-    'django_seed',
+    # 'django_seed',
 
 
     'jobsapp',

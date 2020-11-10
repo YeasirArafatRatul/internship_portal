@@ -1,7 +1,7 @@
 footer {
     position: relative;
     bottom: 0;
-    background-color: #292c2f;
+    /* background-color: #292c2f; */
 }
 
 .footer-distributed {
@@ -45,7 +45,13 @@ footer {
     display: inline-block;
     line-height: 1.8;
     text-decoration: none;
-    color: inherit;
+}
+
+.footer-distributed .footer-links a:hover {
+    display: inline-block;
+    line-height: 1.8;
+    text-decoration: underline;
+    color: #92999f;
 }
 
 .footer-distributed .footer-company-name {
