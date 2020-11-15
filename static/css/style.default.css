@@ -2,7 +2,7 @@
     /* --main: #746EA9; */
     --main: #05386B;
     --hover: #379683;
-    --default: #eddfb3;
+    --default: #fada6f;
     --body: #fffff5;
     --element: #379683;
     --light-main: #05386B;
@@ -1372,8 +1372,8 @@ ul.dropdown-menu li a:hover {
     border: solid 1px #ccc;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 40px;
-    margin-top: 2.5rem;
+    padding: 30px;
+    /* margin-top: 2.5rem; */
 }
 
 .box .box-header {
@@ -1617,7 +1617,8 @@ ul.dropdown-menu li a:hover {
 
 .applicant .btn {
     margin-bottom: 5px;
-    margin-right: 5px
+    margin-right: 5px;
+    height: 3em;
 }
 
 .applicant .intro {

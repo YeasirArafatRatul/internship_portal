@@ -150,6 +150,7 @@ class ApplicantsListView(ListView):
     model = Applicant
     template_name = 'jobs/employer/all-applicants.html'
     context_object_name = 'applicants'
+    paginate_by = 8
 
     def get_queryset(self):
         # jobs = Job.objects.filter(user_id=self.request.user.id)
@@ -172,6 +173,32 @@ def filled(request, job_id=None):
         print(e.message)
         return HttpResponseRedirect(reverse_lazy('jobs:employer-dashboard'))
     return HttpResponseRedirect(reverse_lazy('jobs:employer-dashboard'))
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
+def select(request, applicant_id=None):
+    url = request.META.get("HTTP_REFERER")  # get last url
+    try:
+        applicant = Applicant.objects.get(id=applicant_id)
+        applicant.status = 1
+        applicant.save()
+    except IntegrityError as e:
+        print(e.message)
+        return HttpResponseRedirect(url)
+    return HttpResponseRedirect(url)
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
+def reject(request, applicant_id=None):
+    url = request.META.get("HTTP_REFERER")  # get last url
+    try:
+        applicant = Applicant.objects.get(id=applicant_id)
+        applicant.status = 2
+        applicant.save()
+    except IntegrityError as e:
+        print(e.message)
+        return HttpResponseRedirect(url)
+    return HttpResponseRedirect(url)
 
 
 def create_job(request):

@@ -88,7 +88,7 @@ class EmployerRegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(EmployerRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['first_name'].label = "Company Name"
-        self.fields['last_name'].label = "Company Address"
+        # self.fields['address'].label = "Company Address"
         self.fields['password1'].label = "Password"
         self.fields['password2'].label = "Confirm Password"
 
@@ -97,11 +97,11 @@ class EmployerRegistrationForm(UserCreationForm):
                 'placeholder': 'Enter Company Name',
             }
         )
-        self.fields['last_name'].widget.attrs.update(
-            {
-                'placeholder': 'Enter Company Address',
-            }
-        )
+        # self.fields['address'].widget.attrs.update(
+        #     {
+        #         'placeholder': 'Enter Company Address',
+        #     }
+        # )
         self.fields['email'].widget.attrs.update(
             {
                 'placeholder': 'Enter Email',
@@ -120,16 +120,16 @@ class EmployerRegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['first_name',  'email', 'password1', 'password2']
         error_messages = {
             'first_name': {
                 'required': 'First name is required',
                 'max_length': 'Name is too long'
             },
-            'last_name': {
-                'required': 'Last name is required',
-                'max_length': 'Last Name is too long'
-            }
+            # 'address': {
+            #     'required': 'address is required',
+            #     'max_length': 'address is too long'
+            # }
         }
 
     def save(self, commit=True):
@@ -176,28 +176,7 @@ class UserLoginForm(forms.Form):
         return self.user
 
 
-class EmployeeProfileUpdateForm(forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(EmployeeProfileUpdateForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].widget.attrs.update(
-            {
-                'placeholder': 'Enter First Name',
-            }
-        )
-        self.fields['last_name'].widget.attrs.update(
-            {
-                'placeholder': 'Enter Last Name',
-            }
-        )
-
-    class Meta:
-        model = User
-        fields = ["first_name", "last_name", "gender"]
-
-
-class UserUpdateForm(UserChangeForm):
-
+class EmployeeProfileUpdateForm(UserChangeForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', "gender")
@@ -211,16 +190,64 @@ class UserUpdateForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
         del self.fields['password']
+        self.fields['first_name'].widget.attrs.update(
+            {
+                'placeholder': 'Enter First Name',
+            }
+        )
+        self.fields['last_name'].widget.attrs.update(
+            {
+                'placeholder': 'Enter Last Name',
+            }
+        )
+
+
+class EmployerProfileUpdateForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'email',)
+        widgets = {
+            'first_name': TextInput(attrs={'class': 'input', 'placeholder': 'Company name'}),
+            'email': EmailInput(attrs={'class': 'input', 'placeholder': 'email'}),
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        del self.fields['password']
+        self.fields['first_name'].widget.attrs.update(
+            {
+                'placeholder': 'Enter Company Name',
+            }
+        )
+
+
+# class UserUpdateForm(UserChangeForm):
+
+#     class Meta:
+#         model = User
+#         fields = ('first_name', 'last_name', 'email', "gender")
+#         widgets = {
+#             'first_name': TextInput(attrs={'class': 'input', 'placeholder': 'first name'}),
+#             'last_name': TextInput(attrs={'class': 'input', 'placeholder': 'last name'}),
+#             'email': EmailInput(attrs={'class': 'input', 'placeholder': 'email'}),
+
+#         }
+
+#     def __init__(self, *args, **kwargs):
+#         super(UserChangeForm, self).__init__(*args, **kwargs)
+#         del self.fields['password']
 
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('about', 'image', 'cover_img')
+        fields = ('about', 'address', 'image', 'cover_img',)
         widgets = {
             'image': FileInput(attrs={'class': 'input', 'placeholder': 'profile picture', }),
             'cover_img': FileInput(attrs={'class': 'input', 'placeholder': 'cover photo', }),
             'about': TextInput(attrs={'class': 'input', 'placeholder': 'Say Something About You...'}),
+            'address': TextInput(attrs={'class': 'input', 'placeholder': 'Enter Address'}),
         }
 
 

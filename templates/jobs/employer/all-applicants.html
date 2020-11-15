@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h1 class="heading">All applicants who applied for your positions</h1>
+                <h3 class="heading">All applicants who applied for your positions</h3>
             </div>
         </div>
     </div>
@@ -19,16 +19,25 @@
                         <h4>{{ applicant.user.get_full_name }}</h4>
                     </a>
                     <p><strong>Applied position: {{ applicant.job.title }}</strong></p>
-                    <a href="#" data-toggle="modal" data-target="#contact-modal" class="btn btn-outline-white-secondary btn-sm">
-                        <i class="fa fa-envelope"></i>Contact
-                    </a>
                     <p>
                         <span class="badge badge-info">Applied {{ applicant.created_at.astimezone }}</span>
                     </p>
-                    <div class="d-flex justify-content-between">
-                        <p class="intro"></p>
+                    <a href="#" data-toggle="modal" data-target="#contact-modal" class="btn btn-outline-white-secondary btn-sm" style="height: 2.5em;">
+                        <i class="fa fa-envelope"></i>Download Cv
+                    </a>
+
+                    <div class="d-flex align-items-center">
+                        <a href="{% url 'jobs:select' applicant.id %}" class="btn btn-success">
+                            <i class="fa fa-check"></i>
+                            <span class="hidden-xs hidden-sm">Select</span>
+                        </a>
+                        <a href="{% url 'jobs:reject' applicant.id %}" class="btn btn-outline-white-danger">
+                            <i class="fa fa-close"></i>
+                            <span class="hidden-xs hidden-sm">Reject</span>
+                        </a>
+                        <!-- <p class="intro"></p> -->
                         <div class="image">
-                            <img src="{% static 'img/avatar.png' %}" alt="" class="img-fluid rounded-circle">
+                            <img src="{{ applicant.user.userprofile.image.url }}" alt="" class="img-fluid rounded-circle">
                         </div>
                     </div>
                 </div>

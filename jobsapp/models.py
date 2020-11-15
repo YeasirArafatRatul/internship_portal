@@ -49,9 +49,16 @@ class Job(models.Model):
 
 
 class Applicant(models.Model):
+    APPLICANT_STATUS = (
+
+        ('1', "Selected"),
+        ('2', "Rejected"),
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     job = models.ForeignKey(Job, on_delete=models.CASCADE,
                             related_name='applicants')
+    status = models.CharField(
+        max_length=30, choices=APPLICANT_STATUS, null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:

@@ -18,16 +18,23 @@ urlpatterns = [
 
         path('job-update/<int:job_id>',
              JobUpdateView.as_view(), name='job-update'),
-        path('mark-filled/<int:job_id>', filled, name='job-mark-filled'),
+        path('mark-filled/<int:job_id>',
+             filled, name='job-mark-filled'),
+
         path('delete-job/<int:job_id>',
              delete, name='delete-job'),
+
+        path('select-employee/<int:applicant_id>',
+             select, name='select'),
+        path('reject-employee/<int:applicant_id>',
+             reject, name='reject'),
     ])),
+
     path('apply-job/<int:job_id>', ApplyJobView.as_view(), name='apply-job'),
+    path('applid-jobs/', AppliedJobsView.as_view(), name='applied-jobs'),
     path('jobs', JobListView.as_view(), name='jobs'),
     path('filter-jobs/<int:cat_id>', CatJobListView.as_view(), name='filter-jobs'),
     path('jobs/<int:id>', JobDetailsView.as_view(), name='jobs-detail'),
     path('employer/jobs/create', JobCreateView.as_view(),
          name='employer-jobs-create'),
-    #     path('employer/jobs/create2', JobCreate.as_view(),
-    #          name='employer-jobs-create2'),
 ]

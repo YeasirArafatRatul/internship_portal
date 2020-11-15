@@ -83,7 +83,6 @@
                                 <a href="{% url 'jobs:employer-dashboard' %}" class="dropdown-item">Dashboard</a>
                                 <a href="{% url 'jobs:employer-all-applicants' %}" class="dropdown-item">Applicants </a>
                                 <a href="{% url 'jobs:employer-jobs-create' %}" class="dropdown-item">Post a new job </a>
-                                <a href="{% url 'jobs:employer-dashboard' %}" class="dropdown-item">Dashboard</a>
                                 <a href="{% url 'accounts:my-profile' %}" class="dropdown-item">Profile</a>
                                 <a href="{% url 'accounts:logout' %}" class="dropdown-item">Logout</a>
                             </div>
@@ -99,7 +98,8 @@
                                 {% if request.user.role == 'employee' %} {{ request.user.first_name }} {{ request.user.last_name }} {% else %} {{ request.user.first_name }} {% endif %}
                             </a>
                             <div aria-labelledby="clientZone" class="dropdown-menu">
-                                <a href="{% url 'accounts:employer-profile-update' %}" class="dropdown-item">Profile</a>
+                                <!-- <a href="{% url 'accounts:employer-profile-update' %}" class="dropdown-item">Profile</a> -->
+                                <a href="{% url 'jobs:applied-jobs' %}" class="dropdown-item">Applied Jobs</a>
                                 <a href="{% url 'accounts:my-profile' %}" class="dropdown-item">My Profile</a>
                                 <a href="{% url 'accounts:logout' %}" class="dropdown-item">Logout</a>
                             </div>

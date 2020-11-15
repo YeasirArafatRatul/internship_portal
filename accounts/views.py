@@ -15,7 +15,7 @@ from jobsapp.models import JobCategory
 from SiteSettings.models import Setting
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-from .forms import UserUpdateForm, ProfileUpdateForm
+from .forms import ProfileUpdateForm, EmployeeProfileUpdateForm, EmployerProfileUpdateForm
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 
@@ -41,7 +41,13 @@ def profile(request):
 @login_required(login_url='/login')
 def user_update(request):
     if request.method == "POST":
-        user_form = UserUpdateForm(request.POST, instance=request.user)
+        if request.user.role == 'employer':
+            user_form = EmployerProfileUpdateForm(
+                request.POST, instance=request.user)
+        else:
+            user_form = EmployeeProfileUpdateForm(
+                request.POST, instance=request.user)
+
         profile_form = ProfileUpdateForm(
             request.POST, request.FILES, instance=request.user.userprofile)
         if user_form.is_valid() and profile_form.is_valid():
@@ -52,8 +58,15 @@ def user_update(request):
             return redirect('accounts:my-profile')
     else:
         category = JobCategory.objects.all()
-        user_form = UserUpdateForm(instance=request.user)
-        profile_form = ProfileUpdateForm(instance=request.user.userprofile)
+        # EMPLOYER UPDATE
+        if request.user.role == 'employer':
+            user_form = EmployerProfileUpdateForm(instance=request.user)
+        # EMPLYEE UPDATE
+        else:
+            user_form = EmployeeProfileUpdateForm(instance=request.user)
+
+        profile_form = ProfileUpdateForm(
+            instance=request.user.userprofile)
         setting = Setting.objects.filter(status=True).first()
     context = {
         'categories': category,
