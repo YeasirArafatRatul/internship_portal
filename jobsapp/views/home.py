@@ -110,7 +110,7 @@ class Companies(ListView):
     model = User
     template_name = 'jobs/companies.html'
     context_object_name = 'companies'
-    paginate_by = 16
+    paginate_by = 8
 
     def get_queryset(self):
         return self.model.objects.filter(role='employer').order_by('?')
