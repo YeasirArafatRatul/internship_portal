@@ -23,16 +23,9 @@
                     <p>{{ job.description|safe }}</p>
                 </blockquote>
                 <div class="job-detail__apply-bottom">
-                    {% if request.user.role == 'employee' %} {% if request.user.is_authenticated %} {% is_already_applied job request.user as is_applied %} {% if is_applied %}
+
+                    {% if request.user.is_authenticated %}{% if request.user.role == 'employee' %} {% is_already_applied job request.user as is_applied %} {% if is_applied %}
                     <input type="button" class="btn btn-outline-white-primary" value="Already applied" /> {% else %}
-                    <form action="{% url 'jobs:apply-job' job.id %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="job" value="{{ job.id }}">
-                        <input type="submit" class="btn btn-outline-white-primary" value="Apply for this job" />
-                    </form>
-                    {% endif %}
-                    <!-- else -->
-                    {% else %}
                     <form action="{% url 'jobs:apply-job' job.id %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="job" value="{{ job.id }}">
@@ -44,8 +37,11 @@
                     <a href="{% url 'jobs:job-update' job.id %}">
                         <input type="submit" class="btn btn-outline-white-primary" value="Edit Job Details" />
                     </a>
+                    <!-- else -->
                     {% else %}
-                    <input type="submit" class="btn btn-outline-white-primary" value="Employer Can't Apply" /> {% endif %}
+
+                    <input type="submit" class="btn btn-outline-white-primary" value="Employer/Admin Can't Apply" /> {% endif %} {% else %}
+                    <input type="submit" class="btn btn-outline-white-primary" value="Sign In To Apply" /> {% endif %}
                 </div>
             </div>
             <div class="col-lg-1"></div>

@@ -29,7 +29,8 @@ urlpatterns = [
         path('reject-employee/<int:applicant_id>',
              reject, name='reject'),
     ])),
-
+    path('all-jobs-by-company/<int:user_id>',
+         IndividualCompanyJobListView.as_view(), name='company-jobs'),
     path('apply-job/<int:job_id>', ApplyJobView.as_view(), name='apply-job'),
     path('applid-jobs/', AppliedJobsView.as_view(), name='applied-jobs'),
     path('jobs', JobListView.as_view(), name='jobs'),

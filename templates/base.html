@@ -74,7 +74,7 @@
                             <a id="clientZone" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle has-img mb-3 mb-lg-0 mt-3 mt-lg-0">
                                 <div class="client-menu-image">
                                     <div class="inner">
-                                        <img src="{{user.userprofile.image.url}}" alt="company image" class="img-fluid">
+                                        <img src="{{ request.user.userprofile.image.url}}" alt="company image" class="img-fluid">
                                     </div>
                                 </div>
                                 {% if request.user.role == 'employer' %} {{ request.user.first_name }}{% endif %}
@@ -92,7 +92,7 @@
                             <a id="clientZone" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle has-img mb-3 mb-lg-0 mt-3 mt-lg-0">
                                 <div class="client-menu-image">
                                     <div class="inner">
-                                        <img src="{{user.userprofile.image.url}}" alt="company image" class="img-fluid">
+                                        <img src="{{request.user.userprofile.image.url}}" alt="company image" class="img-fluid">
                                     </div>
                                 </div>
                                 {% if request.user.role == 'employee' %} {{ request.user.first_name }} {{ request.user.last_name }} {% else %} {{ request.user.first_name }} {% endif %}

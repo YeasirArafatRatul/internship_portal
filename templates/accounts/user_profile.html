@@ -86,12 +86,10 @@
                         <li><i class="fa fa-edit"></i>Another</li>
                     </ul>
                 </div>
-                <!-- {% if request.user.is_authenticated and request.user == user %}
+
                 <div class="profile-content">
-                    <a href="{% url 'accounts:profile-update' %}"><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-edit"></i>Edit Profile</button></a>
-                    <a href="{% url 'accounts:password-change' %}"><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-key"></i>Change Password</button></a>
+                    <a href="{% url 'jobs:company-jobs' user.id %}"><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-key"></i>See All Jobs</button></a>
                 </div>
-                {% endif %} -->
             </div>
         </div>
         <div class="col-lg-7 mb-5 mb-lg-0">

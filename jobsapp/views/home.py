@@ -67,7 +67,24 @@ class JobListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = JobCategory.objects.all()
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
 
+
+class IndividualCompanyJobListView(ListView):
+    model = Job
+    template_name = 'jobs/jobs.html'
+    context_object_name = 'jobs'
+    paginate_by = 8
+
+    def get_queryset(self):
+        # jobs = Job.objects.filter(user_id=self.request.user.id)
+        self.id = get_object_or_404(User, id=self.kwargs['user_id'])
+        return self.model.objects.filter(user=self.id, filled=False).order_by('-created_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
