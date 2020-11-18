@@ -18,8 +18,8 @@ class JobCategory(models.Model):
 
 
 JOB_TYPE = (
-    ('1', "Paid"),
-    ('2', "Unpaid"),
+    ('paid', "Paid"),
+    ('unpaid', "Unpaid"),
     # ('3', "Internship"),
 )
 

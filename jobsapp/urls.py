@@ -15,7 +15,8 @@ urlpatterns = [
 
         path('applicants/<int:job_id>', ApplicantPerJobView.as_view(),
              name='employer-dashboard-applicants'),
-
+        path('employer/jobs/create', JobCreateView.as_view(),
+             name='employer-jobs-create'),
         path('job-update/<int:job_id>',
              JobUpdateView.as_view(), name='job-update'),
         path('mark-filled/<int:job_id>',
@@ -28,6 +29,7 @@ urlpatterns = [
              select, name='select'),
         path('reject-employee/<int:applicant_id>',
              reject, name='reject'),
+
     ])),
     path('all-jobs-by-company/<int:user_id>',
          IndividualCompanyJobListView.as_view(), name='company-jobs'),
@@ -36,6 +38,5 @@ urlpatterns = [
     path('jobs', JobListView.as_view(), name='jobs'),
     path('filter-jobs/<int:cat_id>', CatJobListView.as_view(), name='filter-jobs'),
     path('jobs/<int:id>', JobDetailsView.as_view(), name='jobs-detail'),
-    path('employer/jobs/create', JobCreateView.as_view(),
-         name='employer-jobs-create'),
+
 ]

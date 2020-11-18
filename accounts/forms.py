@@ -263,21 +263,33 @@ class AddEducationForm(forms.ModelForm):
         }
 
 
+class EducationUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        exclude = ('user',)
+        widgets = {
+            'institute_name': TextInput(attrs={'class': 'input', 'placeholder': 'Institute Name', }),
+            'subject': TextInput(attrs={'class': 'input', 'placeholder': 'Discipline', }),
+            'passing_year': DateInput(attrs={'class': 'input', 'placeholder': '00/00/00'}),
+            'cgpa': TextInput(attrs={'class': 'input', 'placeholder': '4.00'}),
+        }
+
+
 class AddExperienceForm(forms.ModelForm):
     class Meta:
         model = Education
         exclude = ('user',)
         widgets = {
-            'name': TextInput(attrs={'class': 'input', 'placeholder': 'Institute Name', }),
-            'details': TextInput(attrs={'class': 'input', 'placeholder': 'Discipline', }),
+            'Experience': TextInput(attrs={'class': 'input', 'placeholder': 'Institute Name', }),
+            'details': TextInput(attrs={'class': 'textarea', 'placeholder': 'Discipline', }),
         }
 
 
 class AddServiceForm(forms.ModelForm):
     class Meta:
-        model = Education
+        model = Service
         exclude = ('user',)
         widgets = {
-            'name': TextInput(attrs={'class': 'input', 'placeholder': 'Institute Name', }),
-            'details': TextInput(attrs={'class': 'input', 'placeholder': 'Discipline', }),
+            'name': TextInput(attrs={'class': 'input', 'placeholder': ' Skill Name', }),
+            'details': TextInput(attrs={'class': 'textarea', 'placeholder': 'Description', }),
         }

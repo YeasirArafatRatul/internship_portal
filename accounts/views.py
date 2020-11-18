@@ -5,10 +5,11 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 import os
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages, auth
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import CreateView, FormView, RedirectView, TemplateView, DetailView
+from django.views.generic import CreateView, FormView, RedirectView, TemplateView, DetailView, UpdateView
 from accounts.forms import *
 from accounts.models import User, CV, UserProfile, Education, Service
 from jobsapp.models import JobCategory
@@ -29,11 +30,12 @@ def profile(request):
     print(profile.user.id)
 
     degrees = Education.objects.filter(user_id=current_user.id)
-
+    skills = Service.objects.filter(user_id=current_user.id)
     context = {'categories': categories,
                'settings': setting,
                'profile': profile,
                'degrees': degrees,
+               'skills': skills,
                }
     return render(request, 'accounts/demo_profile.html', context)
 
@@ -103,19 +105,18 @@ def password_change(request):
                                                                  })
 
 
-class AddEducationView(CreateView):
-    model = Education
+class AddEducationView(LoginRequiredMixin, CreateView):
     form_class = AddEducationForm
     template_name = 'accounts/add_education.html'
-    success_url = 'accounts:my-profile'
+    success_url = reverse_lazy('accounts:my-profile')
 
-    @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request.user.is_authenticated:
-            return reverse_lazy('accounts:login')
-        if self.request.user.is_authenticated and self.request.user.role != 'employer':
-            return reverse_lazy('accounts:login')
-        return super().dispatch(self.request, *args, **kwargs)
+    # @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
+    # def dispatch(self, request, *args, **kwargs):
+    #     if not self.request.user.is_authenticated:
+    #         return reverse_lazy('accounts:login')
+    #     if self.request.user.is_authenticated and self.request.user.role != 'employer':
+    #         return reverse_lazy('accounts:login')
+    #     return super().dispatch(self.request, *args, **kwargs)
 
     def form_valid(self, form):
         request = self.request
@@ -130,25 +131,68 @@ class AddEducationView(CreateView):
         return context
 
 
-class AddEducationView(CreateView):
+class EducationUpdateView(LoginRequiredMixin, UpdateView):
     model = Education
-    form_class = AddServiceForm
-    template_name = 'accounts/add_experience.html'
-    success_url = 'accounts:my-profile'
-
-    @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request.user.is_authenticated:
-            return reverse_lazy('accounts:login')
-        if self.request.user.is_authenticated and self.request.user.role != 'employer':
-            return reverse_lazy('accounts:login')
-        return super().dispatch(self.request, *args, **kwargs)
+    form_class = EducationUpdateForm
+    template_name = 'accounts/update_edu.html'
+    success_url = reverse_lazy('accounts:my-profile')
+    pk_url_kwarg = 'edu_id'
 
     def form_valid(self, form):
         request = self.request
         form.instance.user = self.request.user
         form.save()
         return super().form_valid(form)
+
+    def test_func(self):
+        job = self.get_object()
+        if self.request.user == job.user:
+            return True
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class AddSkillView(LoginRequiredMixin, CreateView):
+    form_class = AddServiceForm
+    template_name = 'accounts/skill_or_service.html'
+    success_url = reverse_lazy('accounts:my-profile')
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class SkillUpdateView(LoginRequiredMixin, UpdateView):
+    model = Service
+    form_class = AddServiceForm
+    template_name = 'accounts/update_edu.html'
+    success_url = reverse_lazy('accounts:my-profile')
+    pk_url_kwarg = 'skill_id'
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        skill = self.get_object()
+        if self.request.user == skill.user:
+            return True
+        return False
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

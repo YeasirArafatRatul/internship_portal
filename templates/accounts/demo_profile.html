@@ -3,6 +3,10 @@
 <style>
     /* card css */
     
+    a {
+        color: #007bff;
+    }
+    
     @mixin vertical-align($position: fixed) {
         position: $position;
         top: 50%;
@@ -278,7 +282,8 @@
                                         <h5 class="bold">PASSING YEAR: <span class="contact">{{degree.passing_year|date}}</span></h5>
                                         <h5 class="bold">CGPA: <span class="contact">{{degree.cgpa}}</span></h5>
                                         {% if request.user == degree.user %}
-                                        <a href="#" target="_blank"><i class="fa fa-edit"></i>Edit</a> {% endif %}
+                                        <a href="{% url 'accounts:update-education' degree.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="#"><i class="fa fa-trash"></i>Delete</a>{% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -286,43 +291,104 @@
                     </div>
                     {% endfor %}
                     <!-- END LOOP -->
-                    <a href="#"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a> {% else %}
+                    <a href="{% url 'accounts:add-education' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a> {% else %}
                     <h4>SERVICES</h4>
+                    <!-- LOOP THROUGH DEGREES -->
+                    {% for degree in degrees %}
                     <div class="flip-container centered">
                         <div class="flipper">
                             <div class="front">
-                                <h5><span class="contact">Web Development</span></h5>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga illo mollitia, voluptate illum quod facere magnam praesentium. Quaerat dolore est culpa! Veritatis tempore cumque laboriosam? Numquam quibusdam inventore perspiciatis
-                                    quo ea corporis odio exercitationem mollitia corrupti? Perspiciatis possimus modi distinctio rem harum laboriosam illo! Aspernatur, doloremque cumque quod, eveniet laudantium, blanditiis placeat repellendus corrupti
-                                    quibusdam voluptatum dolores nisi nihil optio. Ab perferendis commodi</p>
+                                <h5>DEGREE: <span class="contact">{{degree.degree}}</span></h5>
+                                <h5>SUBJECT: <span class="contact">{{degree.subject}}</span></h5>
+                                <h5>INSTITUTE: <span class="contact">{{degree.institute_name}}</span></h5>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        <h5 class="bold">PASSING YEAR: <span class="contact">{{degree.passing_year|date}}</span></h5>
+                                        <h5 class="bold">CGPA: <span class="contact">{{degree.cgpa}}</span></h5>
+                                        {% if request.user == degree.user %}
+                                        <a href="{% url 'accounts:update-education' degree.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="#"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <a href="#"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a> {% endif %}
+                    {% endfor %}
+                    <!-- END LOOP -->
+                    <a href="{% url 'accounts:add-education' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a>
+                    <!-- END IF -->
+                    {% endif %}
                 </div>
+                <br>
+                <br>
+                <hr>
                 <div class="profile-content">
                     {% if request.user.is_authenticated and request.user.role == 'employee' %}
                     <h4>SKILLS</h4>
+                    <!-- LOOP THROUGH DEGREES -->
+                    {% for skill in skills %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5><span class="contact">{{skill.name}}</span></h5>
+                                <p>Description: <span class="contact">{{skill.details}}</span></p>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        {% if request.user == skill.user %}
+                                        <a href="{% url 'accounts:update-skill' skill.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="#"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- END LOOP -->
+
+                    <a href="{% url 'accounts:add-skill' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a>
+                    <!-- ELSE IF -->
                     {% elif request.user.is_authenticated and request.user.role == 'admin' %}
                     <h4>DESIGNATION</h4>
                     {% else %}
                     <h4>ADDRESS</h4>{% endif %}
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo omnis harum expedita voluptatum. Veritatis sit deleniti voluptatem iste cumque neque, id sunt quo sint, molestiae mollitia. Mollitia voluptates iusto amet natus! Nostrum
-                        error corporis sunt. Accusamus tenetur iste deleniti, sint quaerat quasi libero officia facere numquam. Sint nisi adipisci laborum voluptatibus hic! Doloribus unde officiis culpa nisi natus architecto voluptates quod a neque saepe
-                        dignissimos distinctio similique facilis recusandae harum sint, est tempora nostrum maiores non adipisci! Et tempora aspernatur quos temporibus consequuntur. Sit laudantium repellat unde cum impedit consequuntur nostrum atque qui
-                        sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
-                    </p>
+                    <p></p>
+
                 </div>
+                <br>
+                <br>
+                <hr>
+
                 <div class="profile-content">
                     {% if request.user.is_authenticated and request.user.role == 'employer' %}
-                    <h4>EDUCATION</h4>
-                    {% else %}
-                    <h4>EDUCATION</h4>{% endif %}
+                    <h4>Interview Process</h4>
+
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo omnis harum expedita voluptatum. Veritatis sit deleniti voluptatem iste cumque neque, id sunt quo sint, molestiae mollitia. Mollitia voluptates iusto amet natus! Nostrum
                         error corporis sunt. Accusamus tenetur iste deleniti, sint quaerat quasi libero officia facere numquam. Sint nisi adipisci laborum voluptatibus hic! Doloribus unde officiis culpa nisi natus architecto voluptates quod a neque saepe
                         dignissimos distinctio similique facilis recusandae harum sint, est tempora nostrum maiores non adipisci! Et tempora aspernatur quos temporibus consequuntur. Sit laudantium repellat unde cum impedit consequuntur nostrum atque qui
                         sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
                     </p>
+                    {% elif request.user.is_authenticated and request.user.role == 'employee' %}
+                    <h4>Experience</h4>
+                    <!-- LOOP THROUGH DEGREES -->
+                    {% for skill in skills %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5><span class="contact">{{skill.name}}</span></h5>
+                                <p>Description: <span class="contact">{{skill.details}}</span></p>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        {% if request.user == skill.user %}
+                                        <a href="{% url 'accounts:update-skill' skill.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="#"><i class="fa fa-trash"></i>Delete</a>{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- END LOOP -->
+                    <a href="{% url 'accounts:add-skill' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a> {% endif %}
                 </div>
             </div>
         </div>

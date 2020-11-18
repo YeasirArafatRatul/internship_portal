@@ -3,20 +3,23 @@
 <section class="job-form-section job-form-section--compressed" style="background-image: linear-gradient(180deg, #05386B, #fffff5);">
     <div class="container">
         <h3 class="heading">Find a <span class="accent">job </span> you will <span class="accent">love</span></h3>
-        <form id="job-main-form" method="get" action="#" class="job-main-form">
+        <form id="job-main-form" method="get" action="{% url 'jobs:search' %}" class="job-main-form">
             <div class="controls">
-                <div class="row align-items-end">
-                    <div class="col-sm-1 col-lg-2"></div>
-                    <div class="col-sm-5 col-lg-4 form-group">
-                        <label for="profession">Profession</label>
-                        <input type="text" id="profession" name="profession" placeholder="ex: Software Engineer" class="form-control">
+                <div class="row align-items-center">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="profession">Position</label>
+                            <input type="text" id="profession" name="position" placeholder="ex: Software Engineer" class="form-control">
+                        </div>
                     </div>
-                    <div class="col-sm-5 col-lg-4 form-group">
-                        <label for="location">Location</label>
-                        <input type="text" id="location" name="location" placeholder="ex: Dhaka" class="form-control">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" name="location" placeholder="ex: Dhaka" class="form-control">
+                        </div>
                     </div>
-                    <div class="col-sm-1 col-lg-2 form-group">
-                        <button type="submit" name="name" class="btn btn-outline-white-primary job-main-form__button">
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-outline-white-primary job-main-form__button">
                                 <i class="fa fa-search"></i>
                             </button>
                     </div>
@@ -27,8 +30,26 @@
 </section>
 <section>
     <div class="container">
-        <h3 class="heading">All Jobs<span class="accent"></span> jobs</h3>
+        <h3 class="heading">All<span class="accent"></span> jobs</h3>
         <div class="row featured align-items-stretch">
+            <!-- <div class="form-group">
+                <label for="type">Type</label>
+                <br>
+                <div class="form-check form-check">
+                    <input class="form-check-input" type="radio" name="type" id="paid" value="paid">
+                    <label class="form-check-label" for="paid">Paid</label>
+                </div>
+                <div class="form-check form-check">
+                    <input class="form-check-input" type="radio" name="type" id="unpaid" value="unpaid">
+                    <label class="form-check-label" for="paid">Unpaid</label>
+                </div>
+                <div class="col-sm-1 col-lg-2 form-group">
+                    <button type="submit" name="name" class="btn btn-outline-white-primary job-main-form__button" style="width:120px;margin-left: 0px;">
+                            <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div> -->
+
             {% for job in jobs %}
             <div class="col-lg-3 mb-5 mb-lg-0">
                 <div class="box-image-text bg-visible full-height">
