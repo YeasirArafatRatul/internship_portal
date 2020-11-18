@@ -283,7 +283,7 @@
                                         <h5 class="bold">CGPA: <span class="contact">{{degree.cgpa}}</span></h5>
                                         {% if request.user == degree.user %}
                                         <a href="{% url 'accounts:update-education' degree.id %}"><i class="fa fa-edit"></i>Edit</a>
-                                        <a href="#"><i class="fa fa-trash"></i>Delete</a>{% endif %}
+                                        <a href="{% url 'accounts:delete-education' degree.id %}"><i class="fa fa-trash"></i>Delete</a>{% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -324,19 +324,21 @@
                 <hr>
                 <div class="profile-content">
                     {% if request.user.is_authenticated and request.user.role == 'employee' %}
-                    <h4>SKILLS</h4>
+                    <h4>Experience</h4>
                     <!-- LOOP THROUGH DEGREES -->
-                    {% for skill in skills %}
+                    {% for exp in experiences %}
                     <div class="flip-container centered">
                         <div class="flipper">
                             <div class="front">
-                                <h5><span class="contact">{{skill.name}}</span></h5>
-                                <p>Description: <span class="contact">{{skill.details}}</span></p>
+                                <h5>Company<span class="contact">{{exp.company_name}}</span></h5>
+                                <h5>Position: <span class="contact">{{exp.position}}</span></h5>
                                 <div class="font-a-icons">
                                     <div class="icon-group">
-                                        {% if request.user == skill.user %}
-                                        <a href="{% url 'accounts:update-skill' skill.id %}"><i class="fa fa-edit"></i>Edit</a>
-                                        <a href="#"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                        <h5 class="bold">From: <span class="contact">{{exp.from_date|date}}</span></h5>
+                                        <h5 class="bold">To: <span class="contact">{{exp.to_date|date}}</span></h5>
+                                        {% if request.user == exp.user %}
+                                        <a href="{% url 'accounts:update-experience' exp.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="{% url 'accounts:delete-experience' exp.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -345,7 +347,7 @@
                     {% endfor %}
                     <!-- END LOOP -->
 
-                    <a href="{% url 'accounts:add-skill' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a>
+                    <a href="{% url 'accounts:add-experience' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a>
                     <!-- ELSE IF -->
                     {% elif request.user.is_authenticated and request.user.role == 'admin' %}
                     <h4>DESIGNATION</h4>
@@ -368,7 +370,7 @@
                         sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
                     </p>
                     {% elif request.user.is_authenticated and request.user.role == 'employee' %}
-                    <h4>Experience</h4>
+                    <h4>Skill</h4>
                     <!-- LOOP THROUGH DEGREES -->
                     {% for skill in skills %}
                     <div class="flip-container centered">
@@ -380,7 +382,7 @@
                                     <div class="icon-group">
                                         {% if request.user == skill.user %}
                                         <a href="{% url 'accounts:update-skill' skill.id %}"><i class="fa fa-edit"></i>Edit</a>
-                                        <a href="#"><i class="fa fa-trash"></i>Delete</a>{% endif %}
+                                        <a href="{% url 'accounts:delete-skill' skill.id %}"><i class="fa fa-trash"></i>Delete</a>{% endif %}
                                     </div>
                                 </div>
                             </div>

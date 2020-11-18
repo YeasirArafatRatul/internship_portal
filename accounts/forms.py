@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from django.forms import TextInput, EmailInput, Select, FileInput
 from accounts.models import User, UserProfile
-from accounts.models import Education, Service
+from accounts.models import Education, Experience, Service
 from django.forms.widgets import DateInput
 
 GENDER_CHOICES = (
@@ -275,16 +275,6 @@ class EducationUpdateForm(forms.ModelForm):
         }
 
 
-class AddExperienceForm(forms.ModelForm):
-    class Meta:
-        model = Education
-        exclude = ('user',)
-        widgets = {
-            'Experience': TextInput(attrs={'class': 'input', 'placeholder': 'Institute Name', }),
-            'details': TextInput(attrs={'class': 'textarea', 'placeholder': 'Discipline', }),
-        }
-
-
 class AddServiceForm(forms.ModelForm):
     class Meta:
         model = Service
@@ -292,4 +282,16 @@ class AddServiceForm(forms.ModelForm):
         widgets = {
             'name': TextInput(attrs={'class': 'input', 'placeholder': ' Skill Name', }),
             'details': TextInput(attrs={'class': 'textarea', 'placeholder': 'Description', }),
+        }
+
+
+class AddExperienceForm(forms.ModelForm):
+    class Meta:
+        model = Experience
+        exclude = ('user',)
+        widgets = {
+            'company_name': TextInput(attrs={'class': 'input', 'placeholder': 'Company Name', }),
+            'position': TextInput(attrs={'class': 'textarea', 'placeholder': 'What was your position?', }),
+            'from_date': DateInput(attrs={'class': 'input', 'placeholder': '00/00/00', }),
+            'to_date': DateInput(attrs={'class': 'input', 'placeholder': '00/00/00', }),
         }

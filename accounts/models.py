@@ -101,6 +101,23 @@ class Service(models.Model):
     details = models.CharField(
         max_length=1000)
 
+    def __str__(self):
+        return str(f'{self.user.first_name} {self.user.last_name} - Service')
+
+
+class Experience(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    company_name = models.CharField(
+        max_length=250, blank=True, null=True, default="")
+    position = models.CharField(
+        max_length=250, blank=True, null=True, default="")
+
+    from_date = models.DateField()
+    to_date = models.DateField()
+
+    def __str__(self):
+        return str(f'{self.user.first_name} {self.user.last_name} - Experience')
+
 
 class CV(models.Model):
     name = models.CharField(max_length=200)

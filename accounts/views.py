@@ -10,6 +10,7 @@ from django.contrib import messages, auth
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import CreateView, FormView, RedirectView, TemplateView, DetailView, UpdateView
+from django.views.generic.edit import DeleteView
 from accounts.forms import *
 from accounts.models import User, CV, UserProfile, Education, Service
 from jobsapp.models import JobCategory
@@ -19,6 +20,7 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import ProfileUpdateForm, EmployeeProfileUpdateForm, EmployerProfileUpdateForm
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.db import IntegrityError
 
 
 @login_required(login_url='/login')
@@ -31,11 +33,14 @@ def profile(request):
 
     degrees = Education.objects.filter(user_id=current_user.id)
     skills = Service.objects.filter(user_id=current_user.id)
+    experiences = Experience.objects.filter(user_id=current_user.id)
+
     context = {'categories': categories,
                'settings': setting,
                'profile': profile,
                'degrees': degrees,
                'skills': skills,
+               'experiences': experiences,
                }
     return render(request, 'accounts/demo_profile.html', context)
 
@@ -105,18 +110,14 @@ def password_change(request):
                                                                  })
 
 
+# ------------------------------------------------------------
+#                      EDUCATION
+# -------------------------------------------------------------
+
 class AddEducationView(LoginRequiredMixin, CreateView):
     form_class = AddEducationForm
     template_name = 'accounts/add_education.html'
     success_url = reverse_lazy('accounts:my-profile')
-
-    # @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
-    # def dispatch(self, request, *args, **kwargs):
-    #     if not self.request.user.is_authenticated:
-    #         return reverse_lazy('accounts:login')
-    #     if self.request.user.is_authenticated and self.request.user.role != 'employer':
-    #         return reverse_lazy('accounts:login')
-    #     return super().dispatch(self.request, *args, **kwargs)
 
     def form_valid(self, form):
         request = self.request
@@ -145,8 +146,8 @@ class EducationUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def test_func(self):
-        job = self.get_object()
-        if self.request.user == job.user:
+        edu = self.get_object()
+        if self.request.user == edu.user:
             return True
         return False
 
@@ -157,6 +158,21 @@ class EducationUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
 
+@login_required(login_url=reverse_lazy('accounts:login'))
+def edu_delete(request, edu_id=None):
+    try:
+        edu = Education.objects.get(user_id=request.user.id, id=edu_id)
+        edu.delete()
+
+    except IntegrityError as e:
+        print(e.message)
+        return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+    return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+
+
+# ------------------------------------------------------------
+#                      SKILL
+# ------------------------------------------------------------
 class AddSkillView(LoginRequiredMixin, CreateView):
     form_class = AddServiceForm
     template_name = 'accounts/skill_or_service.html'
@@ -199,6 +215,78 @@ class SkillUpdateView(LoginRequiredMixin, UpdateView):
         context['categories'] = JobCategory.objects.all()
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
+def skill_delete(request, skill_id=None):
+    try:
+        skill = Service.objects.get(user_id=request.user.id, id=skill_id)
+        skill.delete()
+
+    except IntegrityError as e:
+        print(e.message)
+        return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+    return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+
+
+# ------------------------------------------------------------
+#                      EXPERIENCE
+# ------------------------------------------------------------
+
+class AddExperienceView(LoginRequiredMixin, CreateView):
+    form_class = AddExperienceForm
+    template_name = 'accounts/skill_or_service.html'
+    success_url = reverse_lazy('accounts:my-profile')
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class ExperienceUpdateView(LoginRequiredMixin, UpdateView):
+    model = Experience
+    form_class = AddExperienceForm
+    template_name = 'accounts/update_edu.html'
+    success_url = reverse_lazy('accounts:my-profile')
+    pk_url_kwarg = 'exp_id'
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        skill = self.get_object()
+        if self.request.user == skill.user:
+            return True
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
+def exp_delete(request, exp_id=None):
+    try:
+        edu = Experience.objects.get(user_id=request.user.id, id=exp_id)
+        edu.delete()
+
+    except IntegrityError as e:
+        print(e.message)
+        return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+    return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
 
 
 class UserDetailView(DetailView):
