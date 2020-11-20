@@ -78,7 +78,6 @@ class IndividualCompanyJobListView(ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        # jobs = Job.objects.filter(user_id=self.request.user.id)
         self.id = get_object_or_404(User, id=self.kwargs['user_id'])
         return self.model.objects.filter(user=self.id, filled=False).order_by('-created_at')
 

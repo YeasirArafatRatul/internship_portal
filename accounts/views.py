@@ -9,18 +9,20 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages, auth
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import CreateView, FormView, RedirectView, TemplateView, DetailView, UpdateView
+from django.views.generic import CreateView, FormView, RedirectView, TemplateView, DetailView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.db import IntegrityError
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
+# forms
 from accounts.forms import *
 from accounts.models import User, CV, UserProfile, Education, Service
 from jobsapp.models import JobCategory
 from SiteSettings.models import Setting
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
-from .forms import ProfileUpdateForm, EmployeeProfileUpdateForm, EmployerProfileUpdateForm
-from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.db import IntegrityError
+from .forms import ProfileUpdateForm, EmployeeProfileUpdateForm, EmployerProfileUpdateForm, CompanyImageForm
 
 
 @login_required(login_url='/login')
@@ -29,11 +31,24 @@ def profile(request):
     categories = JobCategory.objects.all()
     current_user = request.user
     profile = UserProfile.objects.get(user_id=current_user.id)
-    print(profile.user.id)
 
     degrees = Education.objects.filter(user_id=current_user.id)
     skills = Service.objects.filter(user_id=current_user.id)
     experiences = Experience.objects.filter(user_id=current_user.id)
+
+    if request.method == 'POST':
+        form = CompanyImageForm(
+            request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user = request.user
+            image.save()
+            messages.success(
+                request, "Image is uploaded successfully")
+            return redirect('accounts:my-profile')
+
+    else:
+        form = CompanyImageForm(request.POST)
 
     context = {'categories': categories,
                'settings': setting,
@@ -41,6 +56,7 @@ def profile(request):
                'degrees': degrees,
                'skills': skills,
                'experiences': experiences,
+               'form': form,
                }
     return render(request, 'accounts/demo_profile.html', context)
 
@@ -64,7 +80,6 @@ def user_update(request):
                 request, "Your Profile is updated successfully")
             return redirect('accounts:my-profile')
     else:
-        category = JobCategory.objects.all()
         # EMPLOYER UPDATE
         if request.user.role == 'employer':
             user_form = EmployerProfileUpdateForm(instance=request.user)
@@ -75,6 +90,7 @@ def user_update(request):
         profile_form = ProfileUpdateForm(
             instance=request.user.userprofile)
         setting = Setting.objects.filter(status=True).first()
+        category = JobCategory.objects.all()
     context = {
         'categories': category,
         'user_form': user_form,
@@ -288,6 +304,10 @@ def exp_delete(request, exp_id=None):
         return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
     return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
 
+# --------------------------------------------------------
+#                   USER DETAIL
+# --------------------------------------------------------
+
 
 class UserDetailView(DetailView):
     model = User
@@ -300,6 +320,28 @@ class UserDetailView(DetailView):
         return get_object_or_404(User, id=id_)
 
     # this will server siteSettings data to this view
+    def get_context_data(self, **kwargs):
+        id_ = self.kwargs.get("id")
+        context = super().get_context_data(**kwargs)
+        context['degrees'] = Education.objects.filter(user_id=id_)
+        context['skills'] = Service.objects.filter(user_id=id_)
+        context['experiences'] = Experience.objects.filter(user_id=id_)
+        context['settings'] = Setting.objects.get(status=True)
+        context['categories'] = JobCategory.objects.all()
+        return context
+
+
+class CompanyImagesView(ListView):
+    model = ComapanyImage
+    template_name = 'accounts/company_images.html'
+    context_object_name = 'images'
+
+    def get_queryset(self):
+        self.id = get_object_or_404(User, id=self.kwargs['user_id'])
+        return self.model.objects.filter(user=self.id).order_by('-id')
+
+    # this will server siteSettings data to this view
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['settings'] = Setting.objects.get(status=True)

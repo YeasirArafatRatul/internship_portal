@@ -1,6 +1,164 @@
 {% extends 'base.html' %} {% load static %} {% block styles %}
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <style>
+    /* card css */
+    
+    a {
+        color: #007bff;
+    }
+    
+    @mixin vertical-align($position: fixed) {
+        position: $position;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        /* end */
+        body {
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        h3 {
+            position: relative;
+            left: 45%;
+        }
+        /* THE FRONT */
+        .front {
+            background-size: cover;
+        }
+        /* /end */
+        /* THE BACK */
+        .back {
+            background-size: cover;
+        }
+        h1,
+        p,
+        .font-a-icons {
+            color: rgb(106, 106, 106);
+            font-family: lato;
+            margin-left: 2%;
+            line-height: 90%;
+        }
+        h1 {
+            margin-top: 5%;
+        }
+        p {
+            font-size: 16px;
+            padding-bottom: 15px;
+            width: 35%;
+            border-bottom: 2px solid black;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .font-a-icons {
+            margin-top: 25px;
+        }
+        .icon-group {
+            margin-top: 8px;
+        }
+        span,
+        .link,
+        .fa,
+        a {
+            color: $black;
+        }
+        .fa {
+            font-size: 18px;
+        }
+        span,
+        a {
+            font-size: 16px;
+        }
+        a,
+        .website {
+            text-decoration: none;
+        }
+        a:hover,
+        .website:hover {
+            color: #3f3f3f;
+        }
+        .icon-box {
+            position: relative;
+            color: black;
+            font-size: 24px;
+            height: 45px;
+            width: 45px;
+            padding: 5px;
+            top: 75px;
+            left: 30%;
+            display: inline-block;
+            border: 2px solid black;
+            margin: 5px;
+            text-align: center;
+            cursor: pointer;
+            -webkit-transition: all ease 0.5s;
+            -moz-transition: all ease 0.5s;
+            transition: all ease 0.5s;
+        }
+        .icon-box:hover {
+            box-shadow: inset 0 50px 0 0 black;
+            color: white;
+        }
+    }
+    /* /end */
+    /* THE FLIP EFFECT */
+    /* entire container, keeps perspective */
+    
+    .flip-container {
+        perspective: 1000px;
+    }
+    /* flip the pane when hovered */
+    /* .flip-container:hover .flipper,
+.flip-container.hover .flipper {
+    transform: rotateY(180deg);
+    cursor: pointer;
+} */
+    
+    .front {
+        z-index: 2;
+        background-color: rgb(216, 216, 216);
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+    
+    .back {
+        background-color: rgb(255, 255, 255);
+    }
+    
+    .back {
+        transform: rotateY(180deg);
+    }
+    
+    .front h5 {
+        text-transform: none;
+        font-weight: 600;
+    }
+    
+    .icon-group h5 {
+        text-transform: none;
+        font-weight: 500;
+    }
+    
+    .vertical.flip-container {
+        position: relative;
+    }
+    
+    .vertical .back {
+        transform: rotateX(180deg);
+    }
+    
+    .vertical.flip-container .flipper {
+        transform-origin: 100% 400x;
+    }
+    
+    .vertical.flip-container:hover .flipper {
+        transform: rotateX(-180deg);
+    }
+    /* card css ends */
+    
     .fb-profile img.fb-image-lg {
         z-index: 0;
         width: 1170px;
@@ -20,16 +178,26 @@
     
     .profile-content {
         text-align: left;
+        border: none !important;
     }
     
     .profile-content h5 {
-        color: #007bff;
+        color: #525252;
+    }
+    
+    .profile-content h4 {
+        color: #004d88;
     }
     
     .btn-primary {
         background-color: #004d88;
         border-radius: 10px;
         border-color: #004d88;
+    }
+    
+    .btn-add {
+        float: right;
+        margin-right: 0;
     }
     
     @media (max-width:768px) {
@@ -48,6 +216,7 @@
             width: 20%;
         }
     }
+</style>
 </style>
 {% endblock %} {% block title %} Profile {% endblock %} {% block content %}
 
@@ -86,53 +255,119 @@
                         <li><i class="fa fa-edit"></i>Another</li>
                     </ul>
                 </div>
-
+                {% if user.role == 'employer' %}
                 <div class="profile-content">
-                    <a href="{% url 'jobs:company-jobs' user.id %}"><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-key"></i>See All Jobs</button></a>
+                    <a href="{% url 'jobs:company-jobs' user.id %}"><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-suitcase"></i>See All Jobs</button></a>
+                    <a href="{% url 'accounts:company-images' user.id %}"><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-camera"></i>See All Photos</button></a>
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="col-lg-7 mb-5 mb-lg-0">
             <div class="box-image-text bg-visible full-height">
                 <div class="profile-content">
                     {% if user.role == 'employee' %}
-                    <h5>EDUCATION</h5>
-                    {% else %}
-                    <h5>SERVICES</h5>{% endif %}
+                    <h4>Experience</h4>
+                    {% for exp in experiences %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5>Company<span class="contact">{{exp.company_name}}</span></h5>
+                                <h5>Position: <span class="contact">{{exp.position}}</span></h5>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        <h5 class="bold">From: <span class="contact">{{exp.from_date|date}}</span></h5>
+                                        <h5 class="bold">To: <span class="contact">{{exp.to_date|date}}</span></h5>
+                                        {% if request.user == exp.user %}
+                                        <a href="{% url 'accounts:update-experience' exp.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="{% url 'accounts:delete-experience' exp.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %} {% else %}
+                    <h4>SERVICES</h4>
+                    {% for skill in skills %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5><span class="contact">{{skill.name}}</span></h5>
+                                <p>Description: <span class="contact">{{skill.details}}</span></p>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        {% if request.user == skill.user %}
+                                        <a href="{% url 'accounts:update-skill' skill.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="#"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- END LOOP -->
+                    {% endif %}
+                </div>
+                <br>
+                <hr>
+                <!-- SECTION 2 -->
+                <div class="profile-content">
+                    {% if user.role == 'employee' %}
+                    <h4>EDUCATION</h4>
+                    <!-- LOOP THROUGH DEGREES -->
+                    {% for degree in degrees %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5>DEGREE: <span class="contact">{{degree.degree}}</span></h5>
+                                <h5>SUBJECT: <span class="contact">{{degree.subject}}</span></h5>
+                                <h5>INSTITUTE: <span class="contact">{{degree.institute_name}}</span></h5>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        <h5 class="bold">PASSING YEAR: <span class="contact">{{degree.passing_year|date}}</span></h5>
+                                        <h5 class="bold">CGPA: <span class="contact">{{degree.cgpa}}</span></h5>
+                                        {% if request.user == degree.user %}
+                                        <a href="{% url 'accounts:update-education' degree.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="{% url 'accounts:delete-education' degree.id %}"><i class="fa fa-trash"></i>Delete</a>{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
 
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo omnis harum expedita voluptatum. Veritatis sit deleniti voluptatem iste cumque neque, id sunt quo sint, molestiae mollitia. Mollitia voluptates iusto amet natus! Nostrum
-                        error corporis sunt. Accusamus tenetur iste deleniti, sint quaerat quasi libero officia facere numquam. Sint nisi adipisci laborum voluptatibus hic! Doloribus unde officiis culpa nisi natus architecto voluptates quod a neque saepe
-                        dignissimos distinctio similique facilis recusandae harum sint, est tempora nostrum maiores non adipisci! Et tempora aspernatur quos temporibus consequuntur. Sit laudantium repellat unde cum impedit consequuntur nostrum atque qui
-                        sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
-                    </p>
-                </div>
-                <div class="profile-content">
-                    {% if user.role == 'employee' %}
-                    <h5>SKILLS</h5>
-                    {% elif request.user.is_authenticated and request.user.role == 'admin' %}
-                    <h5>DESIGNATION</h5>
+                    <!-- if user is EMPLOYER -->
+                    {% elif user.role == 'employer' %}
+                    <h4>Interview Process</h4>
+                    <!-- LOOP THROUGH DEGREES -->
+                    {% for skill in skills %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5><span class="contact">{{skill.name}}</span></h5>
+                                <p>Description: <span class="contact">{{skill.details}}</span></p>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        {% if request.user == degree.user %}
+                                        <a href="{% url 'accounts:update-skill' skill.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="#"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- ELSE USER IS EMPLOYER -->
                     {% else %}
-                    <h5>ADDRESS</h5>{% endif %}
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo omnis harum expedita voluptatum. Veritatis sit deleniti voluptatem iste cumque neque, id sunt quo sint, molestiae mollitia. Mollitia voluptates iusto amet natus! Nostrum
-                        error corporis sunt. Accusamus tenetur iste deleniti, sint quaerat quasi libero officia facere numquam. Sint nisi adipisci laborum voluptatibus hic! Doloribus unde officiis culpa nisi natus architecto voluptates quod a neque saepe
-                        dignissimos distinctio similique facilis recusandae harum sint, est tempora nostrum maiores non adipisci! Et tempora aspernatur quos temporibus consequuntur. Sit laudantium repellat unde cum impedit consequuntur nostrum atque qui
-                        sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
-                    </p>
+                    <h4>None</h4>
+                    {% endif %}
                 </div>
-                <div class="profile-content">
-                    {% if user.role == 'employee' %}
-                    <h5>Others</h5>
-                    {% else %}
-                    <h5>Awards</h5>{% endif %}
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo omnis harum expedita voluptatum. Veritatis sit deleniti voluptatem iste cumque neque, id sunt quo sint, molestiae mollitia. Mollitia voluptates iusto amet natus! Nostrum
-                        error corporis sunt. Accusamus tenetur iste deleniti, sint quaerat quasi libero officia facere numquam. Sint nisi adipisci laborum voluptatibus hic! Doloribus unde officiis culpa nisi natus architecto voluptates quod a neque saepe
-                        dignissimos distinctio similique facilis recusandae harum sint, est tempora nostrum maiores non adipisci! Et tempora aspernatur quos temporibus consequuntur. Sit laudantium repellat unde cum impedit consequuntur nostrum atque qui
-                        sunt ipsam expedita, voluptate ullam quasi rerum itaque vel cumque iure praesentium provident iste ab. Ea perspiciatis optio nulla delectus quisquam. In inventore molestiae ipsa blanditiis autem nesciunt? Laudantium aut molestias
-                    </p>
-                </div>
+                <br>
+                <hr>
             </div>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}
 <!-- /container -->

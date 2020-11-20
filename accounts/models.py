@@ -73,9 +73,8 @@ class UserProfile(models.Model):
 
     objects = UserProfileManager()
 
+
 # signal.py
-
-
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
@@ -83,6 +82,17 @@ def create_profile(sender, instance, created, **kwargs):
         post_save.connect(create_profile, sender=User)
 
 
+class ComapanyImage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    company_image = models.ImageField(blank=True, null=True,
+                                      default='avatar.png', upload_to='company_images')
+
+    def __str__(self):
+        return f'{self.user.email}+CompanyImages'
+
+
+# --------------------------------------------------------------
+# --------------------------------------------------------------
 class Education(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     degree = models.CharField(max_length=400, default="My Degree")

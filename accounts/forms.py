@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from django.forms import TextInput, EmailInput, Select, FileInput
 from accounts.models import User, UserProfile
-from accounts.models import Education, Experience, Service
+from accounts.models import Education, Experience, Service, ComapanyImage
 from django.forms.widgets import DateInput
 
 GENDER_CHOICES = (
@@ -237,6 +237,15 @@ class EmployerProfileUpdateForm(UserChangeForm):
 #     def __init__(self, *args, **kwargs):
 #         super(UserChangeForm, self).__init__(*args, **kwargs)
 #         del self.fields['password']
+
+class CompanyImageForm(forms.ModelForm):
+    class Meta:
+        model = ComapanyImage
+        exclude = ('user',)
+        widgets = {
+            'company_image': FileInput(attrs={'class': 'input', 'placeholder': 'Company Image', }),
+
+        }
 
 
 class ProfileUpdateForm(forms.ModelForm):
