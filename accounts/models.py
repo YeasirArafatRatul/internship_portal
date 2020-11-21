@@ -4,6 +4,7 @@ from accounts.managers import UserManager
 from PIL import Image
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from ckeditor.fields import RichTextField
 
 
 GENDER_CHOICES = (
@@ -127,6 +128,14 @@ class Experience(models.Model):
 
     def __str__(self):
         return str(f'{self.user.first_name} {self.user.last_name} - Experience')
+
+
+class InterviewProcess(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    details = RichTextField(blank=True, null=True)
+
+    def __str__(self):
+        return str(f'{self.user.first_name} {self.user.last_name} - Interview Process')
 
 
 class CV(models.Model):

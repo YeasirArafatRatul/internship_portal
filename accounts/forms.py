@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from django.forms import TextInput, EmailInput, Select, FileInput
 from accounts.models import User, UserProfile
-from accounts.models import Education, Experience, Service, ComapanyImage
+from accounts.models import ComapanyImage, Education, Experience, InterviewProcess, Service
 from django.forms.widgets import DateInput
 
 GENDER_CHOICES = (
@@ -303,4 +303,14 @@ class AddExperienceForm(forms.ModelForm):
             'position': TextInput(attrs={'class': 'textarea', 'placeholder': 'What was your position?', }),
             'from_date': DateInput(attrs={'class': 'input', 'placeholder': '00/00/00', }),
             'to_date': DateInput(attrs={'class': 'input', 'placeholder': '00/00/00', }),
+        }
+
+
+class AddInterviewProcessForm(forms.ModelForm):
+    class Meta:
+        model = InterviewProcess
+        exclude = ('user',)
+        widgets = {
+
+            'details': TextInput(attrs={'class': 'input', 'placeholder': 'Write Your Content Here', }),
         }

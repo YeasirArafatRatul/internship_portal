@@ -17,7 +17,9 @@ from accounts.views import (
     CompanyImagesView,
     edu_delete,
     exp_delete,
-    skill_delete
+    skill_delete,
+
+    InterviewProcessView,
 )
 
 
@@ -72,6 +74,10 @@ urlpatterns = [
          ExperienceUpdateView.as_view(), name='update-experience'),
     path('employee/delete-exp/<int:exp_id>',
          exp_delete, name='delete-experience'),
+
+    # --------------INTERVIEW PROCESS-----------
+    path('employer/add-interview-process/',
+         InterviewProcessView.as_view(), name='add-interview-process'),
 
 
     # ----------------RESUME-----------------

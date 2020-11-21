@@ -22,7 +22,7 @@ from accounts.forms import *
 from accounts.models import User, CV, UserProfile, Education, Service
 from jobsapp.models import JobCategory
 from SiteSettings.models import Setting
-from .forms import ProfileUpdateForm, EmployeeProfileUpdateForm, EmployerProfileUpdateForm, CompanyImageForm
+from jobsapp.forms import CreateJobForm
 
 
 @login_required(login_url='/login')
@@ -30,11 +30,13 @@ def profile(request):
     setting = Setting.objects.filter(status=True).first()
     categories = JobCategory.objects.all()
     current_user = request.user
-    profile = UserProfile.objects.get(user_id=current_user.id)
 
+    profile = UserProfile.objects.get(user_id=current_user.id)
     degrees = Education.objects.filter(user_id=current_user.id)
     skills = Service.objects.filter(user_id=current_user.id)
     experiences = Experience.objects.filter(user_id=current_user.id)
+    interview_process = InterviewProcess.objects.filter(
+        user_id=current_user.id)
 
     if request.method == 'POST':
         form = CompanyImageForm(
@@ -56,7 +58,9 @@ def profile(request):
                'degrees': degrees,
                'skills': skills,
                'experiences': experiences,
+               'process': interview_process,
                'form': form,
+
                }
     return render(request, 'accounts/demo_profile.html', context)
 
@@ -328,6 +332,7 @@ class UserDetailView(DetailView):
         context['experiences'] = Experience.objects.filter(user_id=id_)
         context['settings'] = Setting.objects.get(status=True)
         context['categories'] = JobCategory.objects.all()
+        context['process'] = InterviewProcess.objects.filter(user_id=id_)
         return context
 
 
@@ -346,6 +351,24 @@ class CompanyImagesView(ListView):
         context = super().get_context_data(**kwargs)
         context['settings'] = Setting.objects.get(status=True)
         context['categories'] = JobCategory.objects.all()
+        return context
+
+
+class InterviewProcessView(LoginRequiredMixin, CreateView):
+    template_name = 'jobs/jobcreate.html'
+    form_class = AddInterviewProcessForm
+    success_url = reverse_lazy('accounts:my-profile')
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+        context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
 
@@ -417,6 +440,10 @@ class RegisterEmployerView(CreateView):
         context['categories'] = JobCategory.objects.all()
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
+
+# ---------------------------------------------------------------
+#  LOGIN - LOGOUT
+# ---------------------------------------------------------------
 
 
 class LoginView(FormView):

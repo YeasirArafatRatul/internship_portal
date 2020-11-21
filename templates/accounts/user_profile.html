@@ -340,12 +340,12 @@
                     {% elif user.role == 'employer' %}
                     <h4>Interview Process</h4>
                     <!-- LOOP THROUGH DEGREES -->
-                    {% for skill in skills %}
+                    {% for data in process %}
                     <div class="flip-container centered">
                         <div class="flipper">
                             <div class="front">
-                                <h5><span class="contact">{{skill.name}}</span></h5>
-                                <p>Description: <span class="contact">{{skill.details}}</span></p>
+                                <h5><span class="contact"></span></h5>
+                                <p>Description: <span class="contact">{{data.details|safe}}</span></p>
                                 <div class="font-a-icons">
                                     <div class="icon-group">
                                         {% if request.user == degree.user %}

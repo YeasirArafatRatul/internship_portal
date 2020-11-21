@@ -32,6 +32,7 @@ class Job(models.Model):
     location = models.CharField(max_length=150)
     type = models.CharField(choices=JOB_TYPE, max_length=10)
     category = models.ForeignKey(JobCategory, on_delete=models.CASCADE)
+    vacancy = models.PositiveSmallIntegerField(default=1)
     last_date = models.DateTimeField()
     company_name = models.CharField(max_length=100, blank=True, null=True)
     company_description = models.CharField(

@@ -300,6 +300,7 @@
                         </div>
                     </div>
                     <!-- MODAL SECTION ENDS -->
+                    <a href="{% url 'accounts:company-images' user.id %}"><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-eye"></i>See Photos</button></a>
                     <a href="{% url 'accounts:profile-update' %}"><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-edit"></i>Edit Profile</button></a>
                     <a href="{% url 'accounts:password-change' %}"><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-key"></i>Change Password</button></a>
                 </div>
@@ -396,17 +397,17 @@
                     <h4>Interview Process</h4>
 
                     <!-- LOOP THROUGH DEGREES -->
-                    {% for skill in skills %}
+                    {% for data in process %}
                     <div class="flip-container centered">
                         <div class="flipper">
                             <div class="front">
-                                <h5><span class="contact">{{skill.name}}</span></h5>
-                                <p>Description: <span class="contact">{{skill.details}}</span></p>
+                                <h5><span class="contact"></span></h5>
+                                <p>Description: <span class="contact">{{data.details|safe}}</span></p>
                                 <div class="font-a-icons">
                                     <div class="icon-group">
-                                        {% if request.user == skill.user %}
-                                        <a href="{% url 'accounts:update-skill' skill.id %}"><i class="fa fa-edit"></i>Edit</a>
-                                        <a href="{% url 'accounts:delete-skill' skill.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                        {% if request.user == data.user %}
+                                        <a href="{% url 'accounts:update-skill' data.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="{% url 'accounts:delete-skill' data.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -414,7 +415,7 @@
                     </div>
                     {% endfor %}
                     <!-- END LOOP -->
-                    <a href="{% url 'accounts:add-skill' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a> {% endif %}
+                    <a href="{% url 'accounts:add-interview-process' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a> {% endif %}
                     <p></p>
 
                 </div>
