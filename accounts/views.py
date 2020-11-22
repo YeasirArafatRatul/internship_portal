@@ -505,11 +505,19 @@ class LogoutView(RedirectView):
         return context
 
 
-def render_pdf_view(request):
+def render_pdf_view(request, id):
     template_path = 'resume/resume.html'
-    resume = CV.objects.get(id=1)
+
+    user = User.objects.get(id=id)
+    degrees = Education.objects.filter(user_id=id)
+    skills = Service.objects.filter(user_id=id)
+    userprofile = UserProfile.objects.filter(user_id=id)
+    experiences = Experience.objects.filter(user_id=id)
     context = {
-        'resume': resume,
+        'user': user,
+        'degrees': degrees,
+        'skills': skills,
+        'experiences': experiences,
     }
 
     response = HttpResponse(content_type='application/pdf')
@@ -528,8 +536,34 @@ def render_pdf_view(request):
     return response
 
 
+class ResumeShowView(DetailView):
+    model = User
+    template_name = 'resume/resume.html'
+    context_object_name = 'user'
+
+    # this function serves the product id
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(User, id=id_)
+
+    # this will server siteSettings data to this view
+    def get_context_data(self, **kwargs):
+        id_ = self.kwargs.get("id")
+        context = super().get_context_data(**kwargs)
+        context['degrees'] = Education.objects.filter(user_id=id_)
+        context['skills'] = Service.objects.filter(user_id=id_)
+        context['userprofile'] = UserProfile.objects.filter(user_id=id_)
+        context['experiences'] = Experience.objects.filter(user_id=id_)
+        # context['settings'] = Setting.objects.get(status=True)
+        # context['categories'] = JobCategory.objects.all()
+        # context['process'] = InterviewProcess.objects.filter(user_id=id_)
+        return context
+
+
 def resume_show_view(request, *args, **kwargs):
     resume = CV.objects.get(id=1)
+
     context = {
         'resume': resume,
     }

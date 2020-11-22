@@ -22,7 +22,7 @@
                     <p>
                         <span class="badge badge-info">Applied {{ applicant.created_at.astimezone }}</span>
                     </p>
-                    <a href="#" data-toggle="modal" data-target="#contact-modal" class="btn btn-outline-white-secondary btn-sm" style="height: 2.5em;">
+                    <a href="{% url 'accounts:employee-resume' applicant.user.id %}" class="btn btn-outline-white-secondary btn-sm" style="height: 2.5em;">
                         <i class="fa fa-envelope"></i>Download Cv
                     </a>
 

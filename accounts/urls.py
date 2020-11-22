@@ -7,20 +7,7 @@ from jobsapp.views import EditProfileView
 from .views import RegisterEmployeeView, RegisterEmployerView, LoginView, LogoutView, UserDetailView
 
 from .views import render_pdf_view, resume_show_view, jsresume, profile, user_update, password_change
-from accounts.views import (
-    AddEducationView,
-    AddExperienceView,
-    AddSkillView,
-    EducationUpdateView,
-    ExperienceUpdateView,
-    SkillUpdateView,
-    CompanyImagesView,
-    edu_delete,
-    exp_delete,
-    skill_delete,
-
-    InterviewProcessView,
-)
+from accounts.views import AddEducationView, AddExperienceView, AddSkillView, CompanyImagesView, EducationUpdateView, ExperienceUpdateView, InterviewProcessView, ResumeShowView, SkillUpdateView, edu_delete, exp_delete, skill_delete
 
 
 app_name = "accounts"
@@ -81,7 +68,10 @@ urlpatterns = [
 
 
     # ----------------RESUME-----------------
-    path('employee/resume-download', render_pdf_view,
+
+    path('employee/resume/<int:id>',
+         ResumeShowView.as_view(), name='employee-resume'),
+    path('employee/resume-download/<int:id>', render_pdf_view,
          name='resumedownload'),
     path('employee/resume', resume_show_view,
          name='resume-show'),
