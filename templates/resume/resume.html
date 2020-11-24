@@ -25,6 +25,36 @@
         /* .yui-u tr>td {
             padding: 0 1.5rem;
         } */
+        
+        table,
+        th,
+        td {
+            /* border: 1px solid rgb(158, 216, 255); */
+            padding: 5px;
+        }
+        
+        th {
+            text-transform: uppercase;
+            border: none;
+        }
+        
+        img {
+            height: 150px;
+            width: 150px;
+            border: 3px solid rgb(21, 56, 56);
+            border-radius: 50%;
+            float: right;
+        }
+        
+        table {
+            width: 100%;
+        }
+        
+        th>h2 {
+            text-transform: uppercase;
+            font-style: italic;
+            font-weight: bolder;
+        }
     </style>
 
 </head>
@@ -33,7 +63,18 @@
 
     <div id="doc2" class="yui-t7">
         <div id="inner">
-            <div id="hd">
+            <table id='hd'>
+                <td>
+                    <h1 style="color: rgb(26, 29, 29); font-size: 26px; font-family: 'Times New Roman', Times, serif;">{{user.first_name}} {{user.last_name}}</h1>
+                    <h3><i class='fa fa-envelop'></i><a href="#">Email: {{user.email}}</a></h3>
+                    <p>{{user.userprofile.address}}</p>
+                </td>
+                <td>
+                    <img src="{{user.userprofile.image.path}}" alt="">
+                    <h3><a id="pdf" href="{% url 'accounts:resumedownload' user.id %}">Download PDF</a></h3>
+                </td>
+            </table>
+            <!-- <div id="hd">
                 <div class="yui-gc">
                     <div class="yui-u first">
                         <h1 style="color: rgb(26, 29, 29); font-size: 26px; font-family: 'Times New Roman', Times, serif;">{{user.first_name}} {{user.last_name}}</h1>
@@ -48,20 +89,17 @@
                             <h3><a id="pdf" href="{% url 'accounts:resumedownload' user.id %}">Download PDF</a></h3>
 
                         </div>
-                        <!--// .contact-info -->
                     </div>
                 </div>
-                <!--// .yui-gc -->
-            </div>
+            </div> -->
             <!--// hd -->
 
             <div id="bd">
                 <div id="yui-main">
                     <div class="yui-b">
-
                         <div class="yui-gf">
                             <div class="yui-u first">
-                                <h2>Profile</h2>
+                                <h2>Career Objective</h2>
                             </div>
                             <div class="yui-u">
                                 <p class="enlarge">
@@ -69,10 +107,31 @@
                                 </p>
                             </div>
                         </div>
-                        <!--// .yui-gf -->
-
                         <div class="yui-gf">
-                            <div class="yui-u first">
+                            <table>
+                                <tr>
+                                    <th>
+                                        <h2>Education</h2>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    {% for degree in degrees %}
+                                    <div class="job">
+                                        <td>
+                                            <h2>{{degree.degree}}</h2>
+                                            <h3>{{degree.institute_name}}</h3>
+                                            <h4>Score: {{degree.cgpa}}</h4>
+                                            <h4>Passing Year: {{degree.passing_year|date}}</h4>
+                                        </td>
+                                        <!-- <p>Intrinsicly enable optimal core competencies through corporate relationships. Phosfluorescently implement worldwide vortals and client-focused imperatives. Conveniently initiate virtual paradigms and top-line convergence.
+                                    </p> -->
+                                    </div>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="yui-gf">
+                            <!-- <div class="yui-u first">
                                 <h2>Education</h2>
                             </div>
 
@@ -86,46 +145,14 @@
                                         <br>
                                         <h3>Passing Year:{{degree.passing_year|date}}</h3>
                                     </td>
-                                    <!-- <p>Intrinsicly enable optimal core competencies through corporate relationships. Phosfluorescently implement worldwide vortals and client-focused imperatives. Conveniently initiate virtual paradigms and top-line convergence.
-                                    </p> -->
+           
                                 </div>
                                 {% endfor %}
-                                <!-- <table>
-                                    <tr>
-                                        <th>Education</th>
-                                        <th>Experience</th>
-                                        <th>Skills</th>
-                                    </tr>
-                                    <tr>
-                                        <td>{% for degree in degrees %}
-                                            <h4>DEGREE: <span class="contact">{{degree.degree}}</span></h4>
-                                            <h5>SUBJECT: <span class="contact">{{degree.subject}}</span></h5>
-                                            <h5>INSTITUTE: <span class="contact">{{degree.institute_name}}</span></h5>
-                                            {% endfor %}
-                                        </td>
-                                        <td>Python,Django, DRF</td>
-                                        <td>Windows, Linux</td>
-                                    </tr>
-                                </table> -->
-                                <!-- <div class="talent">
-                                    <h2>Web Design</h2>
-                                    <p>Assertively exploit wireless initiatives rather than synergistic core competencies. </p>
-                                </div>
-
-                                <div class="talent">
-                                    <h2>Interface Design</h2>
-                                    <p>Credibly streamline mission-critical value with multifunctional functionalities. </p>
-                                </div>
-
-                                <div class="talent">
-                                    <h2>Project Direction</h2>
-                                    <p>Proven ability to lead and manage a wide variety of design and development projects in team and independent situations.</p>
-                                </div> -->
-                            </div>
+                            </div> -->
                         </div>
                         <!--// .yui-gf -->
 
-                        <!-- <div class="yui-gf">
+                        <div class="yui-gf">
                             <div class="yui-u first">
                                 <h2>Technical</h2>
                             </div>
@@ -161,7 +188,7 @@
                                     <li class="last">Linux</li>
                                 </ul>
                             </div>
-                        </div> -->
+                        </div>
                         <!--// .yui-gf-->
 
                         <div class="yui-gf">
