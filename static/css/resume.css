@@ -60,7 +60,7 @@ body {
 #hd {
     margin: 2.5em 0 3em 0;
     padding-bottom: 1.5em;
-    border-bottom: 1px solid #ccc
+    border-bottom: 1px solid #ccc;
 }
 
 #hd h2 {
@@ -178,8 +178,8 @@ a#pdf:hover {
 .job {
     position: relative;
     margin-bottom: 1em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid #ccc;
+    /* padding-bottom: 1em;
+    border-bottom: 1px solid #ccc; */
 }
 
 .job h4 {

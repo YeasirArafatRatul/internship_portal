@@ -506,7 +506,7 @@ class LogoutView(RedirectView):
 
 
 def render_pdf_view(request, id):
-    template_path = 'resume/resume.html'
+    template_path = 'resume/jsresume.html'
 
     user = User.objects.get(id=id)
     degrees = Education.objects.filter(user_id=id)
@@ -538,7 +538,7 @@ def render_pdf_view(request, id):
 
 class ResumeShowView(DetailView):
     model = User
-    template_name = 'resume/resume.html'
+    template_name = 'resume/jsresume.html'
     context_object_name = 'user'
 
     # this function serves the product id
@@ -567,7 +567,7 @@ def resume_show_view(request, *args, **kwargs):
     context = {
         'resume': resume,
     }
-    return render(request, 'resume/resume.html', context)
+    return render(request, 'resume/jsresume.html', context)
 
 
 def jsresume(request):
@@ -575,4 +575,4 @@ def jsresume(request):
     context = {
         'resume': resume,
     }
-    return render(request, 'resume/resume.html', context)
+    return render(request, 'resume/jsresume.html', context)
