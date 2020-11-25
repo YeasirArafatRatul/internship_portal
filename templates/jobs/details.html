@@ -46,10 +46,10 @@
             </div>
             <div class="col-lg-1"></div>
             <div class="col-lg-3">
-                <h4>About {{ job.company_name }}</h4>
-                <p class="job-detail__company-description">{{ job.company_description }}</p>
+                <h4>About {{ job.user.first_name }}</h4>
+                <p class="job-detail__company-description">{{ job.user.userprofile.about }}</p>
                 <p class="job-detail__social social social--outline">
-                    <a href="{{ job.website }}" data-toggle="tooltip" data-placement="top" title="Website" class="link">
+                    <a href="{{ job.user.userprofile.website }}" data-toggle="tooltip" data-placement="top" title="Website" class="link">
                         <i class="fa fa-link"></i>
                     </a>
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter" class="twitter">

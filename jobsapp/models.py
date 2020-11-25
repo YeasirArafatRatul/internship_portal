@@ -34,10 +34,6 @@ class Job(models.Model):
     category = models.ForeignKey(JobCategory, on_delete=models.CASCADE)
     vacancy = models.PositiveSmallIntegerField(default=1)
     last_date = models.DateTimeField()
-    company_name = models.CharField(max_length=100, blank=True, null=True)
-    company_description = models.CharField(
-        max_length=300, null=True, blank=True)
-    website = models.CharField(max_length=100, default="")
     created_at = models.DateTimeField(default=timezone.now)
     filled = models.BooleanField(default=False)
     salary = models.IntegerField(default=0, blank=True)

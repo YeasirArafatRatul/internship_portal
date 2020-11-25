@@ -52,6 +52,7 @@ class UserProfile(models.Model):
     website = models.CharField(
         max_length=100, default="", null=True, blank=True)
     industry_type = models.CharField(max_length=100, null=True, blank=True)
+    website = models.URLField(default='www.mysite.com')
 
     def __str__(self):
         return f'{self.user.email}'

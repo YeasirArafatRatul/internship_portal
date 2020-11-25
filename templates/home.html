@@ -111,13 +111,13 @@
                             {% if request.user.is_authenticated and request.user == trending.user %}
                             <a href="{% url 'accounts:my-profile' %}">
                                 <p class="job__company">
-                                    <i class="fa fa-building"></i> {{ trending.company_name }}
+                                    <i class="fa fa-building"></i> {{ trending.user.first_name }}
                                 </p>
                             </a>
                             {% else %}
                             <a href="{% url 'accounts:user-detail' trending.user.id %}">
                                 <p class="job__company">
-                                    <i class="fa fa-building"></i> {{ trending.company_name }}
+                                    <i class="fa fa-building"></i> {{ trending.user.first_name }}
                                 </p>
                             </a>
                             {% endif %}
