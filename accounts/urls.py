@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from jobsapp.views import EditProfileView
 from .views import RegisterEmployeeView, RegisterEmployerView, LoginView, LogoutView, UserDetailView
 
-from .views import render_pdf_view, resume_show_view, jsresume, profile, user_update, password_change
+from .views import render_pdf_view, profile, user_update, password_change
 from accounts.views import AddEducationView, AddExperienceView, AddSkillView, CompanyImagesView, EducationUpdateView, ExperienceUpdateView, InterviewProcessView, ResumeShowView, SkillUpdateView, edu_delete, exp_delete, skill_delete
 
 
@@ -73,10 +73,10 @@ urlpatterns = [
          ResumeShowView.as_view(), name='employee-resume'),
     path('employee/resume-download/<int:id>', render_pdf_view,
          name='resumedownload'),
-    path('employee/resume', resume_show_view,
-         name='resume-show'),
-    path('employee/jsresume', jsresume,
-         name='jsresume'),
+    #     path('employee/resume', resume_show_view,
+    #          name='resume-show'),
+    #     path('employee/jsresume', jsresume,
+    #          name='jsresume'),
 
 
     path('all-images-by-company/<int:user_id>',

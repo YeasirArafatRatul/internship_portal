@@ -80,7 +80,7 @@
                 <div class="profile-content">
                     <ul style="list-style: none;">
                         <li><i class="fa fa-envelope"></i>{{profile.user.email}}</li>
-                        <li><i class="fa fa-edit"></i>Another</li>
+                        <li><i class="fa fa-world"></i><a href="{{ user.userprofile.website.url }}">{{user.userprofile.website}}</a></li>
                     </ul>
                 </div>
                 {% if request.user.is_authenticated and request.user == profile.user %}

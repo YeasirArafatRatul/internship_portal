@@ -31,6 +31,7 @@ urlpatterns = [
              reject, name='reject'),
 
     ])),
+    path("all-categories/", AllCategories.as_view(), name='all-categories'),
     path('all-jobs-by-company/<int:user_id>',
          IndividualCompanyJobListView.as_view(), name='company-jobs'),
     path('apply-job/<int:job_id>', ApplyJobView.as_view(), name='apply-job'),

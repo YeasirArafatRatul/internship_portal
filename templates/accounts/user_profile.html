@@ -233,7 +233,7 @@
                 <h1>{{user.first_name}} {{user.last_name}}</h1>
             </div>
             {% else %}
-            <h1>@username</h1>{% endif %}
+            <h1>{{user.first_name}} {{user.last_name}}</h1>{% endif %}
         </div>
     </div>
     <!-- 2nd row -->
@@ -251,8 +251,8 @@
                 </div>
                 <div class="profile-content">
                     <ul style="list-style: none;">
-                        <li><i class="fa fa-envelope"></i>{{user.email}}</li>
-                        <li><i class="fa fa-edit"></i>Another</li>
+                        <li><i class="fa fa-envelope"></i> {{user.email}}</li>
+                        <li><i class="fa fa-globe"></i><a href="{{ user.userprofile.website }}"> {{user.userprofile.website}}</a></li>
                     </ul>
                 </div>
                 {% if user.role == 'employer' %}

@@ -25,7 +25,7 @@ class AppliedJobsView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # context['applied_jobs'] = Applicant.objects.filter(user=self.user)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -59,6 +59,6 @@ class EditProfileView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context

@@ -52,7 +52,7 @@ class SearchView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
 
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
@@ -66,7 +66,7 @@ class JobListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -83,7 +83,7 @@ class IndividualCompanyJobListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -99,7 +99,7 @@ class CatJobListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
 
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
@@ -116,7 +116,7 @@ class Companies(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
 
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
@@ -145,7 +145,7 @@ class JobDetailsView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
 
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
@@ -192,7 +192,21 @@ class ApplyJobView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
+
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class AllCategories(ListView):
+    model = JobCategory
+    template_name = 'jobs/allcategories.html'
+    context_object_name = 'categories'
+    paginate_by = 8
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
 
         context['settings'] = Setting.objects.filter(status=True).first()
         return context

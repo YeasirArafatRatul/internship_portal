@@ -80,7 +80,11 @@
                         </div>
                         <hr>
                         <div>
-                            <h5><a href="{% url 'jobs:company-jobs' employer.id %}">{{ employer.first_name }}{{employer.last_name}}</a></h5>
+                            {% if request.user.is_authenticated and request.user == employer %}
+                            <!-- <h5><a href="{% url 'jobs:company-jobs' employer.id %}">{{ employer.first_name }}{{employer.last_name}}</a></h5> -->
+                            <h5><a href="{% url 'accounts:my-profile' %}">{{ employer.first_name }}{{employer.last_name}}</a></h5>
+                            {% else %}
+                            <h5><a href="{% url 'accounts:user-detail' employer.id %}">{{ employer.first_name }}{{employer.last_name}}</a></h5>{% endif %}
                         </div>
                         <!-- <p><i class="fa fa-money"></i></p> -->
 

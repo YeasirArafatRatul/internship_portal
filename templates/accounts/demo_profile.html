@@ -260,24 +260,27 @@
                 <div class="profile-content">
                     <ul style="list-style: none;">
                         <li><i class="fa fa-envelope"></i>{{profile.user.email}}</li>
-                        <li><i class="fa fa-edit"></i>Another</li>
+                        <li><i class="fa fa-globe"></i><a href="{{ user.userprofile.website }}"> {{user.userprofile.website}}</a></li>
                     </ul>
                 </div>
                 {% if request.user.is_authenticated and request.user == profile.user %}
                 <div class="profile-content">
                     <!-- MODAL SECTION -->
+                    {% if request.user.role == 'employer' %}
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 16rem; margin-bottom: 10px;"><i class="fa fa-camera"></i>Add Photo</button>
-                    <br>
-
+                    <br> {% endif %}
                     <!-- Modal -->
+
                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
+
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLongTitle">Add Photo</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
+
                                 <div class="modal-body">
                                     <form action="#" method="POST" enctype="multipart/form-data">
                                         <div class="login-form">
@@ -300,7 +303,8 @@
                         </div>
                     </div>
                     <!-- MODAL SECTION ENDS -->
-                    <a href="{% url 'accounts:company-images' user.id %}"><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-eye"></i>See Photos</button></a>
+                    {% if request.user.role == 'employer' %}
+                    <a href="{% url 'accounts:company-images' user.id %}"><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-eye"></i>See Photos</button></a> {% endif %}
                     <a href="{% url 'accounts:profile-update' %}"><button class="btn btn-primary mb-2" style="width: 16rem;"><i class="fa fa-edit"></i>Edit Profile</button></a>
                     <a href="{% url 'accounts:password-change' %}"><button class="btn btn-primary" style="width: 16rem;"><i class="fa fa-key"></i>Change Password</button></a>
                 </div>

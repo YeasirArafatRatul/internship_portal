@@ -28,7 +28,7 @@ from jobsapp.forms import CreateJobForm
 @login_required(login_url='/login')
 def profile(request):
     setting = Setting.objects.filter(status=True).first()
-    categories = JobCategory.objects.all()
+    categories = JobCategory.objects.all().order_by('-id')[:8]
     current_user = request.user
 
     profile = UserProfile.objects.get(user_id=current_user.id)
@@ -331,7 +331,7 @@ class UserDetailView(DetailView):
         context['skills'] = Service.objects.filter(user_id=id_)
         context['experiences'] = Experience.objects.filter(user_id=id_)
         context['settings'] = Setting.objects.get(status=True)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['process'] = InterviewProcess.objects.filter(user_id=id_)
         return context
 
@@ -350,7 +350,7 @@ class CompanyImagesView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['settings'] = Setting.objects.get(status=True)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         return context
 
 
@@ -367,7 +367,7 @@ class InterviewProcessView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -437,7 +437,7 @@ class RegisterEmployerView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -482,7 +482,7 @@ class LoginView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('?')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -500,7 +500,7 @@ class LogoutView(RedirectView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('?')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -509,16 +509,43 @@ def render_pdf_view(request, id):
     template_path = 'resume/jsresume.html'
 
     user = User.objects.get(id=id)
+    userprofile = UserProfile.objects.filter(user_id=id)
     degrees = Education.objects.filter(user_id=id)
     skills = Service.objects.filter(user_id=id)
-    userprofile = UserProfile.objects.filter(user_id=id)
     experiences = Experience.objects.filter(user_id=id)
-    context = {
-        'user': user,
-        'degrees': degrees,
-        'skills': skills,
-        'experiences': experiences,
-    }
+    edu_set = Education.objects.filter(user_id=id)
+    experience_set = Experience.objects.filter(user_id=id)
+    skills_set = Service.objects.filter(user_id=id)
+
+    if len(skills_set) > 3 or len(edu_set) > 3 or len(experience_set) > 3:
+        degrees = Education.objects.filter(user_id=id)[:3]
+        degrees_two = Education.objects.filter(user_id=id)[3:6]
+        skills = Service.objects.filter(user_id=id)[:3]
+        skills_two = Service.objects.filter(user_id=id)[3:6]
+        experiences = Experience.objects.filter(user_id=id)[:3]
+        experiences_two = Experience.objects.filter(user_id=id)[
+            3:6]
+        context = {
+            'user': user,
+            'degrees': degrees,
+            'degrees_two': degrees_two,
+            'skills': skills,
+            'skills_two': skills_two,
+            'experiences': experiences,
+            'experiences_two': experiences_two,
+        }
+
+    else:
+        degrees = Education.objects.filter(user_id=id)[:3]
+        skills = Service.objects.filter(user_id=id)[:3]
+        experiences = Experience.objects.filter(user_id=id)[:3]
+
+        context = {
+            'user': user,
+            'degrees': degrees,
+            'skills': skills,
+            'experiences': experiences,
+        }
 
     response = HttpResponse(content_type='application/pdf')
     # if we want to download
@@ -538,7 +565,7 @@ def render_pdf_view(request, id):
 
 class ResumeShowView(DetailView):
     model = User
-    template_name = 'resume/jsresume.html'
+    template_name = 'resume/resume.html'
     context_object_name = 'user'
 
     # this function serves the product id
@@ -550,29 +577,53 @@ class ResumeShowView(DetailView):
     # this will server siteSettings data to this view
     def get_context_data(self, **kwargs):
         id_ = self.kwargs.get("id")
+
         context = super().get_context_data(**kwargs)
-        context['degrees'] = Education.objects.filter(user_id=id_)
-        context['skills'] = Service.objects.filter(user_id=id_)
+        edu_set = Education.objects.filter(user_id=id_)
+        experience_set = Experience.objects.filter(user_id=id_)
+
+        skills_set = Service.objects.filter(user_id=id_)
         context['userprofile'] = UserProfile.objects.filter(user_id=id_)
-        context['experiences'] = Experience.objects.filter(user_id=id_)
+
+        if len(skills_set) > 3:
+            context['skills'] = Service.objects.filter(user_id=id_)[:3]
+            context['skills_two'] = Service.objects.filter(user_id=id_)[3:6]
+        else:
+            context['skills'] = Service.objects.filter(user_id=id_)[:3]
+
+        if len(experience_set) > 3:
+            context['experiences'] = Experience.objects.filter(user_id=id_)[:3]
+            context['experiences_two'] = Experience.objects.filter(user_id=id_)[
+                3:6]
+        else:
+            context['experiences'] = Experience.objects.filter(user_id=id_)[:3]
+
+        if len(edu_set) > 3:
+            context['degrees'] = Education.objects.filter(user_id=id_)[:3]
+            context['degrees_two'] = Education.objects.filter(user_id=id_)[3:6]
+        else:
+            context['degrees'] = Education.objects.filter(user_id=id_)[:3]
+
+        for i in skills_set:
+            print(i.name)
         # context['settings'] = Setting.objects.get(status=True)
         # context['categories'] = JobCategory.objects.all()
         # context['process'] = InterviewProcess.objects.filter(user_id=id_)
         return context
 
 
-def resume_show_view(request, *args, **kwargs):
-    resume = CV.objects.get(id=1)
+# def resume_show_view(request, *args, **kwargs):
+#     resume = CV.objects.get(id=1)
 
-    context = {
-        'resume': resume,
-    }
-    return render(request, 'resume/jsresume.html', context)
+#     context = {
+#         'resume': resume,
+#     }
+#     return render(request, 'resume/jsresume.html', context)
 
 
-def jsresume(request):
-    resume = CV.objects.get(id=1)
-    context = {
-        'resume': resume,
-    }
-    return render(request, 'resume/jsresume.html', context)
+# def jsresume(request):
+#     resume = CV.objects.get(id=1)
+#     context = {
+#         'resume': resume,
+#     }
+#     return render(request, 'resume/jsresume.html', context)

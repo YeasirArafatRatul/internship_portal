@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" media="all" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/resume.css' %}" media="all" />
     <style>
+        .data-table {}
+        
         .yui-u table {
             float: left;
         }
@@ -43,7 +45,7 @@
             width: 150px;
             border: 3px solid rgb(21, 56, 56);
             border-radius: 50%;
-            float: right;
+            /* margin-left: 450px; */
         }
         
         table {
@@ -51,9 +53,18 @@
         }
         
         th>h2 {
-            text-transform: uppercase;
             font-style: italic;
             font-weight: bolder;
+            color: #a808b6;
+        }
+        
+        h2 {
+            color: #000038;
+        }
+        
+        .data-table h2 {
+            /* background-color: black; */
+            margin-left: 0;
         }
     </style>
 
@@ -65,14 +76,16 @@
         <div id="inner">
             <table id='hd'>
                 <td>
-                    <h1 style="color: rgb(26, 29, 29); font-size: 26px; font-family: 'Times New Roman', Times, serif;">{{user.first_name}} {{user.last_name}}</h1>
-                    <h3><i class='fa fa-envelop'></i><a href="#">Email: {{user.email}}</a></h3>
-                    <p>{{user.userprofile.address}}</p>
+                    <img src="{{user.userprofile.image.url}}" alt="">
+
                 </td>
                 <td>
-                    <img src="{{user.userprofile.image.path}}" alt="">
+                    <h1 style="color: #000038; font-size: 26px; font-weight: bolder; font-family: 'Times New Roman', Times, serif;">{{user.first_name}} {{user.last_name}}</h1>
+                    <h3><i class='fa fa-envelop'></i><a href="#">Email: {{user.email}}</a></h3>
+                    <p>{{user.userprofile.address}}</p>
                     <h3><a id="pdf" href="{% url 'accounts:resumedownload' user.id %}">Download PDF</a></h3>
                 </td>
+
             </table>
             <!-- <div id="hd">
                 <div class="yui-gc">
@@ -107,7 +120,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="yui-gf">
+                        <div class="yui-gf first data-table">
                             <table>
                                 <tr>
                                     <th>
@@ -123,109 +136,99 @@
                                             <h4>Score: {{degree.cgpa}}</h4>
                                             <h4>Passing Year: {{degree.passing_year|date}}</h4>
                                         </td>
-                                        <!-- <p>Intrinsicly enable optimal core competencies through corporate relationships. Phosfluorescently implement worldwide vortals and client-focused imperatives. Conveniently initiate virtual paradigms and top-line convergence.
-                                    </p> -->
+
                                     </div>
                                     {% endfor %}
                                 </tr>
                             </table>
+                            <table>
+                                <tr>
+                                    {% if degrees_two %} {% for degree in degrees_two %}
+                                    <div class="job">
+
+                                        <td>
+                                            <h2>{{degree.degree}}</h2>
+                                            <h3>{{degree.institute_name}}</h3>
+                                            <h4>Score: {{degree.cgpa}}</h4>
+                                            <h4>Passing Year: {{degree.passing_year|date}}</h4>
+                                        </td>
+                                    </div>
+                                    {% endfor %} {% else %}
+                                    <td></td>
+                                    {% endif %}
+
+                                </tr>
+                            </table>
                         </div>
-                        <div class="yui-gf">
-                            <!-- <div class="yui-u first">
-                                <h2>Education</h2>
-                            </div>
+                        <br>
+                        <div class="yui-gf first  data-table">
+                            <table>
+                                <tr>
+                                    <th>
+                                        <h2>Skill</h2>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    {% for skill in skills %}
+                                    <div class="job">
+                                        <td>
+                                            <h2>{{skill.name}}</h2>
+                                            <p>{{skill.details}}</p>
+                                        </td>
+                                    </div>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    {% for skill in skills_two %}
+                                    <div class="job">
+                                        <td>
+                                            <h2>{{skill.name}}</h2>
+                                            <p>{{skill.details}}</p>
+                                        </td>
+                                    </div>
+                                    {% endfor %}
+                                </tr>
+                            </table>
 
-                            <div class="yui-u">
-                                {% for degree in degrees %}
-                                <div class="job">
-                                    <td>
-                                        <h2>{{degree.degree}}</h2>
-                                        <h3>{{degree.institute_name}}</h3>
-                                        <h4>Score:{{degree.cgpa}}</h4>
-                                        <br>
-                                        <h3>Passing Year:{{degree.passing_year|date}}</h3>
-                                    </td>
-           
-                                </div>
-                                {% endfor %}
-                            </div> -->
                         </div>
-                        <!--// .yui-gf -->
-
-                        <div class="yui-gf">
-                            <div class="yui-u first">
-                                <h2>Technical</h2>
-                            </div>
-                            <div class="yui-u">
-                                <table>
-                                    <tr>
-                                        <th>XHTML</th>
-                                        <th>CSS</th>
-                                        <th>Javascript</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Jquery</td>
-                                        <td>PHP</td>
-                                        <td>Linux</td>
-                                    </tr>
-                                </table>
-
-                                <ul class="talent">
-                                    <li>XHTML</li>
-                                    <li>CSS</li>
-                                    <li class="last">Javascript</li>
-                                </ul>
-
-                                <ul class="talent">
-                                    <li>Jquery</li>
-                                    <li>PHP</li>
-                                    <li class="last">CVS / Subversion</li>
-                                </ul>
-
-                                <ul class="talent">
-                                    <li>OS X</li>
-                                    <li>Windows XP/Vista</li>
-                                    <li class="last">Linux</li>
-                                </ul>
-                            </div>
+                        <br>
+                        <div class="yui-gf first  data-table">
+                            <table>
+                                <tr>
+                                    <th>
+                                        <h2>Projects</h2>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    {% for exp in experiences %}
+                                    <div class="job">
+                                        <td>
+                                            <h2>{{exp.company_name}}</h2>
+                                            <h3>{{exp.position}}</h3>
+                                            <h4>{{exp.from_date}} - {{exp.to_date}}</h4>
+                                        </td>
+                                    </div>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    {% if experiences_two %} {% for exp in experiences_two %}
+                                    <div class="job">
+                                        <td>
+                                            <h2>{{exp.company_name}}</h2>
+                                            <h3>{{exp.position}}</h3>
+                                            <h4>{{exp.from_date}} - {{exp.to_date}}</h4>
+                                        </td>
+                                    </div>
+                                    {% endfor %} {% else %}
+                                    <td></td>
+                                    {% endif %}
+                                </tr>
+                            </table>
                         </div>
-                        <!--// .yui-gf-->
-
-                        <div class="yui-gf">
-
-                            <div class="yui-u first">
-                                <h2>Experience</h2>
-                            </div>
-                            <!--// .yui-u -->
-
-                            <div class="yui-u">
-                                {% for exp in experiences %}
-                                <div class="job">
-                                    <h2>{{exp.company_name}}</h2>
-                                    <h3>{{exp.position}}</h3>
-                                    <h4>{{exp.from_date}}-{{exp.to_date}}</h4>
-                                    <!-- <p>Intrinsicly enable optimal core competencies through corporate relationships. Phosfluorescently implement worldwide vortals and client-focused imperatives. Conveniently initiate virtual paradigms and top-line convergence.
-                                    </p> -->
-                                </div>
-                                {% endfor %}
-
-                            </div>
-                            <!--// .yui-u -->
-                        </div>
-                        <!--// .yui-gf -->
-
-
-                        <div class="yui-gf last">
-                            <div class="yui-u first">
-                                <h2>Education</h2>
-                            </div>
-                            <div class="yui-u">
-                                <h2>Indiana University - Bloomington, Indiana</h2>
-                                <h3>Dual Major, Economics and English &mdash; <strong>4.0 GPA</strong> </h3>
-                            </div>
-                        </div>
-                        <!--// .yui-gf -->
-
 
                     </div>
                     <!--// .yui-b -->
@@ -233,20 +236,11 @@
                 <!--// yui-main -->
             </div>
             <!--// bd -->
-
-            <div id="ft">
-                <p>Jonathan Doe &mdash; <a href="mailto:name@yourdomain.com">name@yourdomain.com</a> &mdash; (313) - 867-5309</p>
-            </div>
             <!--// footer -->
-
         </div>
         <!-- // inner -->
-
-
     </div>
     <!--// doc -->
-
-
 </body>
 
 </html>

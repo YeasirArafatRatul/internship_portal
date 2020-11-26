@@ -31,7 +31,7 @@ class DashboardView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -57,7 +57,7 @@ class JobCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -82,7 +82,7 @@ class JobUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -99,7 +99,7 @@ def job_update(request, job_id):
                 request, "Your Job is updated successfully")
             return redirect('jobs:employer-dashboard')
     else:
-        category = JobCategory.objects.all()
+        category = JobCategory.objects.all().order_by('-id')[:8]
         job_form = CreateJobForm(instance=request.user)
         setting = Setting.objects.filter(status=True).first()
     context = {
@@ -141,7 +141,7 @@ class ApplicantPerJobView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['job'] = Job.objects.get(id=self.kwargs['job_id'])
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
@@ -158,7 +158,7 @@ class ApplicantsListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all()
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
 

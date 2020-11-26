@@ -50,10 +50,10 @@
             width: 100%;
         }
         
-        th>h2 {
-            text-transform: uppercase;
+        .first h2 {
             font-style: italic;
             font-weight: bolder;
+            color: #a808b6;
         }
     </style>
 
@@ -66,34 +66,16 @@
             <table id='hd'>
                 <td>
                     <img src="{{user.userprofile.image.path}}" alt="">
-                    <h3><a id="pdf" href="{% url 'accounts:resumedownload' user.id %}">Download PDF</a></h3>
+
                 </td>
                 <td>
-                    <h1 style="color: rgb(26, 29, 29); font-size: 26px; font-family: 'Times New Roman', Times, serif;">{{user.first_name}} {{user.last_name}}</h1>
+                    <h1 style="color: #000038; font-size: 26px; font-weight: bolder; font-family: 'Times New Roman', Times, serif;">{{user.first_name}} {{user.last_name}}</h1>
                     <h3><i class='fa fa-envelop'></i><a href="#">Email: {{user.email}}</a></h3>
                     <p>{{user.userprofile.address}}</p>
+                    <!-- <h3><a id="pdf" href="{% url 'accounts:resumedownload' user.id %}">Download PDF</a></h3> -->
                 </td>
 
             </table>
-            <!-- <div id="hd">
-                <div class="yui-gc">
-                    <div class="yui-u first">
-                        <h1 style="color: rgb(26, 29, 29); font-size: 26px; font-family: 'Times New Roman', Times, serif;">{{user.first_name}} {{user.last_name}}</h1>
-                        <h3><a href="#">Email: {{user.email}}</a></h3>
-                        <h3></h3>
-                        <p>{{user.userprofile.address}}</p>
-                    </div>
-
-                    <div class="yui-u">
-                        <div class="contact-info">
-                            <img src="{{user.userprofile.image.url}}" alt="">
-                            <h3><a id="pdf" href="{% url 'accounts:resumedownload' user.id %}">Download PDF</a></h3>
-
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!--// hd -->
 
             <div id="bd">
                 <div id="yui-main">
@@ -108,63 +90,85 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="yui-gf">
+                        <div class="yui-gf first data-table">
                             <table>
-                                <tr>
-                                    <th>
-                                        <h2>Education</h2>
-                                    </th>
-                                </tr>
+                                <div class="yui-u first">
+                                    <h2>Education</h2>
+                                </div>
                                 <tr>
                                     {% for degree in degrees %}
                                     <div class="job">
                                         <td>
-                                            <h2>{{degree.degree}}</h2>
+                                            <h2 style='color:#000038;'>{{degree.degree}}</h2>
                                             <h3>{{degree.institute_name}}</h3>
                                             <h4>Score: {{degree.cgpa}}</h4>
                                             <h4>Passing Year: {{degree.passing_year|date}}</h4>
                                         </td>
-                                        <!-- <p>Intrinsicly enable optimal core competencies through corporate relationships. Phosfluorescently implement worldwide vortals and client-focused imperatives. Conveniently initiate virtual paradigms and top-line convergence.
-                                    </p> -->
+
                                     </div>
                                     {% endfor %}
                                 </tr>
                             </table>
-                        </div>
-                        <div class="yui-gf">
-                            <!-- <div class="yui-u first">
-                                <h2>Education</h2>
-                            </div>
-
-                            <div class="yui-u">
-                                {% for degree in degrees %}
-                                <div class="job">
-                                    <td>
-                                        <h2>{{degree.degree}}</h2>
-                                        <h3>{{degree.institute_name}}</h3>
-                                        <h4>Score:{{degree.cgpa}}</h4>
-                                        <br>
-                                        <h3>Passing Year:{{degree.passing_year|date}}</h3>
-                                    </td>
-           
-                                </div>
-                                {% endfor %}
-                            </div> -->
-                        </div>
-                        <!--// .yui-gf -->
-
-                        <div class="yui-gf">
                             <table>
                                 <tr>
-                                    <th>
-                                        <h2>Experience</h2>
-                                    </th>
+                                    {% if degrees_two %} {% for degree in degrees_two %}
+                                    <div class="job">
+                                        <td>
+                                            <h2 style='color:#000038;'>{{degree.degree}}</h2>
+                                            <h3>{{degree.institute_name}}</h3>
+                                            <h4>Score: {{degree.cgpa}}</h4>
+                                            <h4>Passing Year: {{degree.passing_year|date}}</h4>
+                                        </td>
+                                    </div>
+                                    {% endfor %} {% else %}
+                                    <td></td>
+                                    {% endif %}
+
                                 </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <div class="yui-gf first  data-table">
+                            <table>
+                                <div class="yui-u first">
+                                    <h2>Skill</h2>
+                                </div>
+                                <tr>
+                                    {% for skill in skills %}
+                                    <div class="job">
+                                        <td>
+                                            <h2 style='color:#000038;'>{{skill.name}}</h2>
+                                            <p>{{skill.details}}</p>
+                                        </td>
+                                    </div>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    {% for skill in skills_two %}
+                                    <div class="job">
+                                        <td>
+                                            <h2 style='color:#000038;'>{{skill.name}}</h2>
+                                            <p>{{skill.details}}</p>
+                                        </td>
+                                    </div>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+
+                        </div>
+                        <br>
+                        <div class="yui-gf first  data-table">
+                            <table>
+                                <div class="yui-u first">
+                                    <h2>Projects</h2>
+                                </div>
                                 <tr>
                                     {% for exp in experiences %}
                                     <div class="job">
                                         <td>
-                                            <h2>{{exp.company_name}}</h2>
+                                            <h2 style='color:#000038;'>{{exp.company_name}}</h2>
                                             <h3>{{exp.position}}</h3>
                                             <h4>{{exp.from_date}} - {{exp.to_date}}</h4>
                                         </td>
@@ -172,42 +176,22 @@
                                     {% endfor %}
                                 </tr>
                             </table>
+                            <table>
+                                <tr>
+                                    {% if experiences_two %} {% for exp in experiences_two %}
+                                    <div class="job">
+                                        <td>
+                                            <h2 style='color:#000038;'>{{exp.company_name}}</h2>
+                                            <h3>{{exp.position}}</h3>
+                                            <h4>{{exp.from_date}} - {{exp.to_date}}</h4>
+                                        </td>
+                                    </div>
+                                    {% endfor %} {% else %}
+                                    <td></td>
+                                    {% endif %}
+                                </tr>
+                            </table>
                         </div>
-                        <!--// .yui-gf-->
-
-                        <div>
-
-                            <div class="yui-u first">
-                                <h2>Experience</h2>
-                            </div>
-                            <!--// .yui-u -->
-
-                            <div class="yui-u">
-                                {% for exp in experiences %}
-                                <div class="job">
-                                    <h2>{{exp.company_name}}</h2>
-                                    <h3>{{exp.position}}</h3>
-                                    <h4>{{exp.from_date}} - {{exp.to_date}}</h4>
-                                </div>
-                                {% endfor %}
-
-                            </div>
-                            <!--// .yui-u -->
-                        </div>
-                        <!--// .yui-gf -->
-
-
-                        <div class="yui-gf last">
-                            <div class="yui-u first">
-                                <h2>Education</h2>
-                            </div>
-                            <div class="yui-u">
-                                <h2>Indiana University - Bloomington, Indiana</h2>
-                                <h3>Dual Major, Economics and English &mdash; <strong>4.0 GPA</strong> </h3>
-                            </div>
-                        </div>
-                        <!--// .yui-gf -->
-
 
                     </div>
                     <!--// .yui-b -->
@@ -215,20 +199,11 @@
                 <!--// yui-main -->
             </div>
             <!--// bd -->
-
-            <div id="ft">
-                <p>Jonathan Doe &mdash; <a href="mailto:name@yourdomain.com">name@yourdomain.com</a> &mdash; (313) - 867-5309</p>
-            </div>
             <!--// footer -->
-
         </div>
         <!-- // inner -->
-
-
     </div>
     <!--// doc -->
-
-
 </body>
 
 </html>

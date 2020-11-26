@@ -27,9 +27,9 @@
 </section> -->
 <section>
     <div class="container">
-        <h3 class="heading">All Registerd Companies<span class="accent"></span></h3>
+        <h3 class="heading">All Categories<span class="accent"></span></h3>
         <div class="row featured align-items-stretch">
-            {% for company in companies %}
+            {% for cat in categories %}
             <div class="col-lg-3 mb-5 mb-lg-0">
                 <div class="box-image-text bg-visible full-height">
                     <!-- <div class="top">
@@ -45,13 +45,13 @@
                         </div> -->
                     <div class="content">
                         <div>
-                            <img src="{{ company.userprofile.image.url }}" alt="Company Logo" style="height: 100px; width: 100px;border-radius: 50%;">
+                            <img src="{{ cat.logo.url }}" alt="cat Logo" style="height: 100px;  border-radius: 50%;">
                         </div>
+                        <br>
                         <div>
-                            <h5><a href="{% url 'accounts:user-detail' company.id %}"><i class="fa fa-building"></i> {{ company.first_name }}</a></h5>
+                            <h5><a href="{% url 'jobs:filter-jobs' cat.id  %}"><i class="fa fa-building"></i> {{ cat.name }}</a></h5>
                         </div>
-                        <p class="featured__details"><i class="fa fa-map-marker job__location"></i> {{ company.userprofile.address }}
-                        </p>
+
                         <!-- <p><i class="fa fa-building"></i> {{ company.first_name }}</p> -->
                         <!-- <a><button class="btn btn-outline-white-primary">Read More</button></a> -->
                         <!-- <p>{{ job.description|safe|truncatechars:40 }}</p> -->
