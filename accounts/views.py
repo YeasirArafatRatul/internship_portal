@@ -753,14 +753,23 @@ def render_pdf_view(request, id):
     edu_set = Education.objects.filter(user_id=id)
     experience_set = Experience.objects.filter(user_id=id)
     skills_set = Service.objects.filter(user_id=id)
+    courses_set = Course.objects.filter(user_id=id)
+    projects_set = Projects.objects.filter(user_id=id)
 
-    if len(skills_set) > 3 or len(edu_set) > 3 or len(experience_set) > 3:
+    if len(skills_set) > 3 or len(edu_set) > 3 or len(experience_set) > 3 or courses_set > 3 or projects_set > 3:
         degrees = Education.objects.filter(user_id=id)[:3]
         degrees_two = Education.objects.filter(user_id=id)[3:6]
         skills = Service.objects.filter(user_id=id)[:3]
         skills_two = Service.objects.filter(user_id=id)[3:6]
         experiences = Experience.objects.filter(user_id=id)[:3]
         experiences_two = Experience.objects.filter(user_id=id)[
+            3:6]
+
+        courses = Course.objects.filter(user_id=id)[:3]
+        courses_two = Course.objects.filter(user_id=id)[
+            3:6]
+        projects = Projects.objects.filter(user_id=id)[:3]
+        projects_two = Projects.objects.filter(user_id=id)[
             3:6]
         context = {
             'user': user,
@@ -770,6 +779,11 @@ def render_pdf_view(request, id):
             'skills_two': skills_two,
             'experiences': experiences,
             'experiences_two': experiences_two,
+            'courses': courses,
+            'courses_two': courses_two,
+            'projects': projects,
+            'projects_two': projects_two,
+
         }
 
     else:
@@ -818,8 +832,10 @@ class ResumeShowView(DetailView):
         context = super().get_context_data(**kwargs)
         edu_set = Education.objects.filter(user_id=id_)
         experience_set = Experience.objects.filter(user_id=id_)
-
         skills_set = Service.objects.filter(user_id=id_)
+        courses_set = Course.objects.filter(user_id=id_)
+        projects_set = Projects.objects.filter(user_id=id_)
+
         context['userprofile'] = UserProfile.objects.filter(user_id=id_)
 
         if len(skills_set) > 3:
@@ -841,8 +857,19 @@ class ResumeShowView(DetailView):
         else:
             context['degrees'] = Education.objects.filter(user_id=id_)[:3]
 
-        for i in skills_set:
-            print(i.name)
+        if len(courses_set) > 3:
+            context['courses'] = Course.objects.filter(user_id=id_)[:3]
+            context['courses_two'] = Course.objects.filter(user_id=id_)[3:6]
+        else:
+            context['courses'] = Course.objects.filter(user_id=id_)[:3]
+
+        if len(projects_set) > 3:
+            context['projects'] = Projects.objects.filter(user_id=id_)[:3]
+            context['projects_two'] = Projects.objects.filter(user_id=id_)[
+                3:6]
+        else:
+            context['projects'] = Projects.objects.filter(user_id=id_)[:3]
+
         # context['settings'] = Setting.objects.get(status=True)
         # context['categories'] = JobCategory.objects.all()
         # context['process'] = InterviewProcess.objects.filter(user_id=id_)

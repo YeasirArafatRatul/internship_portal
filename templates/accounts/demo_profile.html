@@ -3,6 +3,10 @@
 <style>
     /* for modal form */
     
+    ul {
+        margin-left: -20px !important;
+    }
+    
     .login-title {
         text-align: center;
     }
@@ -260,13 +264,12 @@
                 <div class="profile-content">
                     <ul style="list-style: none;">
                         <li><i class="fa fa-envelope"></i> {{profile.user.email}}</li>
-                        <li><i class="fa fa-globe"></i><a href="{{ user.userprofile.website }}" target="_blank"> {{user.userprofile.website}}</a></li>
-
-
                         {% if profile.user.role == 'employer' %}
                         <li><i class="fa fa-user"></i> No. Of. Employees: {{user.userprofile.employee_no}}</li>
                         <li><i class="fa fa-building"></i> Industry Type: {{user.userprofile.industry_type}}</li>
+                        <li><i class="fa fa-map-marker"></i> Address: {{user.userprofile.address}}</li>
                         {% endif %}
+                        <li><i class="fa fa-globe"></i><a href="{{ user.userprofile.website }}" target="_blank"> {{user.userprofile.website}}</a></li>
                     </ul>
                 </div>
                 {% if request.user.is_authenticated and request.user == profile.user %}

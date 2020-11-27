@@ -156,13 +156,45 @@
                                     {% endfor %}
                                 </tr>
                             </table>
-
                         </div>
-                        <br>
+                        <br> {% if projects %}
                         <div class="yui-gf first  data-table">
                             <table>
                                 <div class="yui-u first">
                                     <h2>Projects</h2>
+                                </div>
+                                <tr>
+                                    {% for pro in projects %}
+                                    <div class="job">
+                                        <td>
+                                            <h2 style='color:#000038;'>{{pro.proj_name}}</h2>
+                                            <p>{{pro.details}}</p>
+                                        </td>
+                                    </div>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    {% if projects_two %} {% for pro in projects %}
+                                    <div class="job">
+                                        <td>
+                                            <h2 style='color:#000038;'>{{pro.proj_name}}</h2>
+                                            <p>{{pro.details}}</p>
+                                        </td>
+                                    </div>
+                                    {% endfor %} {% else %}
+                                    <td></td>
+                                    {% endif %}
+                                </tr>
+                            </table>
+                        </div>
+                        {% endif %}
+                        <br> {% if experiences %}
+                        <div class="yui-gf first  data-table">
+                            <table>
+                                <div class="yui-u first">
+                                    <h2>Experiences</h2>
                                 </div>
                                 <tr>
                                     {% for exp in experiences %}
@@ -192,6 +224,45 @@
                                 </tr>
                             </table>
                         </div>
+                        {% endif %}
+
+                        <br> {% if courses %}
+                        <div class="yui-gf first  data-table">
+                            <table>
+                                <div class="yui-u first">
+                                    <h2>Courses</h2>
+                                </div>
+                                <tr>
+                                    {% for cor in courses %}
+                                    <div class="job">
+                                        <td>
+                                            <h2 style='color:#000038;'>{{cor.course_name}}</h2>
+                                            <h3>{{cor.institute_name}}</h3>
+                                            <h4>Duration: {{cor.duration}}</h4>
+                                            <p>{{cor.details}}</p>
+                                        </td>
+                                    </div>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    {% if courses_two %}{% for cor in courses %}
+                                    <div class="job">
+                                        <td>
+                                            <h2 style='color:#000038;'>{{cor.course_name}}</h2>
+                                            <h3>{{cor.institute_name}}</h3>
+                                            <h4>Duration: {{cor.duration}}</h4>
+                                            <p>{{cor.details}}</p>
+                                        </td>
+                                    </div>
+                                    {% endfor %} {% else %}
+                                    <td></td>
+                                    {% endif %}
+                                </tr>
+                            </table>
+                        </div>
+                        {% endif %}
 
                     </div>
                     <!--// .yui-b -->
