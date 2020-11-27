@@ -75,7 +75,7 @@
                     <h4 class="login-title">Update</h4>
                     <div class="row">
                         <fieldset class="form-group">
-                            {% csrf_token %} {{ form|crispy }}
+                            {% csrf_token %} {{ form|crispy }}{{form.media}}
                         </fieldset>
                         <div class="col-sm-4">
                             <button class="btn btn-outline-white-primary" type='submit'>Update</button>

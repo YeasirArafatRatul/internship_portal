@@ -239,7 +239,7 @@
                 <h1>{{profile.user.first_name}} {{profile.user.last_name}}</h1>
             </div>
             {% else %}
-            <h1>@username</h1>{% endif %}
+            <h1>{{profile.user.first_name}} {{profile.user.last_name}}</h1>{% endif %}
         </div>
     </div>
     <!-- 2nd row -->
@@ -259,8 +259,14 @@
                 </div>
                 <div class="profile-content">
                     <ul style="list-style: none;">
-                        <li><i class="fa fa-envelope"></i>{{profile.user.email}}</li>
-                        <li><i class="fa fa-globe"></i><a href="{{ user.userprofile.website }}"> {{user.userprofile.website}}</a></li>
+                        <li><i class="fa fa-envelope"></i> {{profile.user.email}}</li>
+                        <li><i class="fa fa-globe"></i><a href="{{ user.userprofile.website }}" target="_blank"> {{user.userprofile.website}}</a></li>
+
+
+                        {% if profile.user.role == 'employer' %}
+                        <li><i class="fa fa-user"></i> No. Of. Employees: {{user.userprofile.employee_no}}</li>
+                        <li><i class="fa fa-building"></i> Industry Type: {{user.userprofile.industry_type}}</li>
+                        {% endif %}
                     </ul>
                 </div>
                 {% if request.user.is_authenticated and request.user == profile.user %}
@@ -410,8 +416,8 @@
                                 <div class="font-a-icons">
                                     <div class="icon-group">
                                         {% if request.user == data.user %}
-                                        <a href="{% url 'accounts:update-skill' data.id %}"><i class="fa fa-edit"></i>Edit</a>
-                                        <a href="{% url 'accounts:delete-skill' data.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                        <a href="{% url 'accounts:update-interview-process' data.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="{% url 'accounts:delete-interview-process' data.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -426,7 +432,6 @@
                 <br>
                 <br>
                 <hr>
-
                 <div class="profile-content">
                     {% if user.role == 'employee' %}
                     <h4>Skill</h4>
@@ -450,7 +455,100 @@
                     </div>
                     {% endfor %}
                     <!-- END LOOP -->
-                    <a href="{% url 'accounts:add-skill' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a> {% endif %}
+                    <a href="{% url 'accounts:add-skill' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a> {% elif user.role == 'admin' %}
+                    <h4></h4>
+                    {% else %}
+                    <h4>Benefits</h4>
+                    <!-- LOOP THROUGH DEGREES -->
+                    {% for data in benefits %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5><span class="contact"></span></h5>
+                                <p>Description: <span class="contact">{{data.details|safe}}</span></p>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        {% if request.user == data.user %}
+                                        <a href="{% url 'accounts:update-benefits' data.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="{% url 'accounts:delete-benefits' data.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- END LOOP -->
+                    <a href="{% url 'accounts:add-benefits' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a> {% endif %}
+                </div>
+                <br>
+                <br>
+                <hr>
+                <div class="profile-content">
+                    {% if request.user.is_authenticated and request.user.role == 'employee' %}
+                    <h4>Projects</h4>
+                    <!-- LOOP THROUGH DEGREES -->
+                    {% for pro in projects %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5><span class="contact">{{pro.proj_name}}</span></h5>
+                                <p> <span class="contact">{{pro.details}}</span></p>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        {% if request.user == pro.user %}
+                                        <a href="{% url 'accounts:update-projects' pro.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="{% url 'accounts:delete-projects' pro.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- END LOOP -->
+                    <a href="{% url 'accounts:add-projects' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a>
+                    <!-- ELSE IF -->
+                    {% elif user.role == 'admin' %}
+                    <h4></h4>
+                    {% else %} {% endif %}
+                    <p></p>
+                </div>
+                <br>
+                <br>
+                <hr>
+                <div class="profile-content">
+                    {% if request.user.is_authenticated and request.user.role == 'employee' %}
+
+                    <h4>Courses</h4>
+                    <!-- LOOP THROUGH DEGREES -->
+                    {% for cor in courses %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5><span class="contact">{{cor.course_name}}</span></h5>
+                                <h5> <span class="contact">{{cor.institute_name}}</span></h5>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        <h5 class="bold">Duration: <span class="contact">{{cor.duration}}/month</span></h5>
+                                        <p class="bold">Description: <span class="contact">{{cor.details}}</span>
+                                            <p>
+                                                {% if request.user == cor.user %}
+                                                <a href="{% url 'accounts:update-courses' cor.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                                <a href="{% url 'accounts:delete-courses' cor.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- END LOOP -->
+
+                    <a href="{% url 'accounts:add-courses' %}"><button class="btn btn-primary btn-add"><i class="fa fa-plus"></i>Add New</button></a>
+                    <!-- ELSE IF -->
+                    {% elif user.role == 'admin' %}
+                    <h4></h4>
+                    {% else %}{% endif %}
+                    <p></p>
+
                 </div>
             </div>
         </div>

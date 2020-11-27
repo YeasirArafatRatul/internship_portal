@@ -8,7 +8,7 @@ from .views import RegisterEmployeeView, RegisterEmployerView, LoginView, Logout
 
 from .views import render_pdf_view, profile, user_update, password_change
 from accounts.views import AddEducationView, AddExperienceView, AddSkillView, CompanyImagesView, EducationUpdateView, ExperienceUpdateView, InterviewProcessView, ResumeShowView, SkillUpdateView, edu_delete, exp_delete, skill_delete
-
+from accounts.views import *
 
 app_name = "accounts"
 
@@ -62,9 +62,40 @@ urlpatterns = [
     path('employee/delete-exp/<int:exp_id>',
          exp_delete, name='delete-experience'),
 
+
+    # -------------PROJECTS---------------
+    path('employee/add-projects/',
+         AddProjectView.as_view(), name='add-projects'),
+    path('employee/update-projects/<int:pro_id>',
+         ProjectUpdateView.as_view(), name='update-projects'),
+    path('employee/delete-projects/<int:pro_id>',
+         pro_delete, name='delete-projects'),
+
+
+    # -------------COURSE---------------
+    path('employee/add-course/',
+         AddCourseyView.as_view(), name='add-courses'),
+    path('employee/update-course/<int:cor_id>',
+         CourseUpdateView.as_view(), name='update-courses'),
+    path('employee/delete-course/<int:cor_id>',
+         cor_delete, name='delete-courses'),
+
+
+    # -------------BENEFITS---------------
+    path('employer/add-benefits/',
+         AddBenefitsView.as_view(), name='add-benefits'),
+    path('employer/update-benefits/<int:ben_id>',
+         BenefitsUpdateView.as_view(), name='update-benefits'),
+    path('employee/delete-benefits/<int:ben_id>',
+         ben_delete, name='delete-benefits'),
+
     # --------------INTERVIEW PROCESS-----------
     path('employer/add-interview-process/',
          InterviewProcessView.as_view(), name='add-interview-process'),
+    path('employer/update-interview-process/<int:id>',
+         InterviewProcessUpdateView.as_view(), name='update-interview-process'),
+    path('employee/delete-interview-process/<int:id>',
+         interview_delete, name='delete-interview-process'),
 
 
     # ----------------RESUME-----------------

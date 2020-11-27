@@ -38,6 +38,10 @@ def profile(request):
     interview_process = InterviewProcess.objects.filter(
         user_id=current_user.id)
 
+    benefits = Benefits.objects.filter(user_id=current_user.id)
+    projects = Projects.objects.filter(user_id=current_user.id)
+    courses = Course.objects.filter(user_id=current_user.id)
+
     if request.method == 'POST':
         form = CompanyImageForm(
             request.POST, request.FILES)
@@ -60,6 +64,9 @@ def profile(request):
                'experiences': experiences,
                'process': interview_process,
                'form': form,
+               'courses': courses,
+               'benefits': benefits,
+               'projects': projects,
 
                }
     return render(request, 'accounts/demo_profile.html', context)
@@ -71,12 +78,15 @@ def user_update(request):
         if request.user.role == 'employer':
             user_form = EmployerProfileUpdateForm(
                 request.POST, instance=request.user)
+
+            profile_form = ProfileUpdateFormEmployer(
+                request.POST, request.FILES, instance=request.user.userprofile)
         else:
             user_form = EmployeeProfileUpdateForm(
                 request.POST, instance=request.user)
+            profile_form = ProfileUpdateForm(
+                request.POST, request.FILES, instance=request.user.userprofile)
 
-        profile_form = ProfileUpdateForm(
-            request.POST, request.FILES, instance=request.user.userprofile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -87,12 +97,13 @@ def user_update(request):
         # EMPLOYER UPDATE
         if request.user.role == 'employer':
             user_form = EmployerProfileUpdateForm(instance=request.user)
+            profile_form = ProfileUpdateFormEmployer(
+                instance=request.user.userprofile)
         # EMPLYEE UPDATE
         else:
             user_form = EmployeeProfileUpdateForm(instance=request.user)
+            profile_form = ProfileUpdateForm(instance=request.user.userprofile)
 
-        profile_form = ProfileUpdateForm(
-            instance=request.user.userprofile)
         setting = Setting.objects.filter(status=True).first()
         category = JobCategory.objects.all()
     context = {
@@ -308,6 +319,246 @@ def exp_delete(request, exp_id=None):
         return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
     return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
 
+
+# ------------------------------------------------------------
+#                      PROJECTS
+# ------------------------------------------------------------
+
+class AddProjectView(LoginRequiredMixin, CreateView):
+    form_class = AddProjectForm
+    template_name = 'accounts/skill_or_service.html'
+    success_url = reverse_lazy('accounts:my-profile')
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+    model = Projects
+    form_class = AddProjectForm
+    template_name = 'accounts/update_edu.html'
+    success_url = reverse_lazy('accounts:my-profile')
+    pk_url_kwarg = 'pro_id'
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        skill = self.get_object()
+        if self.request.user == skill.user:
+            return True
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
+def pro_delete(request, pro_id=None):
+    try:
+        edu = Projects.objects.get(user_id=request.user.id, id=pro_id)
+        edu.delete()
+
+    except IntegrityError as e:
+        print(e.message)
+        return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+    return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+
+# ------------------------------------------------------------
+#                      COURSE
+# ------------------------------------------------------------
+
+
+class AddCourseyView(LoginRequiredMixin, CreateView):
+    form_class = AddCourseForm
+    template_name = 'accounts/skill_or_service.html'
+    success_url = reverse_lazy('accounts:my-profile')
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()[:8]
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class CourseUpdateView(LoginRequiredMixin, UpdateView):
+    model = Course
+    form_class = AddCourseForm
+    template_name = 'accounts/update_edu.html'
+    success_url = reverse_lazy('accounts:my-profile')
+    pk_url_kwarg = 'pro_id'
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        skill = self.get_object()
+        if self.request.user == skill.user:
+            return True
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
+def cor_delete(request, cor_id=None):
+    try:
+        edu = Course.objects.get(user_id=request.user.id, id=cor_id)
+        edu.delete()
+
+    except IntegrityError as e:
+        print(e.message)
+        return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+    return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+
+# ------------------------------------------------------------
+#                      BENEFITS
+# ------------------------------------------------------------
+
+
+class AddBenefitsView(LoginRequiredMixin, CreateView):
+    form_class = AddBenefitsForm
+    template_name = 'accounts/skill_or_service.html'
+    success_url = reverse_lazy('accounts:my-profile')
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()[:8]
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class BenefitsUpdateView(LoginRequiredMixin, UpdateView):
+    model = Benefits
+    form_class = AddBenefitsForm
+    template_name = 'accounts/update_edu.html'
+    success_url = reverse_lazy('accounts:my-profile')
+    pk_url_kwarg = 'ben_id'
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        skill = self.get_object()
+        if self.request.user == skill.user:
+            return True
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()[:8]
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
+def ben_delete(request, ben_id=None):
+    try:
+        edu = Benefits.objects.get(user_id=request.user.id, id=ben_id)
+        edu.delete()
+
+    except IntegrityError as e:
+        print(e.message)
+        return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+    return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+
+# ------------------------------------------------------------
+#                      INTERVIEW PROCESS
+# ------------------------------------------------------------
+
+
+class InterviewProcessView(LoginRequiredMixin, CreateView):
+    template_name = 'accounts/skill_or_service.html'
+    form_class = AddInterviewProcessForm
+    success_url = reverse_lazy('accounts:my-profile')
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class InterviewProcessUpdateView(LoginRequiredMixin, UpdateView):
+    model = InterviewProcess
+    form_class = AddInterviewProcessForm
+    template_name = 'accounts/update_edu.html'
+    success_url = reverse_lazy('accounts:my-profile')
+    pk_url_kwarg = 'id'
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        skill = self.get_object()
+        if self.request.user == skill.user:
+            return True
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all()[:8]
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
+def interview_delete(request, id=None):
+    try:
+        edu = InterviewProcess.objects.get(user_id=request.user.id, id=id)
+        edu.delete()
+
+    except IntegrityError as e:
+        print(e.message)
+        return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+    return HttpResponseRedirect(reverse_lazy('accounts:my-profile'))
+
 # --------------------------------------------------------
 #                   USER DETAIL
 # --------------------------------------------------------
@@ -333,6 +584,10 @@ class UserDetailView(DetailView):
         context['settings'] = Setting.objects.get(status=True)
         context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
         context['process'] = InterviewProcess.objects.filter(user_id=id_)
+
+        context['benefits'] = Benefits.objects.filter(user_id=id_)
+        context['projects'] = Projects.objects.filter(user_id=id_)
+        context['courses'] = Course.objects.filter(user_id=id_)
         return context
 
 
@@ -351,24 +606,6 @@ class CompanyImagesView(ListView):
         context = super().get_context_data(**kwargs)
         context['settings'] = Setting.objects.get(status=True)
         context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
-        return context
-
-
-class InterviewProcessView(LoginRequiredMixin, CreateView):
-    template_name = 'jobs/jobcreate.html'
-    form_class = AddInterviewProcessForm
-    success_url = reverse_lazy('accounts:my-profile')
-
-    def form_valid(self, form):
-        request = self.request
-        form.instance.user = self.request.user
-        form.save()
-        return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
-        context['settings'] = Setting.objects.filter(status=True).first()
         return context
 
 

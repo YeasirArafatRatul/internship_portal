@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from django.forms import TextInput, EmailInput, Select, FileInput
 from accounts.models import User, UserProfile
-from accounts.models import ComapanyImage, Education, Experience, InterviewProcess, Service
+from accounts.models import ComapanyImage, Education, Experience, InterviewProcess, Service, Projects, Benefits, Course
 from django.forms.widgets import DateInput
 
 GENDER_CHOICES = (
@@ -205,7 +205,7 @@ class EmployeeProfileUpdateForm(UserChangeForm):
 class EmployerProfileUpdateForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('first_name', 'email',)
+        fields = ('first_name', 'email')
         widgets = {
             'first_name': TextInput(attrs={'class': 'input', 'placeholder': 'Company name'}),
             'email': EmailInput(attrs={'class': 'input', 'placeholder': 'email'}),
@@ -251,12 +251,28 @@ class CompanyImageForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('about', 'address', 'image', 'cover_img',)
+        fields = ('about', 'address', 'image',
+                  'cover_img', 'website',)
         widgets = {
             'image': FileInput(attrs={'class': 'input', 'placeholder': 'profile picture', }),
             'cover_img': FileInput(attrs={'class': 'input', 'placeholder': 'cover photo', }),
             'about': TextInput(attrs={'class': 'input', 'placeholder': 'Say Something About You...'}),
             'address': TextInput(attrs={'class': 'input', 'placeholder': 'Enter Address'}),
+            'website': TextInput(attrs={'class': 'input', 'placeholder': 'https://www.example.com'})
+        }
+
+
+class ProfileUpdateFormEmployer(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('about', 'address', 'image',
+                  'cover_img', 'website', 'industry_type', 'employee_no')
+        widgets = {
+            'image': FileInput(attrs={'class': 'input', 'placeholder': 'profile picture', }),
+            'cover_img': FileInput(attrs={'class': 'input', 'placeholder': 'cover photo', }),
+            'about': TextInput(attrs={'class': 'input', 'placeholder': 'Say Something About You...'}),
+            'address': TextInput(attrs={'class': 'input', 'placeholder': 'Enter Address'}),
+            'website': TextInput(attrs={'class': 'input', 'placeholder': 'https://www.example.com'})
         }
 
 
@@ -312,5 +328,36 @@ class AddInterviewProcessForm(forms.ModelForm):
         exclude = ('user',)
         widgets = {
 
+            'details': TextInput(attrs={'class': 'input', 'placeholder': 'Write Your Content Here', }),
+        }
+
+
+class AddBenefitsForm(forms.ModelForm):
+    class Meta:
+        model = Benefits
+        exclude = ('user',)
+        widgets = {
+            'details': TextInput(attrs={'class': 'input', 'placeholder': 'Write Your Content Here', }),
+        }
+
+
+class AddProjectForm(forms.ModelForm):
+    class Meta:
+        model = Projects
+        exclude = ('user',)
+        widgets = {
+            'proj_name': TextInput(attrs={'class': 'input', 'placeholder': 'Your Project Name', }),
+            'details': TextInput(attrs={'class': 'input', 'placeholder': 'Write Your Content Here', }),
+        }
+
+
+class AddCourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        exclude = ('user',)
+        widgets = {
+            'course_name': TextInput(attrs={'class': 'input', 'placeholder': 'Your Course Name', }),
+            'institute_name': TextInput(attrs={'class': 'input', 'placeholder': 'From Where You Completed This Course?'}),
+            'duration': TextInput(attrs={'class': 'input', 'placeholder': 'duration/month', }),
             'details': TextInput(attrs={'class': 'input', 'placeholder': 'Write Your Content Here', }),
         }

@@ -252,7 +252,12 @@
                 <div class="profile-content">
                     <ul style="list-style: none;">
                         <li><i class="fa fa-envelope"></i> {{user.email}}</li>
-                        <li><i class="fa fa-globe"></i><a href="{{ user.userprofile.website }}"> {{user.userprofile.website}}</a></li>
+                        <li><i class="fa fa-globe"></i><a href="{{ user.userprofile.website }}" target="_blank"> {{user.userprofile.website}}</a></li>
+
+                        {% if user.role == 'employer' %}
+                        <li><i class="fa fa-user"></i> No. Of. Employees: {{user.userprofile.employee_no}}</li>
+                        <li><i class="fa fa-building"></i> Industry Type: {{user.userprofile.industry_type}}</li>
+                        {% endif %}
                     </ul>
                 </div>
                 {% if user.role == 'employer' %}
@@ -364,6 +369,78 @@
                 </div>
                 <br>
                 <hr>
+                <!-- SECTION 3 -->
+                <div class="profile-content">
+                    {% if user.role == 'employee' %}
+                    <h4>Projects</h4>
+                    {% for pro in projects %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5><span class="contact">{{pro.proj_name}}</span></h5>
+                                <p> <span class="contact">{{pro.details}}</span></p>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        {% if request.user == pro.user %}
+                                        <a href="{% url 'accounts:update-projects' pro.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="{% url 'accounts:delete-projects' pro.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <h4>Course</h4>
+                    <!-- LOOP THROUGH DEGREES -->
+                    {% for cor in courses %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5><span class="contact">{{cor.course_name}}</span></h5>
+                                <h5> <span class="contact">{{cor.institute_name}}</span></h5>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        <h5 class="bold">Duration: <span class="contact">{{cor.duration}}/month</span></h5>
+                                        <p class="bold">Description: <span class="contact">{{cor.details}}</span>
+                                            <p>
+                                                {% if request.user == cor.user %}
+                                                <a href="{% url 'accounts:update-courses' cor.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                                <a href="{% url 'accounts:delete-courses' cor.id %}"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- END LOOP -->
+
+                    <!-- if user is EMPLOYER -->
+                    {% elif user.role == 'employer' %}
+                    <h4>Benefits</h4>
+                    <!-- LOOP THROUGH DEGREES -->
+                    {% for data in process %}
+                    <div class="flip-container centered">
+                        <div class="flipper">
+                            <div class="front">
+                                <h5><span class="contact"></span></h5>
+                                <p>Description: <span class="contact">{{data.details|safe}}</span></p>
+                                <div class="font-a-icons">
+                                    <div class="icon-group">
+                                        {% if request.user == degree.user %}
+                                        <a href="{% url 'accounts:update-skill' skill.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="#"><i class="fa fa-trash"></i>Delete</a> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- ELSE USER IS EMPLOYER -->
+                    {% else %}
+                    <h4>None</h4>
+                    {% endif %}
+                </div>
+
             </div>
         </div>
     </div>

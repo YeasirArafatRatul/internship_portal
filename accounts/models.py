@@ -43,16 +43,15 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True)
     address = models.CharField(
-        max_length=300, default="Write Your Adress Here")
+        max_length=300, null=True, blank=True)
     image = models.ImageField(blank=True, null=True,
                               default='avatar.png', upload_to='profile_pics')
     cover_img = models.ImageField(
         blank=True, null=True, default='cover.png', upload_to='cover_pics')
     about = models.CharField(max_length=500, null=True, blank=True)
-    website = models.CharField(
-        max_length=100, default="", null=True, blank=True)
     industry_type = models.CharField(max_length=100, null=True, blank=True)
-    website = models.URLField(default='www.mysite.com')
+    website = models.URLField(null=True, blank=True)
+    employee_no = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.user.email}'
@@ -137,6 +136,34 @@ class InterviewProcess(models.Model):
 
     def __str__(self):
         return str(f'{self.user.first_name} {self.user.last_name} - Interview Process')
+
+
+class Benefits(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    details = RichTextField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.user.first_name + "benefits")
+
+
+class Projects(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    proj_name = models.CharField(max_length=250, blank=True, null=True)
+    details = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return str(f'{self.user.first_name} - Projects')
+
+
+class Course(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    course_name = models.CharField(max_length=250, blank=True, null=True)
+    institute_name = models.CharField(max_length=500, null=True, blank=True)
+    duration = models.PositiveIntegerField(default=1)
+    details = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return str(f'{self.user.first_name} - Course')
 
 
 class CV(models.Model):
