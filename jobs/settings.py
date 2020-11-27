@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     'jobsapp',
     'accounts',
     'SiteSettings',
-
+    'blog',
 
 ]
 

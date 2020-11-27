@@ -1,0 +1,122 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Blog {% endblock %} {% block styles %}
+<link href="{% static 'blog/css/media_query.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'blog/css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'blog/css/animate.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'blog/css/owl.carousel.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'blog/css/owl.theme.default.css' %}" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<!-- Bootstrap CSS -->
+<link href="{% static 'blog/css/style_1.css' %}" rel="stylesheet" type="text/css" /> {% endblock %}
+
+
+<!-- Block Body -->
+{% block content %}
+
+
+<div class="container-fluid pb-4 pt-4 paddding">
+    <div class="container paddding">
+        <div class="row mx-0">
+            <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+                <div>
+                    <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">News</div>
+                </div>
+                {% for blog in blogs %}
+                <div class="row pb-4">
+                    <div class="col-md-5">
+                        <div class="fh5co_hover_news_img">
+                            <div class="fh5co_news_img"><img src="{{ blog.image.url }}" alt="blog image" /></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 animate-box">
+                        <a href="single.html" class="fh5co_magna py-2">{{blog.title}} </a> <a href="#" class="fh5co_mini_time py-3">{{blog.user.frist_name }}</a>
+                        <div class="c_g"><i class="fa fa-clock-o"></i> {{blog.created_at|date}}</div>
+                        <div class="fh5co_consectetur">
+                            <p>{{blog.description|safe|truncatechars:250}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        {% if is_paginated %}
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4 mb-4">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a href="?page={{ page_obj.previous_page_number }}" class="btn_pagging">&laquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="btn_pagging">&laquo;</a>
+                        </li>
+                        {% endif %} {% for i in page_obj.paginator.page_range %} {% if page_obj.number == i %}
+                        <li class="page-item active">
+                            <a class="btn_pagging">{{ i }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a href="?page={{ i }}" class="btn_pagging">{{ i }}</a>
+                        </li>
+                        {% endif %} {% endfor %} {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a href="?page={{ page_obj.next_page_number }}" class="btn_pagging">&raquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="btn_pagging">&raquo;</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+<div class="container-fluid pb-4 pt-5">
+    <div class="container animate-box">
+        <div>
+            <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Featured</div>
+        </div>
+        <div class="owl-carousel owl-theme" id="slider2">
+            {% for blog in featured %}
+            <div class="item px-2">
+                <div class="fh5co_hover_news_img">
+                    <div class="fh5co_news_img"><img src="{{blog.image.url}}" alt="" /></div>
+                    <div>
+                        <a href="#" class="d-block fh5co_small_post_heading"><span class="">{{blog.title}}</span></a>
+                        <div class="c_g"><i class="fa fa-clock-o"></i> {{blog.created_at|date}}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+
+{% endblock %}
+
+<!-- JAVASCRIPT -->
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<!-- Waypoints -->
+<script src="{% static 'blog/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'blog/js/owl.carousel.min.js' %}"></script>
+<!-- Main -->
+<script src="{% static 'blog/js/main.js' %}"></script>
+<!-- Modernizr JS -->
+<script src="{% static 'blog/js/modernizr-3.5.0.min.js' %}"></script>
+{% endblock %}
