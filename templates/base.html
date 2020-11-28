@@ -9,6 +9,17 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+
+    <link href="{% static 'blog/css/media_query.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'blog/css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'blog/css/animate.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'blog/css/owl.carousel.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'blog/css/owl.theme.default.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'blog/css/style_1.css' %}" rel="stylesheet" type="text/css" />
+
+
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
     <!-- Font Awesome CSS-->
@@ -209,7 +220,7 @@
         </div>
     </footer>
     <!-- first footer ends -->
-
+    {% block javascripts %}{% endblock %}
 
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'vendor/popper.js/umd/popper.min.js' %}"></script>
@@ -220,7 +231,7 @@
     <script src="{% static 'js/front.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/nav.js' %}"></script>
-    {% block javascripts %}{% endblock %}
+
 
 </body>
 

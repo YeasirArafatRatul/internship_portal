@@ -1,3 +1,4 @@
+
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import Http404, HttpResponseRedirect
@@ -14,6 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from jobsapp.decorators import user_is_employer
+from jobsapp.tasks import time_to_live
 
 
 class DashboardView(ListView):
@@ -195,6 +197,9 @@ def reject(request, applicant_id=None):
         applicant = Applicant.objects.get(id=applicant_id)
         applicant.status = 2
         applicant.save()
+        time_to_live(applicant_id)
+        print(
+            '****************************background-schedule created for id:', applicant_id)
     except IntegrityError as e:
         print(e.message)
         return HttpResponseRedirect(url)

@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django_elasticsearch_dsl',
     'crispy_forms',
     'ckeditor',
+    'background_task',
     # 'django_seed',
 
 
