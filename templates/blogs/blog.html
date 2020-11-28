@@ -30,10 +30,12 @@
                         </div>
                     </div>
                     <div class="col-md-7 animate-box">
-                        <a href="single.html" class="fh5co_magna py-2">{{blog.title}} </a> <a href="#" class="fh5co_mini_time py-3">{{blog.user.frist_name }}</a>
+                        <a href="{% url 'blog:blog-detail' blog.id %}" class="fh5co_magna py-2">
+                            <h4>{{blog.title|truncatechars:60}}</h4>
+                        </a>
                         <div class="c_g"><i class="fa fa-clock-o"></i> {{blog.created_at|date}}</div>
                         <div class="fh5co_consectetur">
-                            <p>{{blog.description|safe|truncatechars:250}}</p>
+                            <p>{{blog.description|safe|truncatechars:420}}</p>
                         </div>
                     </div>
                 </div>
@@ -90,7 +92,7 @@
                 <div class="fh5co_hover_news_img">
                     <div class="fh5co_news_img"><img src="{{blog.image.url}}" alt="" /></div>
                     <div>
-                        <a href="#" class="d-block fh5co_small_post_heading"><span class="">{{blog.title}}</span></a>
+                        <a href="{% url 'blog:blog-detail' blog.id %}" class="d-block fh5co_small_post_heading"><span class="">{{blog.title}}</span></a>
                         <div class="c_g"><i class="fa fa-clock-o"></i> {{blog.created_at|date}}</div>
                     </div>
                 </div>
