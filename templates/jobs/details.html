@@ -3,7 +3,7 @@
 <section class="bg-light-gray">
     <div class="container">
         <h1 class="heading">{{ job.title }}<br>
-            <small>at <a href="{% url 'accounts:user-detail' job.user.id %}"> {{ job.company_name }}</a></small>
+            <small>at <a href="{% url 'accounts:user-detail' job.user.id %}"> {{ job.user.first_name }}</a></small>
         </h1>
         <div class="job-detail-description"><i class="fa fa-map-marker job__location"> </i> {{ job.location }} | Posted {{ job.created_at|timesince }} | {% if job.type == '1' %}
             <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == '2' %}
@@ -17,8 +17,11 @@
         <div class="row">
             <div class="col-lg-8">
                 <h3>Category: {{ job.category }}</h3>
-                <h5>Last date: {{ job.last_date|date }}</h5>
-                <h5 class="text-info">Salary: {% if job.salary > 0 %} {{ job.salary }}/Monthly {% else %} Unpaid {% endif %} </h5>
+                <h6 class="text-info">Last date: {{ job.last_date|date }}</h6>
+                <h6>Duration: {{ job.duration}}</h6>
+                <h6 class="text-info">Experience: {{ job.experience }}</h6>
+                <h6>Gender: {{ job.gender }}</h6>
+                <h6 class="text-info">Salary: {% if job.salary > 0 %} {{ job.salary }}/Monthly {% else %} Unpaid {% endif %} </h6>
                 <blockquote class="blockquote">
                     <p>{{ job.description|safe }}</p>
                 </blockquote>

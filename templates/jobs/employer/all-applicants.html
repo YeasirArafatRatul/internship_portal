@@ -27,6 +27,7 @@
                     </a>
 
                     <div class="d-flex align-items-center">
+                        {% if applicant.status == '0' %}
                         <a href="{% url 'jobs:select' applicant.id %}" class="btn btn-success">
                             <i class="fa fa-check"></i>
                             <span class="hidden-xs hidden-sm">Select</span>
@@ -35,6 +36,17 @@
                             <i class="fa fa-close"></i>
                             <span class="hidden-xs hidden-sm">Reject</span>
                         </a>
+                        {% elif applicant.status == '1' %}
+                        <a href="#" class="btn btn-success">
+                            <i class="fa fa-check"></i>
+                            <span class="hidden-xs hidden-sm">Selected</span>
+                        </a>
+                        {% else %}
+                        <a href="#" class="btn btn-danger">
+                            <i class="fa fa-check"></i>
+                            <span class="hidden-xs hidden-sm">Rejected</span>
+                        </a>
+                        {% endif %}
                         <!-- <p class="intro"></p> -->
                         <div class="image">
                             <img src="{{ applicant.user.userprofile.image.url }}" alt="" class="img-fluid rounded-circle">

@@ -261,3 +261,6 @@ fabric.properties
 __pycache__/
 
 jobs/staticfiles
+
+
+.db.sqlite3

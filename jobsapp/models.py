@@ -24,6 +24,14 @@ JOB_TYPE = (
 )
 
 
+GENDER = (
+    ('n/a', "N/A"),
+    ('male', "Male"),
+    ('female', "Female"),
+    ('others', "Others"),
+)
+
+
 class Job(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=300)
@@ -33,10 +41,13 @@ class Job(models.Model):
     type = models.CharField(choices=JOB_TYPE, max_length=10)
     category = models.ForeignKey(JobCategory, on_delete=models.CASCADE)
     vacancy = models.PositiveSmallIntegerField(default=1)
+    duration = models.PositiveSmallIntegerField(null=True, blank=True)
     last_date = models.DateTimeField()
     created_at = models.DateTimeField(default=timezone.now)
     filled = models.BooleanField(default=False)
     salary = models.IntegerField(default=0, blank=True)
+    gender = models.CharField(choices=GENDER, max_length=6, default='n/a')
+    experience = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
         return str(self.title)
@@ -48,6 +59,7 @@ class Job(models.Model):
 class Applicant(models.Model):
     APPLICANT_STATUS = (
 
+        ('0', 'Undefined'),
         ('1', "Selected"),
         ('2', "Rejected"),
     )
@@ -55,7 +67,7 @@ class Applicant(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE,
                             related_name='applicants')
     status = models.CharField(
-        max_length=30, choices=APPLICANT_STATUS, null=True, blank=True)
+        max_length=30, choices=APPLICANT_STATUS, default=0)
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:

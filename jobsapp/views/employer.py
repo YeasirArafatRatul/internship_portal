@@ -22,6 +22,7 @@ class DashboardView(ListView):
     model = Job
     template_name = 'jobs/employer/dashboard.html'
     context_object_name = 'jobs'
+    paginate_by = 3
 
     @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
     @method_decorator(user_is_employer)

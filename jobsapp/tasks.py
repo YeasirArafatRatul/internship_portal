@@ -10,8 +10,4 @@ def time_to_live(id):
     print('ID ISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', id)
     obj = Applicant.objects.get(id=id)
     print('OBJECCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCT', obj.id)
-    if obj.status == 2:
-        print('TRYING TO DELETE')
-        obj.delete()
-    else:
-        print("BIG ERORRRRRRRRRRRRRRRRRRRRR ")
+    obj.delete()
