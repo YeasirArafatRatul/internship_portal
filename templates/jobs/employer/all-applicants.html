@@ -23,9 +23,13 @@
                         <span class="badge badge-info">Applied {{ applicant.created_at.astimezone }}</span>
                     </p>
                     <a href="{% url 'accounts:employee-resume' applicant.user.id %}" class="btn btn-outline-white-secondary btn-sm" style="height: 2.5em;">
+                        <i class="fa fa-envelope"></i>Show CV
+                    </a>
+                    <a href="{% url 'accounts:resumedownload' applicant.user.id %}" class="btn btn-outline-white-secondary btn-sm" style="height: 2.5em;">
                         <i class="fa fa-envelope"></i>Download Cv
                     </a>
-
+                    <br>
+                    <hr>
                     <div class="d-flex align-items-center">
                         {% if applicant.status == '0' %}
                         <a href="{% url 'jobs:select' applicant.id %}" class="btn btn-success">

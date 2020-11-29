@@ -12,7 +12,7 @@
 <section>
     <div class="container">
         <div class="row">
-            {% for applicant in applicants %}
+            {% if applicants %} {% for applicant in applicants %}
             <div class="col-lg-6">
                 <div class="box applicant">
                     <h4>{{ applicant.user.get_full_name }}</h4>
@@ -22,6 +22,14 @@
                     <p>
                         <span class="badge badge-info">Applied {{ applicant.created_at.astimezone }}</span>
                     </p>
+                    <a href="{% url 'accounts:employee-resume' applicant.user.id %}" class="btn btn-outline-white-secondary btn-sm" style="height: 2.5em;">
+                        <i class="fa fa-envelope"></i>Show CV
+                    </a>
+                    <a href="{% url 'accounts:resumedownload' applicant.user.id %}" class="btn btn-outline-white-secondary btn-sm" style="height: 2.5em;">
+                        <i class="fa fa-envelope"></i>Download Cv
+                    </a>
+                    <br>
+                    <hr>
                     <div class="d-flex justify-content-between">
                         {% if applicant.status == '0' %}
                         <a href="{% url 'jobs:select' applicant.id %}" class="btn btn-success">
@@ -84,7 +92,7 @@
                     </nav>
                 </div>
             </div>
-            {% else %}
+            {% endif %} {% else %}
             <h3>No Applicants Applied For This Job</h3>
             {% endif %}
         </div>
