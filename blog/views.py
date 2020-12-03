@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Q
 from django.views.generic import ListView, DetailView
 from SiteSettings.models import Setting
 from jobsapp.models import JobCategory
@@ -36,4 +37,21 @@ class PostDetailView(DetailView):
         context['featured'] = Post.objects.filter(
             featured=True).order_by('?')[:6]
         context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
+class BlogSearchView(ListView):
+    model = Post
+    template_name = 'blogs/blog-search.html'
+    context_object_name = 'blogs'
+
+    def get_queryset(self):
+        return self.model.objects.filter(Q(title__icontains=self.request.GET['blog']))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
+        context['settings'] = Setting.objects.filter(status=True).first()
+        context['featured'] = Post.objects.filter(
+            featured=True).order_by('?')[:6]
         return context

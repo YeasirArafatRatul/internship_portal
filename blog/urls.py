@@ -9,4 +9,6 @@ urlpatterns = [
          name='blog-list'),
     path('blog-detail/<int:id>', PostDetailView.as_view(),
          name='blog-detail'),
+    path('blog-search/', BlogSearchView.as_view(),
+         name='blog-search'),
 ]
