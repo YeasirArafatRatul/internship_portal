@@ -5,7 +5,7 @@
 {% block content %}
 <section class="job-form-section job-form-section--compressed" style="background-image: linear-gradient(180deg, #05386B, #fffff5);">
     <div class="container">
-        <h3 class="heading">Find a <span class="accent"> Blog</span> <span class="accent">You Want To Read</span></h3>
+        <h3 class="heading">Find a <span class="accent"> Blog</span>You Want To <span class="accent"> Read</span></h3>
         <form id="job-main-form" method="get" action="{% url 'blog:blog-search' %}" class="job-main-form">
             <div class="controls">
                 <div class="row align-items-end">
@@ -104,6 +104,11 @@
                     <div>
                         <a href="{% url 'blog:blog-detail' blog.id %}" class="d-block fh5co_small_post_heading"><span class="">{{blog.title}}</span></a>
                         <div class="c_g"><i class="fa fa-clock-o"></i> {{blog.created_at|date}}</div>
+                    </div>
+                    <div class="row mx-0">
+
+                        <p>{{blog.description|safe|truncatewords:40}}</p>
+
                     </div>
                 </div>
             </div>

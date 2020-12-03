@@ -48,6 +48,11 @@
                         <a href="{% url 'blog:blog-detail' blog.id %}" class="d-block fh5co_small_post_heading"><span class="">{{blog.title}}</span></a>
                         <div class="c_g"><i class="fa fa-clock-o"></i> {{blog.created_at|date}}</div>
                     </div>
+                    <div class="row mx-0">
+
+                        <p>{{blog.description|safe|truncatewords:40}}</p>
+
+                    </div>
                 </div>
             </div>
             {% endfor %}
