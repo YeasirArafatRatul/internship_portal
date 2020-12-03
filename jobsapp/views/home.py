@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
@@ -64,7 +65,7 @@ class CompanySearchView(ListView):
     context_object_name = 'companies'
 
     def get_queryset(self):
-        return self.model.objects.filter(first_name__icontains=self.request.GET['company'])
+        return self.model.objects.filter(Q(first_name__icontains=self.request.GET['company']), role='employer')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

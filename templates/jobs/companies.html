@@ -8,7 +8,7 @@
                 <div class="row align-items-end">
                     <div class="col-sm-10 col-lg-10 form-group">
                         <label for="company">Company Name</label>
-                        <input type="text" id="company" name="company" placeholder="ex: Google" class="form-control">
+                        <input type="text" id="company" name="company" value="{{ company }}" placeholder="ex: Google" class="form-control">
                     </div>
                     <div class="col-sm-1 col-lg-2 form-group">
                         <button type="submit" name="name" class="btn btn-outline-white-primary job-main-form__button">
@@ -22,9 +22,9 @@
 </section>
 <section>
     <div class="container">
-        <h3 class="heading">All Registerd Companies<span class="accent"></span></h3>
+        <h3 class="heading">All Companies<span class="accent"></span></h3>
         <div class="row featured align-items-stretch">
-            {% for company in companies %}
+            {% for com in companies %}
             <div class="col-lg-3 mb-5 mb-lg-0">
                 <div class="box-image-text bg-visible full-height">
                     <!-- <div class="top">
@@ -40,14 +40,14 @@
                         </div> -->
                     <div class="content">
                         <div>
-                            <img src="{{ company.userprofile.image.url }}" alt="Company Logo" style="height: 100px; width: 100px;border-radius: 50%;">
+                            <img src="{{ com.userprofile.image.url }}" alt="Company Logo" style="height: 100px;border-radius: 50%;">
                         </div>
+                        <br>
                         <div>
-                            <h5><a href="{% url 'accounts:user-detail' company.id %}"><i class="fa fa-building"></i> {{ company.first_name }}</a></h5>
+                            <h5><a href="{% url 'accounts:user-detail' com.id %}"><i class="fa fa-building"></i> {{ com.first_name }}</a></h5>
                         </div>
-                        <p class="featured__details"><i class="fa fa-map-marker job__location"></i> {{ company.userprofile.address }}
-                        </p>
-                        <!-- <p><i class="fa fa-building"></i> {{ company.first_name }}</p> -->
+
+                        <!-- <p><i class="fa fa-building"></i> {{ com.userprofile.location }}</p> -->
                         <!-- <a><button class="btn btn-outline-white-primary">Read More</button></a> -->
                         <!-- <p>{{ job.description|safe|truncatechars:40 }}</p> -->
                     </div>
@@ -116,5 +116,4 @@
         {% endif %}
     </div>
 </section>
-
 {% endblock %}
