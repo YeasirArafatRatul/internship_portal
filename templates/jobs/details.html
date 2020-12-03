@@ -18,8 +18,8 @@
             <div class="col-lg-8">
                 <h3>Category: {{ job.category }}</h3>
                 <h6 class="text-info">Last date: {{ job.last_date|date }}</h6>
-                <h6>Duration: {{ job.duration}}</h6>
-                <h6 class="text-info">Experience: {{ job.experience }}</h6>
+                <h6>Duration: {{ job.duration}}/months</h6>
+                <h6 class="text-info">Experience: {{ job.experience }}/Years</h6>
                 <h6>Gender: {{ job.gender }}</h6>
                 <h6 class="text-info">Salary: {% if job.salary > 0 %} {{ job.salary }}/Monthly {% else %} Unpaid {% endif %} </h6>
                 <blockquote class="blockquote">

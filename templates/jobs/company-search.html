@@ -2,7 +2,7 @@
 
 <section class="job-form-section job-form-section--compressed" style="background-image: linear-gradient(180deg, #05386B, #fffff5);">
     <div class="container">
-        <h3 class="heading">Find a <span class="accent">job </span> you will <span class="accent">love</span></h3>
+        <h4 class="heading">Find a <span class="accent">job </span> you will <span class="accent">love</span></h4>
         <form id="job-main-form" method="get" action="{% url 'jobs:search' %}" class="job-main-form">
             <div class="controls">
                 <div class="row align-items-center">
@@ -30,71 +30,31 @@
 </section>
 <section>
     <div class="container">
-        <h3 class="heading">All<span class="accent"></span> jobs</h3>
-        <div class="row featured align-items-stretch">
-            <!-- <div class="form-group">
-                <label for="type">Type</label>
-                <br>
-                <div class="form-check form-check">
-                    <input class="form-check-input" type="radio" name="type" id="paid" value="paid">
-                    <label class="form-check-label" for="paid">Paid</label>
-                </div>
-                <div class="form-check form-check">
-                    <input class="form-check-input" type="radio" name="type" id="unpaid" value="unpaid">
-                    <label class="form-check-label" for="paid">Unpaid</label>
-                </div>
-                <div class="col-sm-1 col-lg-2 form-group">
-                    <button type="submit" name="name" class="btn btn-outline-white-primary job-main-form__button" style="width:120px;margin-left: 0px;">
-                            <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </div> -->
-
-            {% for job in jobs %}
-            <div class="col-lg-3 mb-5 mb-lg-0">
-                <div class="box-image-text bg-visible full-height">
-                    <!-- <div class="top">
-                            <a href="#">
-                                <div class="image">
-                                    <img src="{% static 'img/featured1.jpg' %}" alt="" class="img-fluid">
-                                </div>
-                                <div class="bg"></div>
-                                <div class="logo">
-                                    <img src="{% static 'img/company-1.png' %}" alt="" style="max-width: 80px;">
-                                </div>
-                            </a>
-                        </div> -->
-                    <div class="content">
-                        <div>
-                            <h5><a href="{% url 'jobs:jobs-detail' job.id %}">{{ job.title }}</a></h5>
-                        </div>
-                        <p class="featured__details"><i class="fa fa-map-marker job__location"></i> {{ job.location }} {% if job.type == '1' %}
-                            <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == '2' %}
-                            <span class="badge featured-badge badge-primary">Unpaid</span> {% else %}
-                            <span style="color: #ffffff;" class="badge featured-badge badge-warning">Unpaid</span> {% endif %}
-                        </p>
-                        <p><i class="fa fa-money"></i> {{ job.salary }}</p>
-                        <p><i class="fa fa-building"></i> {{ job.user.first_name }}</p>
-                        <!-- <a><button class="btn btn-outline-white-primary">Read More</button></a> -->
-                        <!-- <p>{{ job.description|safe|truncatechars:40 }}</p> -->
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        <!-- {% for job in jobs %}
+        <h3 class="heading">We have found <span class="accent">{{ jobs.count }}</span> Companies</h3>
+        {% for job in jobs %}
         <div class="job-listing  ">
             <div class="row">
                 <div class="col-md-12 col-lg-6">
                     <div class="row">
                         <div class="col-2">
-                            <img src="{% static 'img/company-1.png' %}" alt="Ipsioou " class="img-fluid">
+                            <img src="{{ job.user.userprofile.image.url }}" alt="user-image " class="img-fluid">
                         </div>
                         <div class="col-10">
                             <h4 class="job__title"><a href="{% url 'jobs:jobs-detail' job.id %}">{{ job.title }}</a></h4>
-                            <p class="job__company">
-                                {{ job.company_name }}
-                            </p>
+
+                            {% if request.user.is_authenticated and request.user == job.user %}
+                            <a href="{% url 'accounts:my-profile' %}">
+                                <p class="job__company">
+                                    <i class="fa fa-building"></i> {{ job.company_name }}
+                                </p>
+                            </a>
+                            {% else %}
+                            <a href="{% url 'accounts:user-detail' job.user.id %}">
+                                <p class="job__company">
+                                    <i class="fa fa-building"></i> {{ job.company_name }}
+                                </p>
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -103,10 +63,17 @@
                 <div class="col-10 col-md-3 col-lg-3 ml-auto">
                     <p>Posted {{ job.created_at|timesince }}</p>
                 </div>
+                <div class="col-sm-12 col-md-2 col-lg-1">
+                    <div class="job__star">
+                        {% if job.type == '1' %}
+                        <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == '2' %}
+                        <span class="badge featured-badge badge-primary">Unpaid</span> {% else %}
+                        <span style="color: #ffffff;" class="badge featured-badge badge-warning">Remote</span> {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
-        {% endfor %}  -->
-        {% if is_paginated %}
+        {% endfor %} {% if is_paginated %}
         <div class="row">
             <div class="col-md-12">
                 <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4 mb-4">

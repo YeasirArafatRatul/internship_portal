@@ -58,6 +58,21 @@ class SearchView(ListView):
         return context
 
 
+class CompanySearchView(ListView):
+    model = User
+    template_name = 'jobs/company-search.html'
+    context_object_name = 'companies'
+
+    def get_queryset(self):
+        return self.model.objects.filter(first_name__icontains=self.request.GET['company'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
+        context['settings'] = Setting.objects.filter(status=True).first()
+        return context
+
+
 class JobListView(ListView):
     model = Job
     template_name = 'jobs/jobs.html'
@@ -201,12 +216,14 @@ class ApplyJobView(CreateView):
 class AllCategories(ListView):
     model = JobCategory
     template_name = 'jobs/allcategories.html'
-    context_object_name = 'categories'
+    context_object_name = 'catogories'
     paginate_by = 8
+
+    def get_queryset(self):
+        return self.model.objects.filter()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = JobCategory.objects.all().order_by('-id')[:8]
-
         context['settings'] = Setting.objects.filter(status=True).first()
         return context
