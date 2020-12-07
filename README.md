@@ -15,11 +15,11 @@
 #### Categories
 ![](screenshots/catrgories.png)
 
-#### Multiple User                   Student Options
-![](screenshots/multipleuser.png) | ![](screenshots/user_dropdown.png)
+#### Multiple User                   Admin Options
+![](screenshots/multipleuser.png) | ![](screenshots/admin_dropdown.png)
 
-#### Employer Options                    Admin Options
-![](screenshots/employer_dropdown.png) | ![](screenshots/admin_dropdown.png)
+#### Employer Options                    Employee Options
+![](screenshots/employer_dropdown.png) | ![](screenshots/user_dropdown.png)
 
 
 ### PROFILES
