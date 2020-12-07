@@ -2,6 +2,9 @@
 
 ### Features
 1. Multiple User Sign Up
+    * As A Student
+    * As A Employer
+    
 2. Search By Place and Position
 3. Company Profile
     * Basic Infromation Update
@@ -38,6 +41,7 @@
     * Create
     * Update
     * Delete
+
 
 8. Blog
     * Blog List
