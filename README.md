@@ -12,17 +12,14 @@
 
 ### NAVBAR
 
-#### Categories | #### Multiple User
-![](screenshots/catrgories.png) | ![](screenshots/multipleuser.png)
+#### Categories
+![](screenshots/catrgories.png)
 
-#### Student Options
-![](screenshots/user_dropdown.png)
+#### Multiple User                   Student Options
+![](screenshots/multipleuser.png) | ![](screenshots/user_dropdown.png)
 
-#### Employer Options
-![](screenshots/employer_dropdown.png)
-
-#### Admin Options
-![](screenshots/admin_dropdown.png)
+#### Employer Options                    Admin Options
+![](screenshots/employer_dropdown.png) | ![](screenshots/admin_dropdown.png)
 
 
 ### PROFILES
