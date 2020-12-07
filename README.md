@@ -12,11 +12,8 @@
 
 ### NAVBAR
 
-#### Categories
-![](screenshots/catrgories.png)
-
-#### Multiple User
-![](screenshots/multipleuser.png)
+#### Categories | #### Multiple User
+![](screenshots/catrgories.png) | ![](screenshots/multipleuser.png)
 
 #### Student Options
 ![](screenshots/user_dropdown.png)
@@ -35,13 +32,12 @@
 
 
 #### Student Profile
-![](screenshots/Employee Profile.png)
+![](screenshots/employee_profile.png)
 
 
 ### Student RESUME SHOW & DOWNLOAD
 ![](screenshots/UserResume.png)
 
-![](screenshots/home_lower_part.png)
 
 
 ### SIGN UP
