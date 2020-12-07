@@ -3,6 +3,6 @@
 ### Features
 
 ### HOME
-![](.screenshots/home.png)
+![](screenshots/home.png)
 
-![](.screenshots/home_lower_part.png)
+![](screenshots/home_lower_part.png)
