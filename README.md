@@ -4,7 +4,7 @@
 1. Multiple User Sign Up
     * As A Student
     * As A Employer
-    
+
 2. Search By Place and Position
 3. Company Profile
     * Basic Infromation Update
@@ -53,6 +53,13 @@
 10. ALl Categories List 
     * Filtered Jobs According To Category 
     * Filterd Jobs According To Not - Filled
+
+
+11. Dynamically Site Settings
+    * Name
+    * Logo
+    * Contact Details
+    * About
 
 
 
