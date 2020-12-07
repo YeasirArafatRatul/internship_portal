@@ -49,4 +49,24 @@
 
 ![](screenshots/job-details-page.png)
 
+### EMPLOYER DASH BOARD
+![](screenshots/employer_dashboard.png)
+
+#### All Aplicants
+![](screenshots/all-applicants.png)
+
+
+### Empoyee's Applied Jobs
+#### Applied Jobs Will be deleted after a defined time(for example - 3 days) if the application is rejected by EMPLOYER
+![](screenshots/employee-applied-jobs.png)
+
+### BLOG
+#### Blogs
+
+![](screenshots/blog1.png)
+
+#### Featured
+![](screenshots/blog2.png)
+
+
 
