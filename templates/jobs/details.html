@@ -5,10 +5,10 @@
         <h1 class="heading">{{ job.title }}<br>
             <small>at <a href="{% url 'accounts:user-detail' job.user.id %}"> {{ job.user.first_name }}</a></small>
         </h1>
-        <div class="job-detail-description"><i class="fa fa-map-marker job__location"> </i> {{ job.location }} | Posted {{ job.created_at|timesince }} | {% if job.type == '1' %}
-            <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == '2' %}
+        <div class="job-detail-description"><i class="fa fa-map-marker job__location"> </i> {{ job.location }} | Posted {{ job.created_at|timesince }} | {% if job.type == 'paid' %}
+            <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == 'unpaid' %}
             <span class="badge featured-badge badge-primary">Unpaid</span> {% else %}
-            <span style="color: #ffffff;" class="badge featured-badge badge-warning">Remote</span> {% endif %}
+            <span style="color: #ffffff;" class="badge featured-badge badge-warning">Negotiable</span> {% endif %}
         </div>
     </div>
 </section>

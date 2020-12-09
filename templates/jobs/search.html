@@ -45,13 +45,13 @@
                             {% if request.user.is_authenticated and request.user == job.user %}
                             <a href="{% url 'accounts:my-profile' %}">
                                 <p class="job__company">
-                                    <i class="fa fa-building"></i> {{ job.company_name }}
+                                    <i class="fa fa-building"></i> {{ job.user.first_name }}
                                 </p>
                             </a>
                             {% else %}
                             <a href="{% url 'accounts:user-detail' job.user.id %}">
                                 <p class="job__company">
-                                    <i class="fa fa-building"></i> {{ job.company_name }}
+                                    <i class="fa fa-building"></i> {{ job.user.first_name }}
                                 </p>
                             </a>
                             {% endif %}
@@ -65,10 +65,10 @@
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-1">
                     <div class="job__star">
-                        {% if job.type == '1' %}
-                        <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == '2' %}
+                        {% if job.type == 'paid' %}
+                        <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == 'unpaid' %}
                         <span class="badge featured-badge badge-primary">Unpaid</span> {% else %}
-                        <span style="color: #ffffff;" class="badge featured-badge badge-warning">Remote</span> {% endif %}
+                        <span style="color: #ffffff;" class="badge featured-badge badge-warning">Negotiable</span> {% endif %}
                     </div>
                 </div>
             </div>

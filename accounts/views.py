@@ -756,7 +756,7 @@ def render_pdf_view(request, id):
     courses_set = Course.objects.filter(user_id=id)
     projects_set = Projects.objects.filter(user_id=id)
 
-    if len(skills_set) > 3 or len(edu_set) > 3 or len(experience_set) > 3 or courses_set > 3 or projects_set > 3:
+    if len(skills_set) > 3 or len(edu_set) > 3 or len(experience_set) > 3 or len(courses_set) > 3 or len(projects_set) > 3:
         degrees = Education.objects.filter(user_id=id)[:3]
         degrees_two = Education.objects.filter(user_id=id)[3:6]
         skills = Service.objects.filter(user_id=id)[:3]

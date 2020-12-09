@@ -19,6 +19,11 @@ class CreateJobForm(forms.ModelForm):
             'last_date': DateInput(attrs={'class': 'date', 'placeholder': '00/00/00'}),
             'description': TextInput(attrs={'class': 'input', 'placeholder': 'Job Details'}),
             'location': TextInput(attrs={'class': 'input', 'placeholder': 'Dhaka,Bangladesh'}),
+            'vacancy': TextInput(attrs={'class': 'input', 'placeholder': '1'}),
+            'duration': TextInput(attrs={'class': 'input', 'placeholder': 'In Months'}),
+            'last_date': TextInput(attrs={'class': 'input', 'placeholder': 'dd/mm/yyyy'}),
+            'salary': TextInput(attrs={'class': 'input', 'placeholder': 'Leave Blank If Negotiable'}),
+            'experience': TextInput(attrs={'class': 'input', 'placeholder': 'In Years'}),
         }
 
     def is_valid(self):

@@ -45,7 +45,7 @@ class Job(models.Model):
     last_date = models.DateTimeField()
     created_at = models.DateTimeField(default=timezone.now)
     filled = models.BooleanField(default=False)
-    salary = models.IntegerField(default=0, blank=True)
+    salary = models.IntegerField(default=0, blank=True, null=True)
     gender = models.CharField(choices=GENDER, max_length=6, default='n/a')
     experience = models.CharField(max_length=20, null=True, blank=True)
 

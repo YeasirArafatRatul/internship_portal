@@ -66,12 +66,12 @@
                         </div> -->
                     <div class="content">
                         <div>
-                            <h5><a href="{% url 'jobs:jobs-detail' job.id %}">{{ job.title }}</a></h5>
+                            <h5><a href="{% url 'jobs:jobs-detail' job.id %}">{{ job.title|truncatewords:2 }}</a></h5>
                         </div>
-                        <p class="featured__details"><i class="fa fa-map-marker job__location"></i> {{ job.location }} {% if job.type == '1' %}
-                            <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == '2' %}
+                        <p class="featured__details"><i class="fa fa-map-marker job__location"></i> {{ job.location }} {% if job.type == 'paid' %}
+                            <span class="badge featured-badge badge-success">Paid</span> {% elif job.type == 'unpaid' %}
                             <span class="badge featured-badge badge-primary">Unpaid</span> {% else %}
-                            <span style="color: #ffffff;" class="badge featured-badge badge-warning">Unpaid</span> {% endif %}
+                            <span style="color: #ffffff;" class="badge featured-badge badge-warning">Negotiable</span> {% endif %}
                         </p>
                         <p><i class="fa fa-money"></i> {{ job.salary }}</p>
                         <p><i class="fa fa-building"></i> {{ job.user.first_name }}</p>
