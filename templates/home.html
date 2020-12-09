@@ -135,9 +135,10 @@
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-1">
                     <div class="job__star">
-                        {% if trending.type == '1' %}
-                        <span class="badge featured-badge badge-success">Paid</span> {% else %}
-                        <span class="badge featured-badge badge-primary">Unpaid</span> {% endif %}
+                        {% if trending.type == 'paid' %}
+                        <span class="badge featured-badge badge-success">Paid</span> {% elif trending.type == 'unpaid' %}
+                        <span class="badge featured-badge badge-success">Unpaid</span> {% else %}
+                        <span class="badge featured-badge badge-primary">Negotiable</span> {% endif %}
                     </div>
                 </div>
             </div>
