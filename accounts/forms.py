@@ -358,6 +358,6 @@ class AddCourseForm(forms.ModelForm):
         widgets = {
             'course_name': TextInput(attrs={'class': 'input', 'placeholder': 'Your Course Name', }),
             'institute_name': TextInput(attrs={'class': 'input', 'placeholder': 'From Where You Completed This Course?'}),
-            'duration': TextInput(attrs={'class': 'input', 'placeholder': 'duration/month', }),
+            'duration': TextInput(attrs={'class': 'input', 'placeholder': 'duration in month', }),
             'details': TextInput(attrs={'class': 'input', 'placeholder': 'Write Your Content Here', }),
         }

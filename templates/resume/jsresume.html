@@ -1,6 +1,6 @@
 {% load static %}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -11,7 +11,7 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
 
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" media="all" />
+    <!-- <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" media="all" /> -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/resume.css' %}" media="all" />
     <style>
         .yui-u table {
@@ -238,7 +238,7 @@
                                         <td>
                                             <h2 style='color:#000038;'>{{cor.course_name}}</h2>
                                             <h3>{{cor.institute_name}}</h3>
-                                            <h4>Duration: {{cor.duration}}</h4>
+                                            <h4>Duration: {{cor.duration}} months</h4>
                                             <p>{{cor.details}}</p>
                                         </td>
                                     </div>
