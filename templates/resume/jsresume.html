@@ -65,17 +65,36 @@
         <div id="inner">
             <table id='hd'>
                 <td>
-                    <img src="{{user.userprofile.image.path}}" alt="">
+                    <img src="{{user.userprofile.image.url}}" alt="">
 
                 </td>
                 <td>
                     <h1 style="color: #000038; font-size: 26px; font-weight: bolder; font-family: 'Times New Roman', Times, serif;">{{user.first_name}} {{user.last_name}}</h1>
                     <h3><i class='fa fa-envelop'></i><a href="#">Email: {{user.email}}</a></h3>
                     <p>{{user.userprofile.address}}</p>
-                    <!-- <h3><a id="pdf" href="{% url 'accounts:resumedownload' user.id %}">Download PDF</a></h3> -->
+                    <h3><a id="pdf" href="{% url 'accounts:resumedownload' user.id %}">Download PDF</a></h3>
                 </td>
 
             </table>
+            <!-- <div id="hd">
+                <div class="yui-gc">
+                    <div class="yui-u first">
+                        <h1 style="color: rgb(26, 29, 29); font-size: 26px; font-family: 'Times New Roman', Times, serif;">{{user.first_name}} {{user.last_name}}</h1>
+                        <h3><a href="#">Email: {{user.email}}</a></h3>
+                        <h3></h3>
+                        <p>{{user.userprofile.address}}</p>
+                    </div>
+
+                    <div class="yui-u">
+                        <div class="contact-info">
+                            <img src="{{user.userprofile.image.url}}" alt="">
+                            <h3><a id="pdf" href="{% url 'accounts:resumedownload' user.id %}">Download PDF</a></h3>
+
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!--// hd -->
 
             <div id="bd">
                 <div id="yui-main">
@@ -91,15 +110,18 @@
                             </div>
                         </div>
                         <div class="yui-gf first data-table">
+                            {% if degrees %}
                             <table>
-                                <div class="yui-u first">
-                                    <h2>Education</h2>
-                                </div>
+                                <tr>
+                                    <th>
+                                        <h2>Education</h2>
+                                    </th>
+                                </tr>
                                 <tr>
                                     {% for degree in degrees %}
                                     <div class="job">
                                         <td>
-                                            <h2 style='color:#000038;'>{{degree.degree}}</h2>
+                                            <h2>{{degree.degree}}</h2>
                                             <h3>{{degree.institute_name}}</h3>
                                             <h4>Score: {{degree.cgpa}}</h4>
                                             <h4>Passing Year: {{degree.passing_year|date}}</h4>
@@ -109,12 +131,15 @@
                                     {% endfor %}
                                 </tr>
                             </table>
+
+                            {% endif %} {% if degrees_two %}
                             <table>
                                 <tr>
-                                    {% if degrees_two %} {% for degree in degrees_two %}
+                                    {% for degree in degrees_two %}
                                     <div class="job">
+
                                         <td>
-                                            <h2 style='color:#000038;'>{{degree.degree}}</h2>
+                                            <h2>{{degree.degree}}</h2>
                                             <h3>{{degree.institute_name}}</h3>
                                             <h4>Score: {{degree.cgpa}}</h4>
                                             <h4>Passing Year: {{degree.passing_year|date}}</h4>
@@ -122,85 +147,64 @@
                                     </div>
                                     {% endfor %} {% else %}
                                     <td></td>
-                                    {% endif %}
+
 
                                 </tr>
                             </table>
+                            {% endif %}
                         </div>
                         <br>
                         <div class="yui-gf first  data-table">
+                            {% if skills %}
                             <table>
-                                <div class="yui-u first">
-                                    <h2>Skill</h2>
-                                </div>
+                                <tr>
+                                    <th>
+                                        <h2>Skill</h2>
+                                    </th>
+                                </tr>
                                 <tr>
                                     {% for skill in skills %}
                                     <div class="job">
                                         <td>
-                                            <h2 style='color:#000038;'>{{skill.name}}</h2>
+                                            <h2>{{skill.name}}</h2>
                                             <p>{{skill.details}}</p>
                                         </td>
                                     </div>
                                     {% endfor %}
                                 </tr>
                             </table>
+                            {% endif %}
+                            <!--  -->
+                            {% if skills_two %}
                             <table>
                                 <tr>
                                     {% for skill in skills_two %}
                                     <div class="job">
                                         <td>
-                                            <h2 style='color:#000038;'>{{skill.name}}</h2>
+                                            <h2>{{skill.name}}</h2>
                                             <p>{{skill.details}}</p>
                                         </td>
                                     </div>
                                     {% endfor %}
                                 </tr>
                             </table>
+                            {% endif %}
                         </div>
-                        <br> {% if projects %}
+                        <br>
+                        <!--  -->
+                        {% if experiences %}
                         <div class="yui-gf first  data-table">
                             <table>
-                                <div class="yui-u first">
-                                    <h2>Projects</h2>
-                                </div>
                                 <tr>
-                                    {% for pro in projects %}
-                                    <div class="job">
-                                        <td>
-                                            <h2 style='color:#000038;'>{{pro.proj_name}}</h2>
-                                            <p>{{pro.details}}</p>
-                                        </td>
-                                    </div>
-                                    {% endfor %}
+                                    <th>
+                                        <h2>Experience</h2>
+                                    </th>
                                 </tr>
-                            </table>
-                            <table>
-                                <tr>
-                                    {% if projects_two %} {% for pro in projects %}
-                                    <div class="job">
-                                        <td>
-                                            <h2 style='color:#000038;'>{{pro.proj_name}}</h2>
-                                            <p>{{pro.details}}</p>
-                                        </td>
-                                    </div>
-                                    {% endfor %} {% else %}
-                                    <td></td>
-                                    {% endif %}
-                                </tr>
-                            </table>
-                        </div>
-                        {% endif %}
-                        <br> {% if experiences %}
-                        <div class="yui-gf first  data-table">
-                            <table>
-                                <div class="yui-u first">
-                                    <h2>Experiences</h2>
-                                </div>
                                 <tr>
                                     {% for exp in experiences %}
                                     <div class="job">
                                         <td>
-                                            <h2 style='color:#000038;'>{{exp.company_name}}</h2>
+                                            <h2>{{exp.company_name}}</h2>
                                             <h3>{{exp.position}}</h3>
                                             <h4>{{exp.from_date}} - {{exp.to_date}}</h4>
                                         </td>
@@ -208,35 +212,80 @@
                                     {% endfor %}
                                 </tr>
                             </table>
+
+                            {% endif %}
+                            <!--  -->
+                            {% if experiences_two %}
                             <table>
                                 <tr>
-                                    {% if experiences_two %} {% for exp in experiences_two %}
+                                    {% for exp in experiences_two %}
                                     <div class="job">
                                         <td>
-                                            <h2 style='color:#000038;'>{{exp.company_name}}</h2>
+                                            <h2>{{exp.company_name}}</h2>
                                             <h3>{{exp.position}}</h3>
                                             <h4>{{exp.from_date}} - {{exp.to_date}}</h4>
                                         </td>
                                     </div>
                                     {% endfor %} {% else %}
                                     <td></td>
-                                    {% endif %}
+                                </tr>
+                            </table>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <br>
+                        <!--  -->
+                        {% if projects %}
+                        <div class="yui-gf first  data-table">
+                            <table>
+                                <tr>
+                                    <th>
+                                        <h2>Projects</h2>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    {% for pro in projects %}
+                                    <div class="job">
+                                        <td>
+                                            <h2>{{pro.proj_name}}</h2>
+                                            <p>{{pro.details}}</p>
+                                        </td>
+                                    </div>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+
+                            {% endif %} {% if projects_two %}
+                            <table>
+                                <tr>
+                                    {% for pro in projects %}
+                                    <div class="job">
+                                        <td>
+                                            <h2>{{pro.proj_name}}</h2>
+                                            <p>{{pro.details}}</p>
+                                        </td>
+                                    </div>
+                                    {% endfor %} {% else %}
+                                    <td></td>
                                 </tr>
                             </table>
                         </div>
                         {% endif %}
-
-                        <br> {% if courses %}
+                        <br>
+                        <!--  -->
+                        {% if courses %}
                         <div class="yui-gf first  data-table">
                             <table>
-                                <div class="yui-u first">
-                                    <h2>Courses</h2>
-                                </div>
+                                <tr>
+                                    <th>
+                                        <h2>Courses</h2>
+                                    </th>
+                                </tr>
                                 <tr>
                                     {% for cor in courses %}
                                     <div class="job">
                                         <td>
-                                            <h2 style='color:#000038;'>{{cor.course_name}}</h2>
+                                            <h2>{{cor.course_name}}</h2>
                                             <h3>{{cor.institute_name}}</h3>
                                             <h4>Duration: {{cor.duration}} months</h4>
                                             <p>{{cor.details}}</p>
@@ -245,12 +294,16 @@
                                     {% endfor %}
                                 </tr>
                             </table>
+
+                            {% endif %}
+                            <!--  -->
+                            {% if courses_two %}
                             <table>
                                 <tr>
-                                    {% if courses_two %}{% for cor in courses %}
+                                    {% for cor in courses %}
                                     <div class="job">
                                         <td>
-                                            <h2 style='color:#000038;'>{{cor.course_name}}</h2>
+                                            <h2>{{cor.course_name}}</h2>
                                             <h3>{{cor.institute_name}}</h3>
                                             <h4>Duration: {{cor.duration}}</h4>
                                             <p>{{cor.details}}</p>
@@ -258,7 +311,6 @@
                                     </div>
                                     {% endfor %} {% else %}
                                     <td></td>
-                                    {% endif %}
                                 </tr>
                             </table>
                         </div>

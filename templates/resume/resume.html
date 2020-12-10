@@ -120,6 +120,7 @@
                             </div>
                         </div>
                         <div class="yui-gf first data-table">
+                            {% if degrees %}
                             <table>
                                 <tr>
                                     <th>
@@ -140,9 +141,11 @@
                                     {% endfor %}
                                 </tr>
                             </table>
+
+                            {% endif %} {% if degrees_two %}
                             <table>
                                 <tr>
-                                    {% if degrees_two %} {% for degree in degrees_two %}
+                                    {% for degree in degrees_two %}
                                     <div class="job">
 
                                         <td>
@@ -154,13 +157,15 @@
                                     </div>
                                     {% endfor %} {% else %}
                                     <td></td>
-                                    {% endif %}
+
 
                                 </tr>
                             </table>
+                            {% endif %}
                         </div>
                         <br>
                         <div class="yui-gf first  data-table">
+                            {% if skills %}
                             <table>
                                 <tr>
                                     <th>
@@ -178,6 +183,9 @@
                                     {% endfor %}
                                 </tr>
                             </table>
+                            {% endif %}
+                            <!--  -->
+                            {% if skills_two %}
                             <table>
                                 <tr>
                                     {% for skill in skills_two %}
@@ -190,9 +198,11 @@
                                     {% endfor %}
                                 </tr>
                             </table>
-
+                            {% endif %}
                         </div>
-                        <br> {% if experiences %}
+                        <br>
+                        <!--  -->
+                        {% if experiences %}
                         <div class="yui-gf first  data-table">
                             <table>
                                 <tr>
@@ -212,9 +222,13 @@
                                     {% endfor %}
                                 </tr>
                             </table>
+
+                            {% endif %}
+                            <!--  -->
+                            {% if experiences_two %}
                             <table>
                                 <tr>
-                                    {% if experiences_two %} {% for exp in experiences_two %}
+                                    {% for exp in experiences_two %}
                                     <div class="job">
                                         <td>
                                             <h2>{{exp.company_name}}</h2>
@@ -224,12 +238,14 @@
                                     </div>
                                     {% endfor %} {% else %}
                                     <td></td>
-                                    {% endif %}
                                 </tr>
                             </table>
+                            {% endif %}
                         </div>
                         {% endif %}
-                        <br> {% if projects %}
+                        <br>
+                        <!--  -->
+                        {% if projects %}
                         <div class="yui-gf first  data-table">
                             <table>
                                 <tr>
@@ -248,9 +264,11 @@
                                     {% endfor %}
                                 </tr>
                             </table>
+
+                            {% endif %} {% if projects_two %}
                             <table>
                                 <tr>
-                                    {% if projects_two %} {% for pro in projects %}
+                                    {% for pro in projects %}
                                     <div class="job">
                                         <td>
                                             <h2>{{pro.proj_name}}</h2>
@@ -259,12 +277,13 @@
                                     </div>
                                     {% endfor %} {% else %}
                                     <td></td>
-                                    {% endif %}
                                 </tr>
                             </table>
                         </div>
                         {% endif %}
-                        <br> {% if courses %}
+                        <br>
+                        <!--  -->
+                        {% if courses %}
                         <div class="yui-gf first  data-table">
                             <table>
                                 <tr>
@@ -285,9 +304,13 @@
                                     {% endfor %}
                                 </tr>
                             </table>
+
+                            {% endif %}
+                            <!--  -->
+                            {% if courses_two %}
                             <table>
                                 <tr>
-                                    {% if courses_two %}{% for cor in courses %}
+                                    {% for cor in courses %}
                                     <div class="job">
                                         <td>
                                             <h2>{{cor.course_name}}</h2>
@@ -298,7 +321,6 @@
                                     </div>
                                     {% endfor %} {% else %}
                                     <td></td>
-                                    {% endif %}
                                 </tr>
                             </table>
                         </div>
