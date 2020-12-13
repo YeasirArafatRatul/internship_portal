@@ -42,12 +42,13 @@ class Job(models.Model):
     category = models.ForeignKey(JobCategory, on_delete=models.CASCADE)
     vacancy = models.PositiveSmallIntegerField(default=1)
     duration = models.PositiveSmallIntegerField(null=True, blank=True)
-    last_date = models.DateTimeField()
+    # last_date = models.DateField(default=timezone.now)
     created_at = models.DateTimeField(default=timezone.now)
     filled = models.BooleanField(default=False)
     salary = models.IntegerField(default=0, blank=True, null=True)
     gender = models.CharField(choices=GENDER, max_length=6, default='n/a')
     experience = models.CharField(max_length=20, null=True, blank=True)
+    last_time = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return str(self.title)

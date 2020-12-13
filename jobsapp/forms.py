@@ -21,7 +21,7 @@ class CreateJobForm(forms.ModelForm):
             'location': TextInput(attrs={'class': 'input', 'placeholder': 'Dhaka,Bangladesh'}),
             'vacancy': TextInput(attrs={'class': 'input', 'placeholder': '1'}),
             'duration': TextInput(attrs={'class': 'input', 'placeholder': 'In Months'}),
-            'last_date': TextInput(attrs={'class': 'input', 'placeholder': 'dd/mm/yyyy'}),
+            'last_time': TextInput(attrs={'class': 'input', 'placeholder': 'mm/dd/yyyy'}),
             'salary': TextInput(attrs={'class': 'input', 'placeholder': 'Leave Blank If Negotiable'}),
             'experience': TextInput(attrs={'class': 'input', 'placeholder': 'In Years'}),
         }
@@ -53,6 +53,6 @@ class JobUpdateForm(forms.ModelForm):
         exclude = ('user', 'created_at',)
         widgets = {
             'title': TextInput(attrs={'class': 'input', 'placeholder': 'ex: Softeware Engineer'}),
-            'last_date': DateInput(attrs={'class': 'date', 'placeholder': '00/00/00'}),
+            'last_date': DateInput(attrs={'class': 'date', 'placeholder': 'mm/dd/yyyy'}),
             'description': TextInput(attrs={'class': 'input', 'placeholder': 'Job Details'}),
         }

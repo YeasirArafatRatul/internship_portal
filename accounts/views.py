@@ -407,7 +407,7 @@ class CourseUpdateView(LoginRequiredMixin, UpdateView):
     form_class = AddCourseForm
     template_name = 'accounts/update_edu.html'
     success_url = reverse_lazy('accounts:my-profile')
-    pk_url_kwarg = 'pro_id'
+    pk_url_kwarg = 'cor_id'
 
     def form_valid(self, form):
         request = self.request
