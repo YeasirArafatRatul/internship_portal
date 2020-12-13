@@ -130,10 +130,10 @@
                 </div>
                 <div class="col-10 col-md-4 col-lg-2 ml-auto featured__details"><i class="fa fa-map-marker job__location"></i> {{ trending.location }}
                 </div>
-                <div class="col-10 col-md-3 col-lg-3 ml-auto featured__details">
+                <div class="col-10 col-md-3 col-lg-2 ml-auto featured__details">
                     <p>Posted {{ trending.created_at|timesince }}</p>
                 </div>
-                <div class="col-sm-12 col-md-2 col-lg-1">
+                <div class="col-sm-12 col-md-2 col-lg-2">
                     <div class="job__star">
                         {% if trending.type == 'paid' %}
                         <span class="badge featured-badge badge-success">Paid</span> {% elif trending.type == 'unpaid' %}
